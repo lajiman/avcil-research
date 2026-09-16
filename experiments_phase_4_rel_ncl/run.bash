@@ -1,0 +1,35 @@
+nohup python -u train_incremental_ours_rel_ncl.py \
+  --dataset VGGSound_balance_random1 \
+  --num_classes 100 \
+  --class_num_per_step 10 \
+  --max_epoches 200 \
+  --num_workers 0 \
+  --lr 1e-3 \
+  --lr_decay False \
+  --milestones 100 \
+  --weight_decay 1e-4 \
+  --seed 42 \
+  --train_batch_size 128 \
+  --infer_batch_size 32 \
+  --exemplar_batch_size 128 \
+  --memory_size 500 \
+  --instance_contrastive \
+  --class_contrastive \
+  --attn_score_distil \
+  --instance_contrastive_temperature 0.05 \
+  --class_contrastive_temperature 0.05 \
+  --lam 0.5 \
+  --lam_I 0.1 \
+  --lam_C 1.0 \
+  --feature_root ../../../datasets/VGGSound \
+  --meta_root ../data_balance_random/random1 \
+  --rel_ncl \
+  --rel_ncl_beta 1.0 \
+  --rel_ncl_sigma 1.0 \
+  --rel_ncl_lambda_mu 1.0 \
+  --rel_ncl_topk 5 \
+  --rel_ncl_gamma 0.1 \
+  --rel_ncl_rank 20 \
+  --rel_ncl_use_bias True \
+  > logs/VGGSound_balance_random1_rel_ncl_nohup.log 2>&1 &
+echo $! | tee logs/VGGSound_balance_random1_rel_ncl.pid
