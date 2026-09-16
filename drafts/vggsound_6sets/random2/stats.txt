@@ -1,0 +1,4 @@
+train set: 100 classes
+min samples per class: 95
+max samples per class: 950
+mean samples per class: 372.30
