@@ -1,0 +1,311 @@
+label,overall,train,test
+air conditioning noise,245,195,50
+air horn,197,147,50
+airplane,506,456,50
+airplane flyby,964,914,50
+alarm clock ringing,331,281,50
+"alligators, crocodiles hissing",361,311,50
+ambulance siren,1050,1000,50
+arc welding,934,884,50
+baby babbling,598,548,50
+baby crying,667,617,50
+baby laughter,881,831,50
+baltimore oriole calling,200,150,50
+barn swallow calling,420,370,50
+basketball bounce,1050,1000,50
+bathroom ventilation fan running,200,150,50
+beat boxing,998,948,50
+"bee, wasp, etc. buzzing",551,501,50
+"bird chirping, tweeting",1050,1000,50
+bird squawking,348,298,50
+bird wings flapping,258,208,50
+black capped chickadee calling,446,396,50
+blowtorch igniting,250,200,50
+bouncing on trampoline,526,476,50
+bowling impact,969,919,50
+bull bellowing,320,270,50
+canary calling,717,667,50
+cap gun shooting,904,854,50
+car engine idling,370,320,50
+car engine knocking,990,940,50
+car engine starting,491,441,50
+car passing by,595,545,50
+cat caterwauling,237,187,50
+cat growling,387,337,50
+cat hissing,320,270,50
+cat meowing,588,538,50
+cat purring,861,811,50
+cattle mooing,735,685,50
+"cattle, bovinae cowbell",644,594,50
+cell phone buzzing,200,150,50
+chainsawing trees,1050,1000,50
+cheetah chirrup,403,353,50
+chicken clucking,625,575,50
+chicken crowing,1050,1000,50
+child singing,994,944,50
+"child speech, kid speaking",1050,1000,50
+children shouting,201,151,50
+chimpanzee pant-hooting,473,423,50
+chinchilla barking,213,163,50
+chipmunk chirping,261,211,50
+chopping food,200,150,50
+chopping wood,254,204,50
+church bell ringing,807,757,50
+civil defense siren,979,929,50
+cow lowing,199,149,50
+coyote howling,490,440,50
+cricket chirping,702,652,50
+crow cawing,993,943,50
+cuckoo bird calling,218,168,50
+cupboard opening or closing,330,280,50
+cutting hair with electric trimmers,268,218,50
+dinosaurs bellowing,633,583,50
+disc scratching,200,150,50
+dog barking,767,717,50
+dog baying,412,362,50
+dog bow-wow,628,578,50
+dog growling,826,776,50
+dog howling,929,879,50
+dog whimpering,461,411,50
+"donkey, ass braying",438,388,50
+door slamming,200,150,50
+driving buses,1050,1000,50
+driving motorcycle,1050,1000,50
+driving snowmobile,603,553,50
+duck quacking,602,552,50
+eagle screaming,252,202,50
+eating with cutlery,528,478,50
+electric grinder grinding,425,375,50
+"electric shaver, electric razor shaving",908,858,50
+elephant trumpeting,310,260,50
+eletric blender running,214,164,50
+elk bugling,557,507,50
+"engine accelerating, revving, vroom",1050,1000,50
+extending ladders,291,241,50
+female singing,1050,1000,50
+"female speech, woman speaking",1050,1000,50
+ferret dooking,239,189,50
+fire crackling,492,442,50
+fire truck siren,958,908,50
+fireworks banging,1050,1000,50
+firing cannon,336,286,50
+firing muskets,417,367,50
+"fly, housefly buzzing",200,150,50
+foghorn,217,167,50
+footsteps on snow,251,201,50
+forging swords,264,214,50
+fox barking,361,311,50
+francolin calling,651,601,50
+frog croaking,1018,968,50
+gibbon howling,792,743,49
+goat bleating,246,196,50
+golf driving,303,253,50
+goose honking,788,738,50
+hail,718,668,50
+hair dryer drying,343,293,50
+hammering nails,613,563,50
+"heart sounds, heartbeat",756,706,50
+hedge trimmer running,251,201,50
+helicopter,1050,1000,50
+horse clip-clop,882,832,50
+horse neighing,587,537,50
+ice cracking,365,315,50
+"ice cream truck, ice cream van",676,626,50
+lathe spinning,859,809,50
+lawn mowing,858,808,50
+lighting firecrackers,854,804,50
+lions growling,599,549,50
+lions roaring,964,914,50
+lip smacking,265,215,50
+machine gun shooting,986,936,50
+magpie calling,429,379,50
+male singing,1050,1000,50
+"male speech, man speaking",1050,1000,50
+metronome,200,150,50
+missile launch,974,924,50
+mosquito buzzing,438,388,50
+"motorboat, speedboat acceleration",1050,1000,50
+mouse clicking,660,610,50
+mouse pattering,430,380,50
+mouse squeaking,240,190,50
+mynah bird singing,884,834,50
+ocean burbling,983,933,50
+opening or closing car doors,459,409,50
+opening or closing car electric windows,205,155,50
+opening or closing drawers,458,408,50
+orchestra,1050,1000,50
+otter growling,363,313,50
+owl hooting,753,703,50
+parrot talking,593,543,50
+penguins braying,318,268,50
+people babbling,587,537,50
+people battle cry,291,241,50
+people belly laughing,517,467,50
+people booing,1050,1000,50
+people burping,1049,999,50
+people cheering,704,654,50
+people clapping,903,853,50
+people coughing,453,403,50
+people crowd,1050,1000,50
+people eating,226,176,50
+people eating apple,360,310,50
+people eating crisps,442,392,50
+people eating noodle,560,510,50
+people farting,554,504,50
+people finger snapping,200,150,50
+people gargling,221,171,50
+people giggling,273,223,50
+people hiccup,394,344,50
+people humming,391,341,50
+people marching,817,767,50
+people nose blowing,228,178,50
+people running,422,372,50
+people screaming,731,681,50
+people shuffling,675,625,50
+people slapping,211,161,50
+people slurping,562,512,50
+people sneezing,688,638,50
+people sniggering,891,841,50
+people sobbing,481,431,50
+people whispering,747,697,50
+people whistling,883,833,50
+pheasant crowing,937,887,50
+pig oinking,444,394,50
+"pigeon, dove cooing",1050,1000,50
+planing timber,816,766,50
+plastic bottle crushing,264,214,50
+playing accordion,1050,1000,50
+playing acoustic guitar,1050,1000,50
+playing badminton,1000,950,50
+playing bagpipes,960,910,50
+playing banjo,1050,1000,50
+playing bass drum,863,813,50
+playing bass guitar,1050,1000,50
+playing bassoon,1050,1000,50
+playing bongo,920,870,50
+playing bugle,442,392,50
+playing castanets,199,150,49
+playing cello,1050,1000,50
+playing clarinet,1049,999,50
+playing congas,465,415,50
+playing cornet,893,843,50
+playing cymbal,1050,1000,50
+playing darts,555,505,50
+playing didgeridoo,1050,1000,50
+playing djembe,430,380,50
+playing double bass,810,760,50
+playing drum kit,1050,1000,50
+playing electric guitar,1050,1000,50
+playing electronic organ,839,789,50
+playing erhu,971,921,50
+playing flute,1050,1000,50
+playing french horn,865,815,50
+playing glockenspiel,1046,996,50
+playing gong,557,507,50
+playing guiro,477,427,50
+playing hammond organ,1049,999,50
+playing harmonica,824,774,50
+playing harp,1050,1000,50
+playing harpsichord,1022,972,50
+playing hockey,402,352,50
+playing lacrosse,282,232,50
+playing mandolin,824,774,50
+"playing marimba, xylophone",1050,1000,50
+playing oboe,546,497,49
+playing piano,1050,1000,50
+playing saxophone,1050,1000,50
+playing shofar,200,150,50
+playing sitar,860,810,50
+playing snare drum,987,937,50
+playing squash,1049,999,50
+"playing steel guitar, slide guitar",929,879,50
+playing steelpan,504,454,50
+playing synthesizer,909,859,50
+playing tabla,1048,998,50
+playing table tennis,1049,999,50
+playing tambourine,811,761,50
+playing tennis,390,340,50
+playing theremin,1007,957,50
+playing timbales,587,537,50
+playing timpani,629,579,50
+playing trombone,1050,1000,50
+playing trumpet,835,785,50
+playing tuning fork,200,150,50
+playing tympani,463,413,50
+playing ukulele,907,857,50
+playing vibraphone,885,835,50
+"playing violin, fiddle",1050,1000,50
+playing volleyball,991,941,50
+playing washboard,200,150,50
+playing zither,538,488,50
+police car (siren),1050,1000,50
+police radio chatter,958,908,50
+popping popcorn,253,203,50
+printer printing,881,831,50
+pumping water,199,149,50
+"race car, auto racing",1050,1000,50
+"railroad car, train wagon",1050,1000,50
+raining,473,423,50
+rapping,638,588,50
+reversing beeps,487,437,50
+ripping paper,560,510,50
+roller coaster running,678,628,50
+rope skipping,967,917,50
+"rowboat, canoe, kayak rowing",1050,1000,50
+running electric fan,318,268,50
+sailing,592,542,50
+scuba diving,963,913,50
+sea lion barking,211,161,50
+sea waves,250,201,49
+sharpen knife,776,726,50
+sheep bleating,515,465,50
+shot football,226,176,50
+singing bowl,1050,1000,50
+singing choir,762,712,50
+skateboarding,914,864,50
+skidding,906,856,50
+skiing,980,930,50
+sliding door,587,537,50
+sloshing water,276,226,50
+slot machine,1000,950,50
+smoke detector beeping,221,171,50
+snake hissing,285,235,50
+snake rattling,199,149,50
+splashing water,618,568,50
+spraying water,278,228,50
+squishing water,435,385,50
+stream burbling,690,640,50
+strike lighter,229,179,50
+striking bowling,326,276,50
+striking pool,401,351,50
+"subway, metro, underground",1000,950,50
+swimming,566,516,50
+tap dancing,1050,1000,50
+tapping guitar,780,730,50
+telephone bell ringing,200,150,50
+thunder,325,275,50
+toilet flushing,1050,1000,50
+tornado roaring,356,306,50
+tractor digging,970,920,50
+train horning,771,721,50
+train wheels squealing,333,283,50
+train whistling,608,558,50
+turkey gobbling,646,596,50
+typing on computer keyboard,561,511,50
+typing on typewriter,745,695,50
+underwater bubbling,420,370,50
+using sewing machines,626,576,50
+vacuum cleaner cleaning floors,1009,959,50
+"vehicle horn, car horn, honking",1050,1000,50
+volcano explosion,842,792,50
+warbler chirping,264,214,50
+waterfall burbling,514,464,50
+whale calling,200,150,50
+wind chime,389,339,50
+wind noise,922,872,50
+wind rustling leaves,563,513,50
+wood thrush calling,681,631,50
+woodpecker pecking tree,745,695,50
+writing on blackboard with chalk,280,230,50
+yodelling,961,911,50
+zebra braying,199,149,50
