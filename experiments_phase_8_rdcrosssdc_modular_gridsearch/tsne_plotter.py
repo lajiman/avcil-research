@@ -336,7 +336,8 @@ def make_tsne_plots_for_step(
     """
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    model = torch.load(ckpt_path, map_location="cpu")
+    # Project-owned full-model checkpoints; explicit for PyTorch >= 2.6.
+    model = torch.load(ckpt_path, map_location="cpu", weights_only=False)
     model = model.to(device)
     model.eval()
 

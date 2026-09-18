@@ -18,9 +18,13 @@ import random
 import sys
 from datetime import datetime
 from itertools import cycle
+from pathlib import Path
 
-sys.path.append(os.path.abspath(os.path.dirname(os.getcwd())))
+# Resolve imports from this file, including when launched from the repo root.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import matplotlib
+matplotlib.use("Agg")  # H200 compute nodes usually have no display server.
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -214,9 +218,15 @@ def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category
         exemplar_loader = None
         last_step_out_class_num = 0
     else:
-        model = torch.load(checkpoint_path(args, step - 1))
+        # These are full nn.Module checkpoints produced by this project.
+        # Only load trusted checkpoints; PyTorch >= 2.6 defaults to weights_only.
+        model = torch.load(
+            checkpoint_path(args, step - 1), map_location="cpu", weights_only=False
+        )
         model.incremental_classifier(step_out_class_num)
-        old_model = torch.load(checkpoint_path(args, step - 1))
+        old_model = torch.load(
+            checkpoint_path(args, step - 1), map_location="cpu", weights_only=False
+        )
 
         exemplar_loader = DataLoader(
             exemplar_set,
@@ -255,7 +265,7 @@ def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category
 
     train_loss_list = []
     val_acc_list = []
-    best_val_res = 0.0
+    best_val_res = float("-inf")  # Save the first epoch even if accuracy is zero.
 
     epoch_csv = os.path.join(metrics_dir(args), "rd_crosssdc", "epoch_summary.csv")
     epoch_header = [
@@ -711,14 +721,19 @@ def build_parser():
     parser.add_argument("--dataset", type=dataset_type, default="AVE")
     parser.add_argument("--experiment_name", type=str, default=None)
     parser.add_argument(
+        "--require_cuda", action="store_true",
+        help="Fail early when CUDA is unavailable (recommended on H200).",
+    )
+    parser.add_argument(
         "--modality", type=str, default="audio-visual", choices=["audio-visual"]
     )
     parser.add_argument(
         "--feature_root",
         type=str,
-        default="/mnt/data2/wpian/dataset/VGGSound",
+        required=True,
+        help="Feature directory on this machine (visual_features.h5, audio_pretrained_feature/).",
     )
-    parser.add_argument("--meta_root", type=str, default=None)
+    parser.add_argument("--meta_root", type=str, required=True)
     parser.add_argument("--train_batch_size", type=int, default=128)
     parser.add_argument("--infer_batch_size", type=int, default=32)
     parser.add_argument("--exemplar_batch_size", type=int, default=128)
@@ -780,6 +795,8 @@ def build_parser():
 
 
 def validate_args(parser, args):
+    if args.require_cuda and not torch.cuda.is_available():
+        parser.error("CUDA is unavailable; check the GPU allocation, driver and CUDA PyTorch wheel")
     if not args.cross_sdc:
         parser.error("This script expects --cross_sdc for all three controlled modes")
     if args.cross_sdc_temperature <= 0 or args.rd_margin_temperature <= 0:
@@ -805,6 +822,14 @@ def main():
     args = parser.parse_args()
     validate_args(parser, args)
     print(args)
+    print("PyTorch: {} | CUDA runtime: {} | device: {}".format(
+        torch.__version__, torch.version.cuda, device
+    ))
+    if device.type == "cuda":
+        print("GPU: {} | compute capability: {} | visible GPUs: {}".format(
+            torch.cuda.get_device_name(device),
+            torch.cuda.get_device_capability(device), torch.cuda.device_count(),
+        ))
 
     total_incremental_steps = args.num_classes // args.class_num_per_step
     setup_seed(args.seed)

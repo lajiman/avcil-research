@@ -7,9 +7,6 @@ import timm.models.vision_transformer
 from timm.models.vision_transformer import PatchEmbed, Block
 from .util.patch_embed import PatchEmbed_new, PatchEmbed3D_new
 
-import librosa
-import torchaudio
-
 class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
     """ Vision Transformer with support for global average pooling
     """
@@ -21,7 +18,7 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
             norm_layer = kwargs['norm_layer']
             embed_dim = kwargs['embed_dim']
             self.fc_norm = norm_layer(embed_dim)
-        del self.norm  # remove the original norm
+            del self.norm  # global pooling uses fc_norm instead
         self.mask_2d = mask_2d
         self.use_custom_patch = use_custom_patch
         num_heads=12
@@ -208,4 +205,3 @@ def get_model():
     model.pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, 768), requires_grad=False)
 
     return model
-

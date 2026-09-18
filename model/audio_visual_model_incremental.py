@@ -397,14 +397,21 @@ class IncreAudioVisualNet(nn.Module):
         return spatial_attn_score, temporal_attn_score
 
     def incremental_classifier(self, numclass):
-        weight = self.classifier.weight.data
-        bias = self.classifier.bias.data
-        in_features = self.classifier.in_features
-        out_features = self.classifier.out_features
+        old_classifier = self.classifier
+        out_features = old_classifier.out_features
 
-        self.classifier = nn.Linear(in_features, numclass, bias=True)
-        self.classifier.weight.data[:out_features] = weight
-        self.classifier.bias.data[:out_features] = bias
+        # Keep the CPU initialization used by previous runs, then move the new
+        # head to the existing model's device and dtype (including CUDA/BF16).
+        new_classifier = nn.Linear(old_classifier.in_features, numclass, bias=True)
+        new_classifier = new_classifier.to(
+            device=old_classifier.weight.device, dtype=old_classifier.weight.dtype
+        )
+        with torch.no_grad():
+            new_classifier.weight[:out_features].copy_(old_classifier.weight)
+            new_classifier.bias[:out_features].copy_(old_classifier.bias)
+
+        self.classifier = new_classifier
+        self.num_classes = numclass
 
     def extract_joint_feature(self, visual=None, audio=None):
         """

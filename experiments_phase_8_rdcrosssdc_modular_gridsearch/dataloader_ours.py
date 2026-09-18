@@ -1,12 +1,8 @@
 import numpy as np
 import os
 import torch
-from PIL import Image
-from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms
-import librosa
+from torch.utils.data import Dataset
 import random
-from torch.utils.data.sampler import Sampler
 import h5py
 
 class IcaAVELoader(Dataset):
@@ -311,5 +307,4 @@ class exemplarLoader(Dataset):
 
     def __len__(self):
         return len(self.exemplar_vids_set)
-
 

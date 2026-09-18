@@ -92,7 +92,8 @@ def detailed_test(
     print("Start testing...")
     print("=====================================")
 
-    model = torch.load(checkpoint_path)
+    # Project-owned full-model checkpoints, not state_dict files.
+    model = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
     model.to(device)
     model.eval()
 
