@@ -1,0 +1,63 @@
+#!/bin/bash
+# Example: replace the partition and path placeholders before submitting.
+# Submit from the experiment directory; run `mkdir -p logs` FIRST
+# so Slurm can open its output files before this script starts.
+# Adjust resources/time for your cluster and the array range if commands change.
+# Also update --feature_root/--meta_root in grid_commands/commands_direct.txt.
+# The H200 GRES type below must match your cluster (e.g. h200 or nvidia_h200).
+# Check the partition and GRES names with: sinfo -o '%P %G'
+#SBATCH -J vgg_direct_h200
+#SBATCH -p please_input_your_H200_partition
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:h200:1
+#SBATCH --array=1-27
+#SBATCH -t 3-00:00:00
+#SBATCH -o logs/slurm_%x_%A_%a.out
+#SBATCH -e logs/slurm_%x_%A_%a.err
+
+set -euo pipefail
+
+CONDA_SH="please input your path of conda.sh"
+EXPERIMENT_DIR="please input your path of experiments_phase_8_rdcrosssdc_modular_gridsearch"
+
+if [[ "${CONDA_SH}" == "please input your path of "* || "${EXPERIMENT_DIR}" == "please input your path of "* ]]; then
+  echo "Error: replace the path placeholders before running this example." >&2
+  exit 1
+fi
+
+: "${SLURM_ARRAY_TASK_ID:?Submit this example with sbatch as an array job}"
+
+echo "Job ID: ${SLURM_JOB_ID}"
+echo "Array Job ID: ${SLURM_ARRAY_JOB_ID}"
+echo "Array Task ID: ${SLURM_ARRAY_TASK_ID}"
+echo "Node: $(hostname)"
+echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
+echo "Start time: $(date)"
+
+source "${CONDA_SH}"
+conda activate avcil-h200
+
+cd "${EXPERIMENT_DIR}"
+
+mkdir -p logs
+
+nvidia-smi
+
+CMD_FILE="grid_commands/commands_direct.txt"
+
+CMD=$(sed -n "${SLURM_ARRAY_TASK_ID}p" "${CMD_FILE}")
+
+if [ -z "${CMD}" ]; then
+  echo "Error: no command found for SLURM_ARRAY_TASK_ID=${SLURM_ARRAY_TASK_ID}"
+  echo "CMD_FILE=${CMD_FILE}"
+  exit 1
+fi
+
+echo "Running command:"
+echo "${CMD}"
+
+eval "${CMD}"
+
+echo "End time: $(date)"
