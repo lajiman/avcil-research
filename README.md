@@ -2,7 +2,7 @@
 
 ## 环境安装
 
-Linux x86_64 / H200，需已配置可用的 NVIDIA 驱动。在仓库根目录执行：
+在仓库根目录执行：
 
 ```bash
 conda create -n avcil-h200 python=3.10 pip -y
@@ -10,8 +10,6 @@ conda activate avcil-h200
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
-
-依赖已指定 PyTorch 2.6.0 / CUDA 12.4。
 
 ## 数据结构
 
@@ -30,7 +28,7 @@ datasets/VGGSound/
 
 以下文件均位于 `experiments_phase_8_rdcrosssdc_modular_gridsearch/`。
 
-在 `grid_commands/commands_hinge.txt` 和 `grid_commands/commands_direct.txt` 中，将所有 `--feature_root` 占位符替换为数据目录的绝对路径，保留引号。`--meta_root` 默认使用 `../data2/balance`，可按需修改。
+在 `grid_commands/commands_hinge.txt` 和 `grid_commands/commands_direct.txt` 中，将所有 `--feature_root` 占位符替换为数据目录的绝对路径，不用保留引号。`--meta_root` 默认使用 `../data2/balance`，可按需修改。
 
 在所选 Slurm 模板中修改：
 
@@ -63,7 +61,7 @@ sbatch --array=1-7 run_direct_multi.slurm
 
 ## 汇总日志
 
-在实验目录执行，无需等待所有实验结束：
+在实验目录执行：
 
 ```bash
 python summarize_logs.py
