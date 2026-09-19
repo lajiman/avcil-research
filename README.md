@@ -13,7 +13,7 @@ python -m pip install -r requirements.txt
 
 ## 数据结构
 
-数据可放在任意位置，按以下结构组织；`--feature_root` 指向 `VGGSound/`：
+数据集按照以下形式组织；`--feature_root` 指向 `VGGSound/`：
 
 ```text
 datasets/VGGSound/
@@ -40,7 +40,6 @@ datasets/VGGSound/
 
 ```bash
 cd experiments_phase_8_rdcrosssdc_modular_gridsearch
-mkdir -p logs logs_hinge logs_direct
 ```
 
 单进程：每个数组任务申请 1 张 H200，运行 1 个训练进程。
