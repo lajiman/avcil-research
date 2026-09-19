@@ -59,7 +59,7 @@ datasets/VGGSound/
 
 ```bash
 cd experiments_phase_8_rdcrosssdc_modular_gridsearch
-mkdir -p logs logs_hinge
+mkdir -p logs logs_hinge logs_direct
 ```
 
 单进程版本：
@@ -88,3 +88,21 @@ sbatch --array=1-7 run_direct_multi.slurm
 
 四进程共享 GPU 显存和算力，主机内存需容纳各进程的数据副本。若多进程资源不足，可直接使用单进程版本。
 同一批实验的两种版本二选一；切换前结束同一实验的旧作业，避免覆盖相同输出。默认四进程时，第 `k` 组对应命令第 `4k-3` 至 `min(4k, N)` 行（`N` 为命令总数）；可根据日志只补跑失败命令对应的单进程数组项。
+
+## 汇总日志
+
+在实验目录运行（仅使用 Python 标准库）：
+
+```bash
+python summarize_logs.py
+```
+
+默认根据两份命令清单读取 `logs_hinge/` 和 `logs_direct/`，按实验汇总 seeds 42/43/44 的每步 `Testing res`，
+输出 `results/summary.md` 和 `results/summary.csv`。只展示变化的参数和损失类型，保留各 seed 结果，
+每一步有多少有效结果就汇总多少：1 个 seed 直接记录，2–3 个 seed 计算均值及样本标准差。
+报告注明每步实际 seed 数 `n`（CSV 为 `n_step_*`）；只有 1 个结果时标准差留空。准确率保持日志中的 0–1 数值。
+
+可在训练过程中反复运行；缺失、未完成均正常输出（退出码 0），缺失值不补 0。
+重复结果、参数冲突等异常会标记并排除，其他有效 seed 继续汇总，此时退出码为 1。
+可用 `--commands grid_commands/commands_hinge.txt` 只汇总一份清单；日志另存时用 `--log-dir /path/to/logs`，
+输出位置用 `--output-dir results/hinge` 指定。PR 只提交生成的 Markdown/CSV；原始日志已由 `.gitignore` 排除。
