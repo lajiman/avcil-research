@@ -35,7 +35,14 @@ datasets/VGGSound/
 - `--feature_root`：将所有 `"please input your path of VGGSound features"` 替换为数据目录的绝对路径，保留引号。
 - `--meta_root`：默认 `../data2/balance`，使用仓库内的元数据；若另行存放，改为对应路径。
 
-修改 `run_hinge.slurm.example` 和 `run_direct.slurm.example`：
+选择一套 Slurm 模板；每个数组任务均申请 **1 张 H200**，不要求独占整个节点：
+
+| 版本 | 模板（均带 `.example` 后缀） | 每个数组任务 | hinge / direct 数组范围 |
+| --- | --- | --- | --- |
+| 单进程 | `run_hinge.slurm` / `run_direct.slurm` | 1 个训练进程，4 个 CPU 核 | `1-81` / `1-27` |
+| 多进程 | `run_hinge_multi.slurm` / `run_direct_multi.slurm` | 最多 4 个训练进程同时运行，16 个 CPU 核 | `1-21` / `1-7` |
+
+在所选模板中修改：
 
 | 配置 | 填写内容 |
 | --- | --- |
@@ -43,18 +50,41 @@ datasets/VGGSound/
 | `EXPERIMENT_DIR` | 本仓库 `experiments_phase_8_rdcrosssdc_modular_gridsearch/` 的绝对路径 |
 | `#SBATCH -p` | 集群的 H200 分区名称 |
 | `#SBATCH --gres` | 默认 `gpu:h200:1`；GPU 类型名须与集群一致，可用 `sinfo -o '%P %G'` 查看 |
-| 其他 `#SBATCH` 参数 | 按需调整 CPU 数、时限和数组范围；hinge 默认 `1-81`，direct 默认 `1-27`，对应命令文件行数 |
+| `RUNS_PER_GPU` | 仅多进程模板：每张卡同时运行的训练进程数，默认 `4`；修改后数组上限为 `ceil(命令数 / RUNS_PER_GPU)` |
+| 其他 `#SBATCH` 参数 | 按需调整 CPU 核数、主机内存、时限和数组范围 |
 
-两份脚本均激活 `avcil-h200`，分别读取对应的 hinge/direct 命令文件。
-修改完成后，可去掉 `.example` 后缀。在实验目录中先创建日志目录，再按需提交：
+两套模板均激活 `avcil-h200`，使用同一对 hinge/direct 命令文件。单进程版本每个数组任务执行对应行；多进程版本按连续 4 行分组并发执行，最后一组仅运行剩余命令。组内任一进程失败，该数组任务最终返回失败。
+
+修改完成后，可将所选模板的 `.example` 后缀去掉。在实验目录中先创建日志目录，再选择一种版本提交：
 
 ```bash
 cd experiments_phase_8_rdcrosssdc_modular_gridsearch
+mkdir -p logs logs_hinge
+```
+
+单进程版本：
+
+```bash
 mv run_hinge.slurm.example run_hinge.slurm
 mv run_direct.slurm.example run_direct.slurm
-mkdir -p logs logs_hinge
 
-# 按需选择提交
+# 按需选择 hinge / direct
 sbatch --array=1-81 run_hinge.slurm
 sbatch --array=1-27 run_direct.slurm
 ```
+
+多进程版本：
+
+```bash
+mv run_hinge_multi.slurm.example run_hinge_multi.slurm
+mv run_direct_multi.slurm.example run_direct_multi.slurm
+
+# 按需选择 hinge / direct
+sbatch --array=1-21 run_hinge_multi.slurm
+sbatch --array=1-7 run_direct_multi.slurm
+```
+
+数组范围后加 `%1` 可限制该数组同时只使用一张 GPU，例如 `--array=1-21%1`；限制对每个数组分别生效。
+
+四进程共享 GPU 显存和算力，主机内存需容纳各进程的数据副本。若多进程资源不足，可直接使用单进程版本。
+同一批实验的两种版本二选一；切换前结束同一实验的旧作业，避免覆盖相同输出。默认四进程时，第 `k` 组对应命令第 `4k-3` 至 `min(4k, N)` 行（`N` 为命令总数）；可根据日志只补跑失败命令对应的单进程数组项。

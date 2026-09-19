@@ -1,4 +1,6 @@
 #!/bin/bash
+# Single-process version: each array element runs one command on one GPU.
+# For multiple processes per GPU, use run_hinge_multi.slurm.example instead.
 # Example: replace the partition and path placeholders before submitting.
 # Submit from the experiment directory; run `mkdir -p logs logs_hinge` FIRST
 # so Slurm can open its output files before this script starts.

@@ -1,0 +1,119 @@
+#!/bin/bash
+# Example: replace the partition and path placeholders before submitting.
+# Submit from the experiment directory; run `mkdir -p logs` FIRST
+# so Slurm can open its output files before this script starts.
+# Multi-process version: each array element runs up to 4 commands on one GPU.
+# For one process per GPU, use run_direct.slurm.example instead.
+# Set the array range to 1-ceil(command_count / RUNS_PER_GPU).
+# Adjust resources/time for your cluster; host RAM is shared by 4 processes.
+# Also update --feature_root/--meta_root in grid_commands/commands_direct.txt.
+# The H200 GRES type below must match your cluster (e.g. h200 or nvidia_h200).
+# Check the partition and GRES names with: sinfo -o '%P %G'
+#SBATCH -J vgg_direct_h200_multi
+#SBATCH -p please_input_your_H200_partition
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task=16
+#SBATCH --gres=gpu:h200:1
+#SBATCH --array=1-7
+#SBATCH -t 3-00:00:00
+#SBATCH -o logs/slurm_%x_%A_%a.out
+#SBATCH -e logs/slurm_%x_%A_%a.err
+
+set -euo pipefail
+
+# Changing this also requires updating the array range at submission.
+RUNS_PER_GPU=4
+
+CONDA_SH="please input your path of conda.sh"
+EXPERIMENT_DIR="please input your path of experiments_phase_8_rdcrosssdc_modular_gridsearch"
+
+if [[ "${CONDA_SH}" == "please input your path of "* || "${EXPERIMENT_DIR}" == "please input your path of "* ]]; then
+  echo "Error: replace the path placeholders before running this example." >&2
+  exit 1
+fi
+
+: "${SLURM_ARRAY_TASK_ID:?Submit this example with sbatch as an array job}"
+
+if [[ ! "${RUNS_PER_GPU}" =~ ^[1-9][0-9]*$ || ! "${SLURM_ARRAY_TASK_ID}" =~ ^[1-9][0-9]*$ ]]; then
+  echo "Error: RUNS_PER_GPU and SLURM_ARRAY_TASK_ID must be positive integers." >&2
+  exit 1
+fi
+: "${SLURM_CPUS_PER_TASK:?Submit with --cpus-per-task set}"
+CPUS_PER_RUN=$(( SLURM_CPUS_PER_TASK / RUNS_PER_GPU ))
+if (( CPUS_PER_RUN < 1 )); then
+  echo "Error: request at least RUNS_PER_GPU CPU cores." >&2
+  exit 1
+fi
+export OMP_NUM_THREADS=${CPUS_PER_RUN}
+export MKL_NUM_THREADS=${CPUS_PER_RUN}
+export OPENBLAS_NUM_THREADS=${CPUS_PER_RUN}
+export NUMEXPR_NUM_THREADS=${CPUS_PER_RUN}
+
+echo "Job ID: ${SLURM_JOB_ID}"
+echo "Array Job ID: ${SLURM_ARRAY_JOB_ID}"
+echo "Array Task ID: ${SLURM_ARRAY_TASK_ID}"
+echo "Node: $(hostname)"
+echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
+echo "Start time: $(date)"
+
+source "${CONDA_SH}"
+conda activate avcil-h200
+
+cd "${EXPERIMENT_DIR}"
+
+mkdir -p logs
+
+nvidia-smi
+
+CMD_FILE="grid_commands/commands_direct.txt"
+
+# One array element owns one GPU; its child processes inherit the same
+# CUDA_VISIBLE_DEVICES from Slurm. Do not assign a GPU to each child process.
+TOTAL_COMMANDS=$(awk 'END { print NR + 0 }' "${CMD_FILE}")
+TOTAL_GROUPS=$(( (TOTAL_COMMANDS + RUNS_PER_GPU - 1) / RUNS_PER_GPU ))
+if (( SLURM_ARRAY_TASK_ID > TOTAL_GROUPS )); then
+  echo "Error: array task ${SLURM_ARRAY_TASK_ID} exceeds ${TOTAL_GROUPS} command groups." >&2
+  exit 1
+fi
+
+FIRST_LINE=$(( (SLURM_ARRAY_TASK_ID - 1) * RUNS_PER_GPU + 1 ))
+LAST_LINE=$(( FIRST_LINE + RUNS_PER_GPU - 1 ))
+if (( LAST_LINE > TOTAL_COMMANDS )); then
+  LAST_LINE=${TOTAL_COMMANDS}
+fi
+
+# Validate the complete group before starting any training processes.
+COMMANDS=()
+for (( LINE=FIRST_LINE; LINE<=LAST_LINE; LINE++ )); do
+  CMD=$(sed -n "${LINE}p" "${CMD_FILE}")
+  if [[ "${CMD}" =~ ^[[:space:]]*$ || "${CMD}" =~ ^[[:space:]]*# || "${CMD}" == *"please input your path of "* ]]; then
+    echo "Error: line ${LINE} in ${CMD_FILE} is empty, a comment, or has an unfilled path." >&2
+    exit 1
+  fi
+  COMMANDS+=("${CMD}")
+done
+
+echo "Running lines ${FIRST_LINE}-${LAST_LINE} on one GPU; ${CPUS_PER_RUN} CPU threads per process."
+PIDS=()
+for (( INDEX=0; INDEX<${#COMMANDS[@]}; INDEX++ )); do
+  echo "Starting command line $(( FIRST_LINE + INDEX )): ${COMMANDS[INDEX]}"
+  # Each command already redirects output to its own experiment log.
+  bash -c "${COMMANDS[INDEX]}" &
+  PIDS+=("$!")
+done
+
+# Keep the allocation until every child finishes; propagate any failure to Slurm.
+STATUS=0
+for (( INDEX=0; INDEX<${#PIDS[@]}; INDEX++ )); do
+  if wait "${PIDS[INDEX]}"; then
+    echo "Command line $(( FIRST_LINE + INDEX )) completed."
+  else
+    CHILD_STATUS=$?
+    echo "Command line $(( FIRST_LINE + INDEX )) failed with exit code ${CHILD_STATUS}." >&2
+    STATUS=1
+  fi
+done
+
+echo "End time: $(date)"
+exit "${STATUS}"
