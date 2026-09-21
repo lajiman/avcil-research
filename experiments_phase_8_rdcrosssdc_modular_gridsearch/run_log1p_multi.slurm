@@ -1,15 +1,15 @@
 #!/bin/bash
 # Submit from the experiment directory after running `mkdir -p logs`.
-# Uses the original RTX 3090 cluster paths and avcil environment.
+# Uses the Juno H200 checkout and avcil-h200 environment.
 # Each array element runs up to 4 experiments concurrently on one GPU.
 # Submit: sbatch --array=1-21 run_log1p_multi.slurm
 # Adjust RUNS_PER_GPU to available memory; array size = ceil(81 / RUNS_PER_GPU).
-#SBATCH -J vgg_log1p_3090_multi
+#SBATCH -J vgg_log1p_h200_multi
 #SBATCH -p gpu-preempt
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=16
-#SBATCH --gres=gpu:nvidia_geforce_rtx_3090:1
+#SBATCH --gres=gpu:h200:1
 #SBATCH --array=1-21
 #SBATCH -t 3-00:00:00
 #SBATCH -o logs/slurm_%x_%A_%a.out
@@ -45,9 +45,9 @@ echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
 echo "Start time: $(date)"
 
 source /groups/ytian/lujing/miniconda3/etc/profile.d/conda.sh
-conda activate avcil
+conda activate avcil-h200
 
-cd /groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023/experiments_phase_8_rdcrosssdc_modular_gridsearch
+cd /groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch
 
 mkdir -p logs logs_log1p
 
