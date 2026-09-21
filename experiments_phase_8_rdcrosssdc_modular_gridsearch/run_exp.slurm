@@ -4,11 +4,11 @@
 # Each array element runs one experiment on one GPU.
 # Submit: sbatch --array=1-81 run_exp.slurm
 #SBATCH -J vgg_exp_h200
-#SBATCH -p gpu-preempt
+#SBATCH -p h200
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:h200:1
+#SBATCH --gres=gpu:nvidia_h200_nvl:1
 #SBATCH --array=1-81
 #SBATCH -t 3-00:00:00
 #SBATCH -o logs/slurm_%x_%A_%a.out

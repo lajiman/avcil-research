@@ -5,11 +5,11 @@
 # Submit: sbatch --array=1-21 run_log1p_multi.slurm
 # Adjust RUNS_PER_GPU to available memory; array size = ceil(81 / RUNS_PER_GPU).
 #SBATCH -J vgg_log1p_h200_multi
-#SBATCH -p gpu-preempt
+#SBATCH -p h200
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=16
-#SBATCH --gres=gpu:h200:1
+#SBATCH --gres=gpu:nvidia_h200_nvl:1
 #SBATCH --array=1-21
 #SBATCH -t 3-00:00:00
 #SBATCH -o logs/slurm_%x_%A_%a.out
