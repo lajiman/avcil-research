@@ -15,6 +15,7 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+from dataloader_ours import h5_data_loader_kwargs
 from .cmr_penalties import cmr_penalty_per_sample
 
 
@@ -183,10 +184,9 @@ def build_old_teacher_prototype_bank(
     loader = DataLoader(
         exemplar_set,
         batch_size=min(batch_size, len(exemplar_set)),
-        num_workers=num_workers,
-        pin_memory=True,
         drop_last=False,
         shuffle=False,
+        **h5_data_loader_kwargs(num_workers),
     )
 
     all_audio = []

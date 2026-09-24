@@ -11,6 +11,8 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+from dataloader_ours import h5_data_loader_kwargs
+
 
 def safe_div(a: float, b: float) -> float:
     return a / b if b > 0 else 0.0
@@ -100,10 +102,9 @@ def detailed_test(
     test_loader = DataLoader(
         test_data_set,
         batch_size=args.infer_batch_size,
-        num_workers=args.num_workers,
-        pin_memory=True,
         drop_last=False,
         shuffle=False,
+        **h5_data_loader_kwargs(args.num_workers),
     )
 
     logits_list = []

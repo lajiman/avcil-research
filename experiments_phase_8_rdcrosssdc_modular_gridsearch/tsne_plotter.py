@@ -5,6 +5,8 @@ import torch
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 
+from dataloader_ours import h5_data_loader_kwargs
+
 try:
     from sklearn.manifold import TSNE
     _HAS_SKLEARN = True
@@ -85,10 +87,9 @@ def extract_features_labels_preds(
     loader = DataLoader(
         dataset,
         batch_size=args.infer_batch_size,
-        num_workers=args.num_workers,
-        pin_memory=True,
         shuffle=False,
         drop_last=False,
+        **h5_data_loader_kwargs(args.num_workers),
     )
 
     feats_all = []

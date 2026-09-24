@@ -27,14 +27,24 @@ import matplotlib
 matplotlib.use("Agg")  # H200 compute nodes usually have no display server.
 import matplotlib.pyplot as plt
 import numpy as np
+
 import torch
+
+torch.set_num_threads(8)
+torch.set_num_interop_threads(1)
+
 import torch.nn as nn
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from tqdm.contrib import tzip
 
-from dataloader_ours import IcaAVELoader, exemplarLoader
+from dataloader_ours import (
+    IcaAVELoader,
+    exemplarLoader,
+    h5_data_loader_kwargs,
+)
+from loader_lifecycle import close_data_loader
 from model.audio_visual_model_incremental import IncreAudioVisualNet
 from tsne_plotter import make_tsne_plots_for_step
 
@@ -185,7 +195,15 @@ def _prepare_optional_rd_state(
     return bank, controller
 
 
-def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category):
+def _train_step(
+    args,
+    step,
+    train_data_set,
+    val_data_set,
+    exemplar_set,
+    id_to_category,
+    managed_loaders,
+):
     """Train one class-incremental step.
 
     The body intentionally preserves the working CrossSDC order.  New branches
@@ -197,19 +215,25 @@ def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category
     train_loader = DataLoader(
         train_data_set,
         batch_size=min(args.train_batch_size, len(train_data_set)),
-        num_workers=args.num_workers,
-        pin_memory=True,
         drop_last=True,
         shuffle=True,
+        **h5_data_loader_kwargs(
+            args.num_workers,
+            persistent_workers=True,
+        ),
     )
+    managed_loaders.append(train_loader)
     val_loader = DataLoader(
         val_data_set,
         batch_size=min(args.infer_batch_size, len(val_data_set)),
-        num_workers=args.num_workers,
-        pin_memory=True,
         drop_last=False,
         shuffle=False,
+        **h5_data_loader_kwargs(
+            args.num_workers,
+            persistent_workers=True,
+        ),
     )
+    managed_loaders.append(val_loader)
 
     step_out_class_num = (step + 1) * args.class_num_per_step
     if step == 0:
@@ -231,11 +255,14 @@ def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category
         exemplar_loader = DataLoader(
             exemplar_set,
             batch_size=min(args.exemplar_batch_size, len(exemplar_set)),
-            num_workers=args.num_workers,
-            pin_memory=True,
             drop_last=True,
             shuffle=True,
+            **h5_data_loader_kwargs(
+                args.num_workers,
+                persistent_workers=True,
+            ),
         )
+        managed_loaders.append(exemplar_loader)
         last_step_out_class_num = step * args.class_num_per_step
 
     if torch.cuda.device_count() > 1:
@@ -704,6 +731,26 @@ def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category
             adjust_learning_rate(args, optimizer, epoch)
 
 
+def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category):
+    """Run one step and always release that step's persistent DataLoaders."""
+    managed_loaders = []
+    try:
+        return _train_step(
+            args=args,
+            step=step,
+            train_data_set=train_data_set,
+            val_data_set=val_data_set,
+            exemplar_set=exemplar_set,
+            id_to_category=id_to_category,
+            managed_loaders=managed_loaders,
+        )
+    finally:
+        # Reverse creation order.  Workers are reused for all epochs within the
+        # step, but cannot leak pipes/sentinels into subsequent steps.
+        for loader in reversed(managed_loaders):
+            close_data_loader(loader)
+
+
 def dataset_type(value):
     if value in ["AVE", "ksounds"]:
         return value
@@ -730,14 +777,14 @@ def build_parser():
     parser.add_argument(
         "--feature_root",
         type=str,
-        required=True,
+        default='/project/home/p200686/project/lujing/AV-CIL_h200/datasets/VGGSound',
         help="Feature directory on this machine (visual_features.h5, audio_pretrained_feature/).",
     )
     parser.add_argument("--meta_root", type=str, required=True)
     parser.add_argument("--train_batch_size", type=int, default=128)
     parser.add_argument("--infer_batch_size", type=int, default=32)
     parser.add_argument("--exemplar_batch_size", type=int, default=128)
-    parser.add_argument("--num_workers", type=int, default=0)
+    parser.add_argument("--num_workers", type=int, default=2)
     parser.add_argument("--max_epoches", type=int, default=500)
     parser.add_argument("--num_classes", type=int, default=28)
     parser.add_argument("--lr", type=float, default=1e-3)
@@ -867,40 +914,57 @@ def main():
         print("Incremental step: {}".format(step))
 
         if not args.test_only:
-            train(
+            try:
+                train_set.preload_visual_features()
+                val_set.preload_visual_features()
+                if step > 0:
+                    exemplar_set.preload_visual_features()
+                train(
+                    args=args,
+                    step=step,
+                    train_data_set=train_set,
+                    val_data_set=val_set,
+                    exemplar_set=exemplar_set,
+                    id_to_category=id_to_category,
+                )
+            finally:
+                # train() closes its workers first; only then release the
+                # parent-side caches shared with those workers by fork.
+                exemplar_set.clear_visual_features_cache()
+                val_set.clear_visual_features_cache()
+                train_set.clear_visual_features_cache()
+
+        try:
+            # Test data are loaded only for the test/optional t-SNE phase, so
+            # they never overlap with the larger training-phase caches.
+            test_set.preload_visual_features()
+            step_forgetting = detailed_test(
                 args=args,
                 step=step,
-                train_data_set=train_set,
-                val_data_set=val_set,
-                exemplar_set=exemplar_set,
+                test_data_set=test_set,
+                task_best_acc_list=task_best_acc_list,
+                metrics_root=metrics_dir(args),
+                metrics_state=metrics_state,
                 id_to_category=id_to_category,
+                checkpoint_path=checkpoint_path(args, step),
+                device=device,
             )
+            if step_forgetting is not None:
+                step_forgetting_list.append(step_forgetting)
 
-        step_forgetting = detailed_test(
-            args=args,
-            step=step,
-            test_data_set=test_set,
-            task_best_acc_list=task_best_acc_list,
-            metrics_root=metrics_dir(args),
-            metrics_state=metrics_state,
-            id_to_category=id_to_category,
-            checkpoint_path=checkpoint_path(args, step),
-            device=device,
-        )
-        if step_forgetting is not None:
-            step_forgetting_list.append(step_forgetting)
-
-        if args.dump_tsne:
-            out_root = os.path.join(args.tsne_out_root, run_name(args))
-            make_tsne_plots_for_step(
-                args=args,
-                step=step,
-                test_set=test_set,
-                ckpt_path=checkpoint_path(args, step),
-                out_root=out_root,
-                feature_type=args.tsne_feature,
-                max_points_per_class=args.tsne_max_points_per_class,
-            )
+            if args.dump_tsne:
+                out_root = os.path.join(args.tsne_out_root, run_name(args))
+                make_tsne_plots_for_step(
+                    args=args,
+                    step=step,
+                    test_set=test_set,
+                    ckpt_path=checkpoint_path(args, step),
+                    out_root=out_root,
+                    feature_type=args.tsne_feature,
+                    max_points_per_class=args.tsne_max_points_per_class,
+                )
+        finally:
+            test_set.clear_visual_features_cache()
 
     mean_forgetting = (
         np.mean(step_forgetting_list) if len(step_forgetting_list) > 0 else 0.0

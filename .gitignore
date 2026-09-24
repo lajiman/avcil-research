@@ -124,3 +124,7 @@ visual_pretrained_feature/
 # No blanket *.txt, *.csv, *.json, *.yaml, *.yml, *.pkl, *.npy, *.npz, *.patch,
 # *.png, or *.jpg rule: these formats can contain reproducibility inputs.
 # A file inside an excluded parent directory is still excluded.
+
+datasets
+submit_*.sh
+.agents
