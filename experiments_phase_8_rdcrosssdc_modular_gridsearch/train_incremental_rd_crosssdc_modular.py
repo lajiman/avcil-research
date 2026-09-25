@@ -40,6 +40,8 @@ from tqdm import tqdm
 from tqdm.contrib import tzip
 
 from dataloader_ours import (
+    DEFAULT_H5_READ_RETRIES,
+    DEFAULT_H5_RETRY_DELAY,
     IcaAVELoader,
     exemplarLoader,
     h5_data_loader_kwargs,
@@ -785,6 +787,14 @@ def build_parser():
     parser.add_argument("--infer_batch_size", type=int, default=32)
     parser.add_argument("--exemplar_batch_size", type=int, default=128)
     parser.add_argument("--num_workers", type=int, default=2)
+    parser.add_argument(
+        "--h5_read_retries", type=int, default=DEFAULT_H5_READ_RETRIES,
+        help="Retries after transient HDF5 I/O failures; 0 disables retries.",
+    )
+    parser.add_argument(
+        "--h5_retry_delay", type=float, default=DEFAULT_H5_RETRY_DELAY,
+        help="Initial retry delay in seconds; doubles up to 30 seconds.",
+    )
     parser.add_argument("--max_epoches", type=int, default=500)
     parser.add_argument("--num_classes", type=int, default=28)
     parser.add_argument("--lr", type=float, default=1e-3)
@@ -842,6 +852,10 @@ def build_parser():
 
 
 def validate_args(parser, args):
+    if args.h5_read_retries < 0:
+        parser.error("--h5_read_retries must be non-negative")
+    if not np.isfinite(args.h5_retry_delay) or args.h5_retry_delay < 0:
+        parser.error("--h5_retry_delay must be finite and non-negative")
     if args.require_cuda and not torch.cuda.is_available():
         parser.error("CUDA is unavailable; check the GPU allocation, driver and CUDA PyTorch wheel")
     if not args.cross_sdc:

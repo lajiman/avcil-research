@@ -1,10 +1,39 @@
 import numpy as np
+import errno
+import logging
+import math
 import os
+import re
+import time
 import torch
 from torch.utils.data import Dataset
 import random
 import h5py
 from tqdm import tqdm
+
+
+DEFAULT_H5_READ_RETRIES = 5
+DEFAULT_H5_RETRY_DELAY = 2.0
+_MAX_H5_RETRY_DELAY = 30.0
+_TRANSIENT_H5_ERRNOS = {
+    getattr(errno, name)
+    for name in (
+        'EIO', 'ENXIO', 'ENODEV', 'ESTALE', 'ETIMEDOUT', 'EINTR',
+        'EAGAIN', 'ECONNRESET', 'ENOTCONN',
+    )
+    if hasattr(errno, name)
+}
+_LOGGER = logging.getLogger(__name__)
+
+
+def _h5_error_number(error):
+    error_number = getattr(error, 'errno', None)
+    if error_number is not None:
+        return error_number
+    # Some h5py versions wrap a low-level read error in KeyError/RuntimeError,
+    # or an OSError without .errno, but retain the OS errno in the HDF5 message.
+    match = re.search(r'(?:\berrno\s*=\s*|\[Errno\s+)(\d+)', str(error), re.IGNORECASE)
+    return int(match.group(1)) if match else None
 
 
 def h5_data_loader_kwargs(num_workers, persistent_workers=False):
@@ -58,11 +87,10 @@ class _LazyVisualH5Mixin:
         )
         visual_cache = {}
         try:
-            visual_store = self._visual_feature_store()
             for vid in tqdm(vids, desc='Preload {}'.format(label), unit='sample'):
                 if vid not in visual_cache:
                     visual_cache[vid] = np.asarray(
-                        visual_store[vid][()], dtype=np.float32
+                        self._visual_feature(vid), dtype=np.float32
                     )
         finally:
             # Workers must never inherit the temporary parent-process H5 handle.
@@ -103,10 +131,69 @@ class _LazyVisualH5Mixin:
         if visual_cache is not None:
             return visual_cache[vid]
 
-        visual_store = self._visual_feature_store()
         if self.args.dataset == 'AVE':
-            return visual_store[vid]
-        return visual_store[vid][()]
+            return self.all_visual_pretrained_features[vid]
+        return self._with_visual_h5_retry(vid, lambda store: store[vid][()], 'read')
+
+    def _has_visual_feature(self, vid):
+        visual_cache = getattr(self, '_visual_feature_cache', None)
+        if visual_cache is not None:
+            return vid in visual_cache
+        if self.args.dataset == 'AVE':
+            return vid in self.all_visual_pretrained_features
+        return self._with_visual_h5_retry(vid, lambda store: vid in store, 'lookup')
+
+    def _with_visual_h5_retry(self, vid, operation, action):
+        """Retry the same sample after reopening a transiently failing HDF5 file."""
+        retries = getattr(self.args, 'h5_read_retries', DEFAULT_H5_READ_RETRIES)
+        delay = getattr(self.args, 'h5_retry_delay', DEFAULT_H5_RETRY_DELAY)
+        if retries < 0 or not math.isfinite(delay) or delay < 0:
+            raise ValueError('HDF5 retries and retry delay must be finite and non-negative')
+        delay = min(delay, _MAX_H5_RETRY_DELAY)
+
+        for attempt in range(retries + 1):
+            try:
+                # Opening, resolving the dataset and reading its data must all
+                # be retried together. Never reuse a Dataset from a closed file.
+                result = operation(self._visual_feature_store())
+            except (OSError, KeyError, RuntimeError) as error:
+                error_number = _h5_error_number(error)
+                try:
+                    self.close_visual_features_h5()
+                except (OSError, RuntimeError, ValueError) as close_error:
+                    # The handle was already detached. Preserve the read error
+                    # and allow the next attempt to open a fresh file.
+                    _LOGGER.warning('[HDF5 retry] Failed to close %s: %s',
+                                    self.visual_pretrained_feature_path, close_error)
+
+                if error_number not in _TRANSIENT_H5_ERRNOS:
+                    raise
+
+                context = '{} sample={!r}, file={!r}, {}, pid={}'.format(
+                    action, vid, os.path.abspath(self.visual_pretrained_feature_path),
+                    self._visual_cache_label(), os.getpid(),
+                )
+                if attempt == retries:
+                    message = (
+                        'HDF5 {} failed after {} attempts. The sample was not skipped. '
+                        'Check the file and storage mount before restarting. Last error: {}'
+                    ).format(context, attempt + 1, error)
+                    raise OSError(error_number, message,
+                                  self.visual_pretrained_feature_path) from error
+
+                _LOGGER.warning(
+                    '[HDF5 retry] %s failed: %s; reopening in %.1fs (retry %d/%d).',
+                    context, error, delay, attempt + 1, retries,
+                )
+            else:
+                if attempt:
+                    _LOGGER.warning('[HDF5 recovered] %s sample=%r, file=%r after %d retries.',
+                                    action, vid, self.visual_pretrained_feature_path, attempt)
+                return result
+
+            # Fixed backoff deliberately avoids advancing the experiment RNG.
+            time.sleep(delay)
+            delay = min(delay * 2, _MAX_H5_RETRY_DELAY)
 
     def _visual_feature_store(self):
         if self.args.dataset == 'AVE':
@@ -132,10 +219,11 @@ class _LazyVisualH5Mixin:
             return
 
         visual_h5 = getattr(self, 'all_visual_pretrained_features', None)
-        if visual_h5 is not None:
-            visual_h5.close()
+        # Even if closing a damaged handle raises, it must never be reused.
         self.all_visual_pretrained_features = None
         self._visual_h5_owner_pid = None
+        if visual_h5 is not None:
+            visual_h5.close()
 
     def __getstate__(self):
         """Never pickle an open h5py handle when using spawn."""
@@ -237,12 +325,7 @@ class IcaAVELoader(_LazyVisualH5Mixin, Dataset):
         has_audio = True
 
         if 'visual' in self.modality:
-            visual_cache = self._visual_feature_cache
-            has_visual = (
-                vid in visual_cache
-                if visual_cache is not None
-                else vid in self._visual_feature_store()
-            )
+            has_visual = self._has_visual_feature(vid)
 
         if 'audio' in self.modality:
             has_audio = (vid in self.all_audio_pretrained_features)
@@ -410,12 +493,7 @@ class exemplarLoader(_LazyVisualH5Mixin, Dataset):
         has_audio = True
 
         if 'visual' in self.modality:
-            visual_cache = self._visual_feature_cache
-            has_visual = (
-                vid in visual_cache
-                if visual_cache is not None
-                else vid in self._visual_feature_store()
-            )
+            has_visual = self._has_visual_feature(vid)
 
         if 'audio' in self.modality:
             has_audio = (vid in self.all_audio_pretrained_features)

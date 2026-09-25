@@ -58,6 +58,8 @@ sbatch --array=1-7 run_direct_multi.slurm
 
 若修改 `RUNS_PER_GPU`，数组上限相应改为 `ceil(命令数 / RUNS_PER_GPU)`。多进程资源不足时可改用单进程版本。
 
+HDF5 遇到短暂 I/O 错误（如 `Errno 6`）时自动重开文件并重试同一样本，默认重试 5 次，等待间隔为 2、4、8、16、30 秒。可用 `--h5_read_retries` 和 `--h5_retry_delay` 调整；持续失败会报错退出，不跳过样本。若仍失败，需检查数据文件及存储挂载状态。
+
 ## 汇总日志
 
 在实验目录执行：
