@@ -10,7 +10,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:nvidia_h200_nvl:1
 #SBATCH --array=1-81
-#SBATCH -t 3-00:00:00
+#SBATCH -t 2-00:00:00
 #SBATCH -o logs/slurm_%x_%A_%a.out
 #SBATCH -e logs/slurm_%x_%A_%a.err
 
