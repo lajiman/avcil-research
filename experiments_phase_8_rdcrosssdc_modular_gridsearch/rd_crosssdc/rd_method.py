@@ -89,6 +89,8 @@ def normalize_class_weights(
     alpha: float,
     min_weight: float,
     max_weight: float,
+    *,
+    clip_weights: bool = True,
 ) -> torch.Tensor:
     """Convert non-negative priorities into detached mean-one weights."""
     """
@@ -99,15 +101,33 @@ def normalize_class_weights(
 
     So this function is right after we get the priority P, and we need to normalize it to get the final weight W.
     """
-    raw_scores = raw_scores.detach().float().clamp_min(0.0) # here raw score is the priority P. We want the weight W to be detached
+    # Clipping preserves the legacy behavior by default. Without clipping, the
+    # uniform component is the only weight floor: w >= 1 - alpha > 0.
+    if not clip_weights and not 0.0 <= alpha < 1.0:
+        raise ValueError("Unclipped class weights require alpha in [0, 1)")
+    raw_scores = raw_scores.detach().float() # here raw score is the priority P. We want the weight W to be detached
+    if not clip_weights and not torch.isfinite(raw_scores).all().item():
+        raise FloatingPointError("Non-finite class priorities before weight normalization")
+    raw_scores = raw_scores.clamp_min(0.0)
     if raw_scores.numel() == 0:
         return raw_scores
 
-    mean_score = raw_scores.mean()
-    if (not torch.isfinite(mean_score).item()) or mean_score.item() <= 1e-12:
-        relative = torch.ones_like(raw_scores)
+    if clip_weights:
+        # Keep the original operations and fallback exactly for existing runs.
+        mean_score = raw_scores.mean()
+        if (not torch.isfinite(mean_score).item()) or mean_score.item() <= 1e-12:
+            relative = torch.ones_like(raw_scores)
+        else:
+            relative = raw_scores / mean_score.clamp_min(1e-12)
     else:
-        relative = raw_scores / mean_score.clamp_min(1e-12)
+        max_score = raw_scores.max()
+        if max_score.item() == 0.0:
+            relative = torch.ones_like(raw_scores)
+        else:
+            # Scaling cancels in P / mean(P), avoiding overflow and preserving
+            # ratios even when every nonzero reliability is smaller than eps.
+            scaled = raw_scores / max_score
+            relative = scaled / scaled.mean()
 
     weights = (1.0 - alpha) + alpha * relative
     # Clip and re-normalize. Repeating prevents re-normalization from moving a
@@ -118,9 +138,11 @@ def normalize_class_weights(
     It can be r' = Rmin + (1-Rmin) * r, or r' = Rmin + (Rmax-Rmin) * r
     However, it can be repetive with the "weights = (1.0 - alpha) + alpha * relative"?
     '''
-    for _ in range(4):  # because after normalize, weights might be over the clamp range again, so we do multiple time. However, doing multiple time might make every class similar.
-        weights = weights.clamp(min=min_weight, max=max_weight)
-        weights = weights / weights.mean().clamp_min(1e-12)
+    if clip_weights:
+        # Legacy four-pass clipping and re-normalization.
+        for _ in range(4):  # because after normalize, weights might be over the clamp range again, so we do multiple time. However, doing multiple time might make every class similar.
+            weights = weights.clamp(min=min_weight, max=max_weight)
+            weights = weights / weights.mean().clamp_min(1e-12)
 
     return weights.detach()
 
@@ -472,6 +494,8 @@ class AdaptiveWeightController:
         ema_momentum: float,
         min_weight: float,
         max_weight: float,
+        *,
+        clip_weights: bool = True,
     ):
         self.trust_a = trust_a_from_v.detach()  # trust is fixed within an incremental step, so we detach it to prevent backpropagation through it
         self.trust_v = trust_v_from_a.detach()
@@ -483,6 +507,7 @@ class AdaptiveWeightController:
         self.ema_momentum = ema_momentum
         self.min_weight = min_weight
         self.max_weight = max_weight
+        self.clip_weights = clip_weights
 
         self.num_classes = int(self.trust_a.numel())
         device = self.trust_a.device
@@ -495,6 +520,7 @@ class AdaptiveWeightController:
 
         # Match the original E2 design: epoch 0 already uses Trust×(delta)^eta
         # weights. Need becomes data-dependent after the first epoch update.
+        # Current experiments use fixed trust-only weights within each step.
         self.class_weight_a = self._trust_only_weight(self.trust_a)
         self.class_weight_v = self._trust_only_weight(self.trust_v)
         # In the replacement formulation, CMR is the class-level RD term.
@@ -503,19 +529,27 @@ class AdaptiveWeightController:
         self.cmr_weight_v = self.class_weight_v
         self.begin_epoch()
 
+    def _trust_priority(self, trust: torch.Tensor) -> torch.Tensor:
+        # The opt-in path must retain exact zeros when trust_offset=0, so zero
+        # reliability receives exactly the uniform baseline after mixing.
+        floor = 1e-12 if self.clip_weights else 0.0
+        return (trust + self.trust_offset).clamp_min(floor).pow(self.trust_gamma)
+
     # so far this function is not used
+    # Current call site: __init__ initializes the trust-only weights above.
     def _trust_only_weight(self, trust: torch.Tensor) -> torch.Tensor:
-        priority = ((trust + self.trust_offset).clamp_min(1e-12)).pow(self.trust_gamma)
+        priority = self._trust_priority(trust)
         return normalize_class_weights(
             raw_scores=priority,
             alpha=self.alpha,
             min_weight=self.min_weight,
             max_weight=self.max_weight,
+            clip_weights=self.clip_weights,
         )
 
     def _trust_need_weight(self, trust: torch.Tensor, need: torch.Tensor) -> torch.Tensor:
         priority = (
-            (trust + self.trust_offset).clamp_min(1e-12).pow(self.trust_gamma)
+            self._trust_priority(trust)
             * (need + self.need_delta).clamp_min(1e-12).pow(self.need_eta)
         )
         return normalize_class_weights(
@@ -523,6 +557,7 @@ class AdaptiveWeightController:
             alpha=self.alpha,
             min_weight=self.min_weight,
             max_weight=self.max_weight,
+            clip_weights=self.clip_weights,
         )
 
     def begin_epoch(self) -> None:

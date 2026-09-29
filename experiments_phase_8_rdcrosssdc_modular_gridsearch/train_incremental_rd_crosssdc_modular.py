@@ -181,6 +181,7 @@ def _prepare_optional_rd_state(
         ema_momentum=args.rd_need_ema_momentum,
         min_weight=args.rd_weight_min,
         max_weight=args.rd_weight_max,
+        clip_weights=not args.rd_disable_weight_clipping,
     )
 
     out_root = os.path.join(metrics_dir(args), "rd_crosssdc")
@@ -836,6 +837,12 @@ def build_parser():
     parser.add_argument("--rd_need_ema_momentum", type=float, default=0.9)
     parser.add_argument("--rd_weight_min", type=float, default=0.5)
     parser.add_argument("--rd_weight_max", type=float, default=2.0)
+    parser.add_argument(
+        "--rd_disable_weight_clipping", action="store_true",
+        help=("Skip final class-weight clipping/re-normalization; requires alpha < 1. "
+              "For paper reliability weights also set trust_offset=0, "
+              "trust_shrinkage_beta=0 and trust_gamma=1."),
+    )
     parser.add_argument("--rd_trust_shrinkage_beta", type=float, default=10.0)
 
     parser.add_argument("--test_only", action="store_true", default=False)
@@ -868,9 +875,16 @@ def validate_args(parser, args):
         parser.error("CMR modes require --lam_cmr > 0")
     if not 0.0 <= args.rd_class_weight_alpha <= 1.0:
         parser.error("--rd_class_weight_alpha must lie in [0, 1]")
+    if args.rd_disable_weight_clipping:
+        if not uses_adaptive_weights(args):
+            parser.error("--rd_disable_weight_clipping requires --rd_mode adaptive_crosssdc_cmr")
+        if args.rd_class_weight_alpha >= 1.0:
+            parser.error("--rd_disable_weight_clipping requires --rd_class_weight_alpha in [0, 1)")
     if not 0.0 <= args.rd_need_ema_momentum < 1.0:
         parser.error("--rd_need_ema_momentum must lie in [0, 1)")
-    if args.rd_weight_min <= 0 or args.rd_weight_max < args.rd_weight_min:
+    if not args.rd_disable_weight_clipping and (
+        args.rd_weight_min <= 0 or args.rd_weight_max < args.rd_weight_min
+    ):
         parser.error("Invalid RD weight bounds")
     if (not np.isfinite(args.rd_margin_tolerance) or args.rd_margin_tolerance < 0):
         parser.error("--rd_margin_tolerance must be finite and non-negative")

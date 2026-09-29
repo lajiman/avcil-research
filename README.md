@@ -60,6 +60,15 @@ sbatch --array=1-7 run_direct_multi.slurm
 
 HDF5 遇到短暂 I/O 错误（如 `Errno 6`）时自动重开文件并重试同一样本，默认重试 5 次，等待间隔为 2、4、8、16、30 秒。可用 `--h5_read_retries` 和 `--h5_retry_delay` 调整；持续失败会报错退出，不跳过样本。若仍失败，需检查数据文件及存储挂载状态。
 
+默认保留原有 reliability 和权重处理。在 `adaptive_crosssdc_cmr` 模式按论文公式计算权重时，将命令中已有参数改为以下取值，并添加关闭裁剪的开关（此处以 `alpha=0.8` 为例）：
+
+```text
+--rd_trust_offset 0 --rd_trust_shrinkage_beta 0 --rd_trust_gamma 1
+--rd_class_weight_alpha 0.8 --rd_disable_weight_clipping
+```
+
+此时 `w=(1-alpha)+alpha*R/mean(R)`，要求 `0≤alpha<1`；`rd_weight_min/max` 不再生效。保留 reliability 自身的 `[0,1]` 裁剪；全部 reliability 为零时使用均匀权重。使用新的 `--experiment_name` 区分新旧实验及日志。
+
 ## 汇总日志
 
 在实验目录执行：

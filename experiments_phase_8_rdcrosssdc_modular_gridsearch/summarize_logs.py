@@ -170,6 +170,9 @@ def read_log(run, log_dirs):
                             unfinished_line = True
                             break
                         raise
+                    # Logs from before this opt-in flag used legacy clipping.
+                    # Treat absence as False when combining old/new seed logs.
+                    logged.setdefault("rd_disable_weight_clipping", False)
                     run.logged_params = logged
                     header_seen = True
                     for key, expected in run.params.items():
