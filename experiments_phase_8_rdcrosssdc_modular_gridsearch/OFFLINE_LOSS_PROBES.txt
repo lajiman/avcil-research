@@ -1,0 +1,76 @@
+离线分析已有实验：不改训练代码，不重复训练
+
+1. 先看真实历史记录
+在仓库根目录运行：
+  python experiments_phase_8_rdcrosssdc_modular_gridsearch/analyze_loss_scales.py
+运行后生成：results/loss_scale_analysis/report.html（相对于本说明所在目录）。
+24 次 hinge 实验，48,000 条 epoch 记录，其中 43,200 条为增量训练。
+可恢复 total、CMR、CrossSDC-I/C 及其加权值；其余项只能得到合计。
+这些是训练时逐 batch 标量的 epoch 平均，不是 checkpoint 上的重算。
+本批 CrossSDC-C 系数为零，原始数值不等于优化贡献。
+
+2. 在原训练服务器环境运行 checkpoint 探针
+需要：PyTorch、numpy、h5py、tqdm；请使用已有训练环境和输入特征。
+只加载自己项目产生的可信 full-model pickle checkpoints。
+在仓库根目录，用真实服务器路径替换下面的占位路径：
+
+  python experiments_phase_8_rdcrosssdc_modular_gridsearch/probe_checkpoint_losses.py --run-dir /path/to/one_experiment --feature-root /path/to/VGGSound --meta-root /path/to/balance --output /path/to/offline_analysis/one_experiment --steps 1 5 9 --batches 3 --lambdas 0 .01 .03 .1 .3 1 --device cuda
+
+run-dir 必须直接包含 step_0_best_model.pkl ... step_9_best_model.pkl。
+feature-root 需有 visual_features.h5 和 audio_pretrained_feature/audio_pretrained_feature_dict.npy。
+meta-root 需有 all_id_category_dict.npy、category_encode_dict.npy、all_classId_vid_dict.npy。
+输出目录必须新建或为空，不能位于 checkpoint 目录内。
+默认一次只测一个实验的 3 个阶段、每阶段 3 个 batch；先用一个 seed 跑通。
+不调用训练入口，不构造 optimizer，不执行 optimizer.step，不写回 checkpoint。
+验证完成后再增加 --batches；没有必要一开始扫描 240 个 checkpoint。
+
+3. 口径与公平比较
+读取学生 checkpoint 中的原参数；前一阶段最佳 checkpoint 是该运行自己的教师。
+学生/教师均为 eval 模式；仍开启学生 autograd。原有此模型无 dropout/BN，
+但以后若加入此类层，eval 探针仍须与 train 模式历史记录区分。
+沿用原 CE、KD(T=2)、模态对比、CrossSDC、CMR、注意力 KL 公式和 reduction。
+默认当前/回放 batch size 沿用原训练参数，通常各 128。
+对比损失依赖同 batch 的其他样本，不能把改小 batch 或微批累加视为等价。
+prototype bank 的无梯度构建 batch 为最多 32，不改变其全 memory 统计定义。
+
+没有原 replay IDs 时，会从 train split 选固定、按类平衡的新 probe memory，
+在这份 memory 上重建教师原型和 Trust 权重，且所有 replay probe 都属于 memory，
+从而保持 leave-one-out 的内部一致性。这是新的受控测量，不冒充原回放 memory。
+probe_manifest.json 保存全部 memory IDs 和每个 batch 的 current/replay IDs。
+比较其他实验时，加 --probe-manifest /path/to/first/probe_manifest.json，使用相同样本。
+不同实验仍各自使用自己的教师；因此这是各自训练目标的测量，不是共享教师实验。
+若有原 memory IDs，可加 --replay-ids /path/to/replay_ids.json，格式如：
+  {"1":["video_id_1","video_id_2"],"5":[...],"9":[...]}
+每个阶段列表必须覆盖全部旧类，列表中的实际 ID 需完整，不能使用这里的占位例子。
+不能同时使用 --probe-manifest 与 --replay-ids。
+
+4. 输出
+components.csv：逐 batch 的全部原始/加权 loss、原始/加权梯度范数、
+相对全部非 CMR 加权项之和的范数比、余弦。
+component_summary.csv：上述量的 batch 均值与 batch 标准差。
+gradient_pairs.csv：两两 loss 梯度余弦，可定位与 CE/KD/对比项的冲突。
+lambda_sweep.csv：固定同一 checkpoint、batch、教师、原型与权重，仅改全局 lambda。
+包含 CMR/base 范数比、总梯度范数、总梯度与 base 的余弦、等范数 lambda。
+parameter_scope 分 all、feature_and_attention、classifier；CMR 通常不直接作用于 classifier。
+metadata.json：运行参数、checkpoint/代码哈希、参数及 buffer 未改变检查。
+只有 metadata.json status=complete 才代表全部测量完成；中断时可留下部分 CSV。
+
+5. 解释
+令 b=grad(sum of weighted non-CMR losses)，c=grad(raw CMR)。
+总梯度为 b+lambda*c；范数不能直接相加，需要梯度内积/夹角。
+rho=lambda*||c||/||b||，是该批该参数范围内的瞬时相对尺度。
+cos(c,b)<0 表示一阶目标存在冲突，>0 表示部分同向，0 表示正交。
+lambda_equal=||b||/||c|| 仅是等梯度范数参考，绝不是自动最优 lambda。
+同 checkpoint 扫 lambda 的线性缩放是数学事实；改变 lambda 后实际训练出的
+checkpoint、教师和激活样本也会变，需比较已有实验，而不能用瞬时扫参替代。
+模型只存每阶段最佳状态，不能重建未保存 epoch 的完整梯度历史。
+参数梯度不是 Adam 实际更新；本测量不包括 Adam 状态、weight decay 或学习率。
+归一化后的各项梯度范数比例不是可相加的百分比。
+
+6. 验证
+  python -m unittest discover -s experiments_phase_8_rdcrosssdc_modular_gridsearch/tests -p test_offline_loss_probe.py -v
+纯 Python 测试覆盖冲突/正交/零梯度几何、可复现采样及 LOO membership。
+PyTorch 测试还核对真实模型的离线计算与训练代码中的实际 batch 公式/梯度，
+覆盖 hinge/direct/exp/log1p、自适应与均匀权重，以及可选损失关闭情形。
+本机缺失运行依赖时这些运行时测试会明确标为 skipped，不能当作已通过。
+先在原训练环境完成这两项运行时测试，再执行真实实验的探针。
