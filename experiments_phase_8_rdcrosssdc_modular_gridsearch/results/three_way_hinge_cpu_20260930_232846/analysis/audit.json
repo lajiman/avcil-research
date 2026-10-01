@@ -1,0 +1,343 @@
+{
+  "measurement": "checkpoint endpoint, not historical training gradients",
+  "scope": "feature_and_attention",
+  "runs": {
+    "A": {
+      "status": "complete",
+      "component_rows": 729,
+      "sample_occurrences": 3456,
+      "reference_checks": 1050,
+      "reference_max_absolute_error": 3.5762786865234375e-07,
+      "gradient_reconstruction_max_residual": 1.069010886567412e-05,
+      "repeated_sample_max_margin_difference": 0.0,
+      "nonzero_cmr_batches_with_positive_base_cosine": 27
+    },
+    "B": {
+      "status": "complete",
+      "component_rows": 729,
+      "sample_occurrences": 3456,
+      "reference_checks": 1050,
+      "reference_max_absolute_error": 4.76837158203125e-07,
+      "gradient_reconstruction_max_residual": 1.0543131793383507e-05,
+      "repeated_sample_max_margin_difference": 0.0,
+      "nonzero_cmr_batches_with_positive_base_cosine": 26
+    }
+  },
+  "input_sha256": {
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\class_reference.csv": "8b7c252f825ae53731ed5f30c67c02efeef0b90923b49d2e535777b5051d67ff",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\cmr_batches.csv": "af470e1e7c4a79fb3e9ccda122e57102165d8fcccb22f2376556c164e23e3cbb",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\cmr_samples.csv": "dd403865f34c6e60d7029bb01d6c78ac749aab6788a895b72b44065e49f031bf",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\component_summary.csv": "e9bea1ab02105f935482ccb22f14a538238978414e2612188070d7da06555fee",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\components.csv": "bd3b3064ff20df2d467a76892427080b8073626182172a869f8d67fec79e8cf8",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\coverage.csv": "a5e7adde852aa413a4a08dcd32f2e85c27880a425188a26996a430da66d272ec",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\gradient_pairs.csv": "1fbf1d0eaa5fb22dc57e2ac89c6cea22611b6a7007f47ee8962798413b3d0ff5",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\historical_comparison.csv": "cab1e8d4e7e3c011a924b4586d957492b703661e565a7865092f42f624c2bec1",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\lambda_sweep.csv": "d28afbe92dc794f23306d5fe8874789c0e694fff32d72d128bfb7b144a9f727f",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\metadata.json": "8fe7bd8f1657173f2953427f801a2469f67d7872cfbeeea3506b03838bccfab0",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\original_replay_ids.json": "07fc59e9676350175e72d802411c9095a66b586a13b955f5c450bd8760287746",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\probe_manifest.json": "16e69d17e9c49ca7abe57a13c902ea49f613dc02e9342ebd7ee0d47e2d266fa3",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p03_alpha_0p5\\reference_checks.csv": "012f6d290392995ca70b6961f13cb90d72f7b6ccc4f72a8e62e1e1905992cd7e",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\class_reference.csv": "57f62bdb9175428d8f02a1f576811a2c9f424664e43c6d32cdb4ac9ce3ea2bb4",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\cmr_batches.csv": "88bda2bd4131f8930c6932dfcd8d9fe21da1db247639c6fe1eeb8fef8fcfaba3",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\cmr_samples.csv": "9cd58e1179a8c493813e36c4623c02f6b61476627c7cea612983dd735760a48e",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\component_summary.csv": "7da6525c37e5157c12a5ca3774b915f2370a368829e339a0d5f0be0b96ee471d",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\components.csv": "3003122f29105d35fd43d16900a62f4a8640ecbb1b01d3e7696320d2db7e280b",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\coverage.csv": "a5e7adde852aa413a4a08dcd32f2e85c27880a425188a26996a430da66d272ec",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\gradient_pairs.csv": "4525ff9ebab77150f1f7f45233d12af8821f47ef4a26e33ec96779550108aa0d",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\historical_comparison.csv": "aa6da562efb84e6f6f10877a226cf28ca1e4ad4beafd591e7a7c42486ca2c406",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\lambda_sweep.csv": "d3dc691beecb15abffc9addafb517ddc6de25d03521a8059ecb370a39b83fcfe",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\metadata.json": "8bc9070b13c2d8ad82af79b6840cb1dc09a4db6c78d4a3c33656ed67475b2485",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\original_replay_ids.json": "07fc59e9676350175e72d802411c9095a66b586a13b955f5c450bd8760287746",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\probe_manifest.json": "16e69d17e9c49ca7abe57a13c902ea49f613dc02e9342ebd7ee0d47e2d266fa3",
+    "experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\three_way_hinge_cpu_20260930_232846\\lambda_0p1_alpha_1p0\\reference_checks.csv": "1e0004e8d935490d69d2f29a961ce0a4c0d5d49479ee86f676d090c6d8d7bb9f"
+  },
+  "source_checks": [
+    {
+      "run": "A",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\probe_checkpoint_three_way.py",
+      "matches": true,
+      "newline_normalization_required": false
+    },
+    {
+      "run": "A",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\probe_checkpoint_losses.py",
+      "matches": true,
+      "newline_normalization_required": false
+    },
+    {
+      "run": "A",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\offline_memory_protocols.py",
+      "matches": true,
+      "newline_normalization_required": false
+    },
+    {
+      "run": "A",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\rd_crosssdc\\rd_method.py",
+      "matches": true,
+      "newline_normalization_required": true
+    },
+    {
+      "run": "A",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\rd_crosssdc\\exact_losses.py",
+      "matches": true,
+      "newline_normalization_required": true
+    },
+    {
+      "run": "A",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\rd_crosssdc\\cmr_penalties.py",
+      "matches": true,
+      "newline_normalization_required": true
+    },
+    {
+      "run": "A",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\dataloader_ours.py",
+      "matches": true,
+      "newline_normalization_required": true
+    },
+    {
+      "run": "A",
+      "path": "model\\audio_visual_model_incremental.py",
+      "matches": true,
+      "newline_normalization_required": true
+    },
+    {
+      "run": "B",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\probe_checkpoint_three_way.py",
+      "matches": true,
+      "newline_normalization_required": false
+    },
+    {
+      "run": "B",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\probe_checkpoint_losses.py",
+      "matches": true,
+      "newline_normalization_required": false
+    },
+    {
+      "run": "B",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\offline_memory_protocols.py",
+      "matches": true,
+      "newline_normalization_required": false
+    },
+    {
+      "run": "B",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\rd_crosssdc\\rd_method.py",
+      "matches": true,
+      "newline_normalization_required": true
+    },
+    {
+      "run": "B",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\rd_crosssdc\\exact_losses.py",
+      "matches": true,
+      "newline_normalization_required": true
+    },
+    {
+      "run": "B",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\rd_crosssdc\\cmr_penalties.py",
+      "matches": true,
+      "newline_normalization_required": true
+    },
+    {
+      "run": "B",
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\dataloader_ours.py",
+      "matches": true,
+      "newline_normalization_required": true
+    },
+    {
+      "run": "B",
+      "path": "model\\audio_visual_model_incremental.py",
+      "matches": true,
+      "newline_normalization_required": true
+    }
+  ],
+  "checkpoint_checks": [
+    {
+      "run": "A",
+      "step": 1,
+      "role": "student",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 1,
+      "role": "teacher",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 5,
+      "role": "student",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 5,
+      "role": "teacher",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 9,
+      "role": "student",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 9,
+      "role": "teacher",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 1,
+      "role": "student",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 1,
+      "role": "teacher",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 5,
+      "role": "student",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 5,
+      "role": "teacher",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 9,
+      "role": "student",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 9,
+      "role": "teacher",
+      "matches": true
+    }
+  ],
+  "historical_checks": [
+    {
+      "run": "A",
+      "step": 1,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\epoch_summary.csv",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 1,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_1_static_trust.csv",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 1,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_1_epoch_194_weights.csv",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 5,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\epoch_summary.csv",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 5,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_5_static_trust.csv",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 5,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_5_epoch_172_weights.csv",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 9,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\epoch_summary.csv",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 9,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_9_static_trust.csv",
+      "matches": true
+    },
+    {
+      "run": "A",
+      "step": 9,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_9_epoch_186_weights.csv",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 1,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\epoch_summary.csv",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 1,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_1_static_trust.csv",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 1,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_1_epoch_165_weights.csv",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 5,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\epoch_summary.csv",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 5,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_5_static_trust.csv",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 5,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_5_epoch_190_weights.csv",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 9,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\epoch_summary.csv",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 9,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_9_static_trust.csv",
+      "matches": true
+    },
+    {
+      "run": "B",
+      "step": 9,
+      "path": "experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\step_9_epoch_189_weights.csv",
+      "matches": true
+    }
+  ],
+  "identical_manifests_across_settings": true,
+  "checkpoint_argument_differences": [
+    "experiment_name",
+    "lam_cmr",
+    "rd_class_weight_alpha"
+  ],
+  "all_checks_passed": true
+}
