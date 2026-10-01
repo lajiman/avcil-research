@@ -1,0 +1,151 @@
+Step 1: loading checkpoints and checking original reference
+
+Build old teacher prototype bank:   0%|          | 0/16 [00:00<?, ?it/s]
+Build old teacher prototype bank:   6%|▋         | 1/16 [00:03<00:45,  3.01s/it]
+Build old teacher prototype bank:  12%|█▎        | 2/16 [00:05<00:35,  2.57s/it]
+Build old teacher prototype bank:  19%|█▉        | 3/16 [00:07<00:32,  2.48s/it]
+Build old teacher prototype bank:  25%|██▌       | 4/16 [00:10<00:32,  2.73s/it]
+Build old teacher prototype bank:  31%|███▏      | 5/16 [00:12<00:27,  2.55s/it]
+Build old teacher prototype bank:  38%|███▊      | 6/16 [00:15<00:24,  2.48s/it]
+Build old teacher prototype bank:  44%|████▍     | 7/16 [00:17<00:22,  2.47s/it]
+Build old teacher prototype bank:  50%|█████     | 8/16 [00:19<00:18,  2.37s/it]
+Build old teacher prototype bank:  56%|█████▋    | 9/16 [00:22<00:17,  2.48s/it]
+Build old teacher prototype bank:  62%|██████▎   | 10/16 [00:24<00:14,  2.36s/it]
+Build old teacher prototype bank:  69%|██████▉   | 11/16 [00:27<00:11,  2.34s/it]
+Build old teacher prototype bank:  75%|███████▌  | 12/16 [00:29<00:09,  2.50s/it]
+Build old teacher prototype bank:  81%|████████▏ | 13/16 [00:32<00:07,  2.45s/it]
+Build old teacher prototype bank:  88%|████████▊ | 14/16 [00:34<00:04,  2.49s/it]
+Build old teacher prototype bank:  94%|█████████▍| 15/16 [00:36<00:02,  2.37s/it]
+Build old teacher prototype bank: 100%|██████████| 16/16 [00:38<00:00,  2.07s/it]
+Build old teacher prototype bank: 100%|██████████| 16/16 [00:38<00:00,  2.39s/it]
+
+Build old teacher prototype bank:   0%|          | 0/16 [00:00<?, ?it/s]
+Build old teacher prototype bank:   6%|▋         | 1/16 [00:02<00:38,  2.59s/it]
+Build old teacher prototype bank:  12%|█▎        | 2/16 [00:04<00:33,  2.38s/it]
+Build old teacher prototype bank:  19%|█▉        | 3/16 [00:07<00:33,  2.59s/it]
+Build old teacher prototype bank:  25%|██▌       | 4/16 [00:10<00:30,  2.56s/it]
+Build old teacher prototype bank:  31%|███▏      | 5/16 [00:12<00:26,  2.42s/it]
+Build old teacher prototype bank:  38%|███▊      | 6/16 [00:14<00:24,  2.43s/it]
+Build old teacher prototype bank:  44%|████▍     | 7/16 [00:17<00:21,  2.44s/it]
+Build old teacher prototype bank:  50%|█████     | 8/16 [00:20<00:20,  2.58s/it]
+Build old teacher prototype bank:  56%|█████▋    | 9/16 [00:22<00:17,  2.48s/it]
+Build old teacher prototype bank:  62%|██████▎   | 10/16 [00:24<00:14,  2.45s/it]
+Build old teacher prototype bank:  69%|██████▉   | 11/16 [00:27<00:12,  2.49s/it]
+Build old teacher prototype bank:  75%|███████▌  | 12/16 [00:29<00:09,  2.43s/it]
+Build old teacher prototype bank:  81%|████████▏ | 13/16 [00:32<00:07,  2.43s/it]
+Build old teacher prototype bank:  88%|████████▊ | 14/16 [00:34<00:04,  2.46s/it]
+Build old teacher prototype bank:  94%|█████████▍| 15/16 [00:37<00:02,  2.48s/it]
+Build old teacher prototype bank: 100%|██████████| 16/16 [00:39<00:00,  2.42s/it]
+Build old teacher prototype bank: 100%|██████████| 16/16 [00:39<00:00,  2.46s/it]
+Step 1: original_memory; original reference validation passed
+  batch 1/3; no parameter update
+  batch 2/3; no parameter update
+  batch 3/3; no parameter update
+Step 1: heldout_fixed_reference; original reference validation passed
+  batch 1/3; no parameter update
+  batch 2/3; no parameter update
+  batch 3/3; no parameter update
+Step 1: fresh_memory; original reference validation passed
+  batch 1/3; no parameter update
+  batch 2/3; no parameter update
+  batch 3/3; no parameter update
+Step 5: loading checkpoints and checking original reference
+
+Build old teacher prototype bank:   0%|          | 0/16 [00:00<?, ?it/s]
+Build old teacher prototype bank:   6%|▋         | 1/16 [00:02<00:32,  2.18s/it]
+Build old teacher prototype bank:  12%|█▎        | 2/16 [00:04<00:31,  2.25s/it]
+Build old teacher prototype bank:  19%|█▉        | 3/16 [00:06<00:30,  2.32s/it]
+Build old teacher prototype bank:  25%|██▌       | 4/16 [00:09<00:27,  2.32s/it]
+Build old teacher prototype bank:  31%|███▏      | 5/16 [00:11<00:26,  2.40s/it]
+Build old teacher prototype bank:  38%|███▊      | 6/16 [00:14<00:25,  2.57s/it]
+Build old teacher prototype bank:  44%|████▍     | 7/16 [00:17<00:22,  2.50s/it]
+Build old teacher prototype bank:  50%|█████     | 8/16 [00:19<00:19,  2.48s/it]
+Build old teacher prototype bank:  56%|█████▋    | 9/16 [00:21<00:16,  2.42s/it]
+Build old teacher prototype bank:  62%|██████▎   | 10/16 [00:23<00:13,  2.33s/it]
+Build old teacher prototype bank:  69%|██████▉   | 11/16 [00:26<00:11,  2.32s/it]
+Build old teacher prototype bank:  75%|███████▌  | 12/16 [00:28<00:09,  2.35s/it]
+Build old teacher prototype bank:  81%|████████▏ | 13/16 [00:30<00:06,  2.28s/it]
+Build old teacher prototype bank:  88%|████████▊ | 14/16 [00:33<00:04,  2.29s/it]
+Build old teacher prototype bank:  94%|█████████▍| 15/16 [00:35<00:02,  2.28s/it]
+Build old teacher prototype bank: 100%|██████████| 16/16 [00:36<00:00,  2.00s/it]
+Build old teacher prototype bank: 100%|██████████| 16/16 [00:36<00:00,  2.29s/it]
+
+Build old teacher prototype bank:   0%|          | 0/16 [00:00<?, ?it/s]
+Build old teacher prototype bank:   6%|▋         | 1/16 [00:02<00:34,  2.28s/it]
+Build old teacher prototype bank:  12%|█▎        | 2/16 [00:04<00:28,  2.02s/it]
+Build old teacher prototype bank:  19%|█▉        | 3/16 [00:06<00:26,  2.05s/it]
+Build old teacher prototype bank:  25%|██▌       | 4/16 [00:08<00:24,  2.08s/it]
+Build old teacher prototype bank:  31%|███▏      | 5/16 [00:11<00:25,  2.32s/it]
+Build old teacher prototype bank:  38%|███▊      | 6/16 [00:13<00:23,  2.34s/it]
+Build old teacher prototype bank:  44%|████▍     | 7/16 [00:15<00:20,  2.32s/it]
+Build old teacher prototype bank:  50%|█████     | 8/16 [00:17<00:17,  2.22s/it]
+Build old teacher prototype bank:  56%|█████▋    | 9/16 [00:20<00:15,  2.25s/it]
+Build old teacher prototype bank:  62%|██████▎   | 10/16 [00:22<00:13,  2.30s/it]
+Build old teacher prototype bank:  69%|██████▉   | 11/16 [00:24<00:11,  2.35s/it]
+Build old teacher prototype bank:  75%|███████▌  | 12/16 [00:27<00:09,  2.36s/it]
+Build old teacher prototype bank:  81%|████████▏ | 13/16 [00:29<00:07,  2.38s/it]
+Build old teacher prototype bank:  88%|████████▊ | 14/16 [00:31<00:04,  2.28s/it]
+Build old teacher prototype bank:  94%|█████████▍| 15/16 [00:34<00:02,  2.29s/it]
+Build old teacher prototype bank: 100%|██████████| 16/16 [00:35<00:00,  2.05s/it]
+Build old teacher prototype bank: 100%|██████████| 16/16 [00:35<00:00,  2.22s/it]
+Step 5: original_memory; original reference validation passed
+  batch 1/3; no parameter update
+  batch 2/3; no parameter update
+  batch 3/3; no parameter update
+Step 5: heldout_fixed_reference; original reference validation passed
+  batch 1/3; no parameter update
+  batch 2/3; no parameter update
+  batch 3/3; no parameter update
+Step 5: fresh_memory; original reference validation passed
+  batch 1/3; no parameter update
+  batch 2/3; no parameter update
+  batch 3/3; no parameter update
+Step 9: loading checkpoints and checking original reference
+
+Build old teacher prototype bank:   0%|          | 0/15 [00:00<?, ?it/s]
+Build old teacher prototype bank:   7%|▋         | 1/15 [00:02<00:28,  2.02s/it]
+Build old teacher prototype bank:  13%|█▎        | 2/15 [00:04<00:28,  2.21s/it]
+Build old teacher prototype bank:  20%|██        | 3/15 [00:06<00:24,  2.07s/it]
+Build old teacher prototype bank:  27%|██▋       | 4/15 [00:08<00:22,  2.06s/it]
+Build old teacher prototype bank:  33%|███▎      | 5/15 [00:10<00:22,  2.23s/it]
+Build old teacher prototype bank:  40%|████      | 6/15 [00:13<00:20,  2.27s/it]
+Build old teacher prototype bank:  47%|████▋     | 7/15 [00:15<00:18,  2.26s/it]
+Build old teacher prototype bank:  53%|█████▎    | 8/15 [00:17<00:15,  2.15s/it]
+Build old teacher prototype bank:  60%|██████    | 9/15 [00:19<00:12,  2.09s/it]
+Build old teacher prototype bank:  67%|██████▋   | 10/15 [00:21<00:09,  1.98s/it]
+Build old teacher prototype bank:  73%|███████▎  | 11/15 [00:22<00:07,  1.94s/it]
+Build old teacher prototype bank:  80%|████████  | 12/15 [00:25<00:06,  2.19s/it]
+Build old teacher prototype bank:  87%|████████▋ | 13/15 [00:28<00:04,  2.25s/it]
+Build old teacher prototype bank:  93%|█████████▎| 14/15 [00:30<00:02,  2.30s/it]
+Build old teacher prototype bank: 100%|██████████| 15/15 [00:30<00:00,  1.65s/it]
+Build old teacher prototype bank: 100%|██████████| 15/15 [00:30<00:00,  2.04s/it]
+
+Build old teacher prototype bank:   0%|          | 0/15 [00:00<?, ?it/s]
+Build old teacher prototype bank:   7%|▋         | 1/15 [00:01<00:26,  1.86s/it]
+Build old teacher prototype bank:  13%|█▎        | 2/15 [00:03<00:25,  1.93s/it]
+Build old teacher prototype bank:  20%|██        | 3/15 [00:05<00:23,  1.98s/it]
+Build old teacher prototype bank:  27%|██▋       | 4/15 [00:08<00:24,  2.24s/it]
+Build old teacher prototype bank:  33%|███▎      | 5/15 [00:10<00:22,  2.29s/it]
+Build old teacher prototype bank:  40%|████      | 6/15 [00:13<00:20,  2.28s/it]
+Build old teacher prototype bank:  47%|████▋     | 7/15 [00:15<00:17,  2.22s/it]
+Build old teacher prototype bank:  53%|█████▎    | 8/15 [00:17<00:15,  2.17s/it]
+Build old teacher prototype bank:  60%|██████    | 9/15 [00:19<00:12,  2.12s/it]
+Build old teacher prototype bank:  67%|██████▋   | 10/15 [00:21<00:09,  1.99s/it]
+Build old teacher prototype bank:  73%|███████▎  | 11/15 [00:23<00:07,  2.00s/it]
+Build old teacher prototype bank:  80%|████████  | 12/15 [00:25<00:06,  2.19s/it]
+Build old teacher prototype bank:  87%|████████▋ | 13/15 [00:28<00:04,  2.39s/it]
+Build old teacher prototype bank:  93%|█████████▎| 14/15 [00:30<00:02,  2.39s/it]
+Build old teacher prototype bank: 100%|██████████| 15/15 [00:31<00:00,  2.07s/it]
+Step 9: original_memory; original reference validation passed
+  batch 1/3; no parameter update
+  batch 2/3; no parameter update
+  batch 3/3; no parameter update
+Step 9: heldout_fixed_reference; original reference validation passed
+  batch 1/3; no parameter update
+  batch 2/3; no parameter update
+  batch 3/3; no parameter update
+Step 9: fresh_memory; original reference validation passed
+  batch 1/3; no parameter update
+  batch 2/3; no parameter update
+  batch 3/3; no parameter update
+Saved all three offline experiments to /groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch/results/three_way_hinge_cpu_20260930_232846/lambda_0p1_alpha_1p0

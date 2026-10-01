@@ -1,0 +1,101 @@
+﻿class_id,category_name,first_seen_step,age,difficulty_rank,difficulty_quartile,age_group
+0,playing volleyball,0,9,13,1,6+
+1,child singing,0,9,88,4,6+
+2,"heart sounds, heartbeat",0,9,11,1,6+
+3,singing bowl,0,9,35,2,6+
+4,cap gun shooting,0,9,58,3,6+
+5,rope skipping,0,9,31,2,6+
+6,"child speech, kid speaking",0,9,80,4,6+
+7,baby laughter,0,9,37,2,6+
+8,playing table tennis,0,9,3,1,6+
+9,lighting firecrackers,0,9,95,4,6+
+10,playing bass drum,1,8,44,2,6+
+11,playing banjo,1,8,66,3,6+
+12,fire truck siren,1,8,72,3,6+
+13,playing bagpipes,1,8,15,1,6+
+14,playing french horn,1,8,73,3,6+
+15,civil defense siren,1,8,27,2,6+
+16,tractor digging,1,8,10,1,6+
+17,people whispering,1,8,23,1,6+
+18,lathe spinning,1,8,6,1,6+
+19,playing theremin,1,8,85,4,6+
+20,playing glockenspiel,2,7,28,2,6+
+21,playing hammond organ,2,7,90,4,6+
+22,police car (siren),2,7,68,3,6+
+23,people cheering,2,7,60,3,6+
+24,playing electronic organ,2,7,91,4,6+
+25,bowling impact,2,7,8,1,6+
+26,people marching,2,7,24,1,6+
+27,playing bass guitar,2,7,81,4,6+
+28,goose honking,2,7,74,3,6+
+29,playing trombone,2,7,69,3,6+
+30,helicopter,3,6,50,3,6+
+31,playing erhu,3,6,18,1,6+
+32,dog howling,3,6,29,2,6+
+33,playing synthesizer,3,6,52,3,6+
+34,cat purring,3,6,32,2,6+
+35,skiing,3,6,1,1,6+
+36,wood thrush calling,3,6,49,2,6+
+37,scuba diving,3,6,0,1,6+
+38,playing tambourine,3,6,36,2,6+
+39,driving motorcycle,3,6,48,2,6+
+40,vacuum cleaner cleaning floors,4,5,57,3,3-5
+41,playing squash,4,5,4,1,3-5
+42,slot machine,4,5,12,1,3-5
+43,beat boxing,4,5,41,2,3-5
+44,playing cello,4,5,82,4,3-5
+45,playing cornet,4,5,7,1,3-5
+46,wind noise,4,5,78,4,3-5
+47,"playing steel guitar, slide guitar",4,5,45,2,3-5
+48,orchestra,4,5,86,4,3-5
+49,playing harp,4,5,59,3,3-5
+50,roller coaster running,5,4,30,2,3-5
+51,missile launch,5,4,21,1,3-5
+52,"playing marimba, xylophone",5,4,97,4,3-5
+53,airplane flyby,5,4,5,1,3-5
+54,playing saxophone,5,4,89,4,3-5
+55,"subway, metro, underground",5,4,33,2,3-5
+56,arc welding,5,4,17,1,3-5
+57,mynah bird singing,5,4,62,3,3-5
+58,playing piano,5,4,79,4,3-5
+59,playing bongo,5,4,14,1,3-5
+60,"pigeon, dove cooing",6,3,51,3,3-5
+61,"race car, auto racing",6,3,47,2,3-5
+62,people crowd,6,3,70,3,3-5
+63,playing vibraphone,6,3,94,4,3-5
+64,playing mandolin,6,3,55,3,3-5
+65,"female speech, woman speaking",6,3,76,4,3-5
+66,volcano explosion,6,3,42,2,3-5
+67,ocean burbling,6,3,71,3,3-5
+68,singing choir,6,3,87,4,3-5
+69,playing flute,6,3,83,4,3-5
+70,playing acoustic guitar,7,2,64,3,1-2
+71,canary calling,7,2,25,2,1-2
+72,pheasant crowing,7,2,53,3,1-2
+73,woodpecker pecking tree,7,2,19,1,1-2
+74,yodelling,7,2,65,3,1-2
+75,sharpen knife,7,2,26,2,1-2
+76,"playing violin, fiddle",7,2,67,3,1-2
+77,printer printing,7,2,39,2,1-2
+78,planing timber,7,2,38,2,1-2
+79,lawn mowing,7,2,46,2,1-2
+80,"electric shaver, electric razor shaving",8,1,20,1,1-2
+81,fireworks banging,8,1,43,2,1-2
+82,tap dancing,8,1,9,1,1-2
+83,tapping guitar,8,1,93,4,1-2
+84,stream burbling,8,1,61,3,1-2
+85,playing bassoon,8,1,16,1,1-2
+86,police radio chatter,8,1,22,1,1-2
+87,playing sitar,8,1,96,4,1-2
+88,playing electric guitar,8,1,84,4,1-2
+89,people whistling,8,1,75,4,1-2
+90,playing double bass,9,0,34,2,new
+91,"male speech, man speaking",9,0,98,4,new
+92,playing accordion,9,0,54,3,new
+93,playing tabla,9,0,77,4,new
+94,playing clarinet,9,0,92,4,new
+95,playing harpsichord,9,0,63,3,new
+96,hail,9,0,2,1,new
+97,playing cymbal,9,0,99,4,new
+98,people booing,9,0,56,3,new
+99,dog growling,9,0,40,2,new

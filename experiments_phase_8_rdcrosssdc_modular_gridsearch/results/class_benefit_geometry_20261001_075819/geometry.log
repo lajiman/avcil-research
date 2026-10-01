@@ -1,0 +1,41 @@
+Input reference: 856/2000
+Input reference: 1440/2000
+Input query: 84/5000
+Input query: 944/5000
+Input query: 1712/5000
+Input query: 2532/5000
+Input query: 3284/5000
+Input query: 4180/5000
+Input query: 4880/5000
+Fixed input features cached
+Completed extraction: seed 42, step 0
+Seed 42 step 1 query: 916/1000; 3 models
+Completed extraction: seed 42, step 1
+Seed 42 step 4 query: 312/2500; 3 models
+Seed 42 step 4 query: 1612/2500; 3 models
+Completed extraction: seed 42, step 4
+Seed 42 step 5 query: 108/3000; 3 models
+Seed 42 step 5 query: 1436/3000; 3 models
+Seed 42 step 5 query: 2760/3000; 3 models
+Completed extraction: seed 42, step 5
+Seed 42 step 8 reference: 1336/1800; 3 models
+Seed 42 step 8 query: 872/4500; 3 models
+Seed 42 step 8 query: 2216/4500; 3 models
+Seed 42 step 8 query: 3556/4500; 3 models
+Completed extraction: seed 42, step 8
+Seed 42 step 9 reference: 1340/2000; 3 models
+Seed 42 step 9 query: 676/5000; 3 models
+Seed 42 step 9 query: 2012/5000; 3 models
+Seed 42 step 9 query: 3352/5000; 3 models
+Seed 42 step 9 query: 4692/5000; 3 models
+Completed extraction: seed 42, step 9
+Analyzed avcil seed 42 step 1
+Analyzed avcil seed 42 step 5
+Analyzed avcil seed 42 step 9
+Analyzed hinge_A seed 42 step 1
+Analyzed hinge_A seed 42 step 5
+Analyzed hinge_A seed 42 step 9
+Analyzed hinge_B seed 42 step 1
+Analyzed hinge_B seed 42 step 5
+Analyzed hinge_B seed 42 step 9
+Step 2 complete: /groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch/results/class_benefit_geometry_20261001_075819/geometry

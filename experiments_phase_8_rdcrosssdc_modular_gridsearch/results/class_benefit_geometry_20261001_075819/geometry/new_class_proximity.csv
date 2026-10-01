@@ -1,0 +1,451 @@
+﻿step,class_id,category_name,first_seen_step,age,difficulty_rank,difficulty_quartile,age_group,audio_nearest_new_class,audio_nearest_new_name,audio_max_new_similarity,visual_nearest_new_class,visual_nearest_new_name,visual_max_new_similarity
+1,0,playing volleyball,0,1,13,1,1-2,10,playing bass drum,0.9935308406479024,12,fire truck siren,0.9948420858188485
+1,1,child singing,0,1,88,4,1-2,11,playing banjo,0.9958066912880728,17,people whispering,0.992971927654567
+1,2,"heart sounds, heartbeat",0,1,11,1,1-2,17,people whispering,0.9815330774346595,17,people whispering,0.9945052959252878
+1,3,singing bowl,0,1,35,2,1-2,17,people whispering,0.9871057630198997,18,lathe spinning,0.9946505455253899
+1,4,cap gun shooting,0,1,58,3,1-2,17,people whispering,0.9838942637795797,15,civil defense siren,0.9925048731830498
+1,5,rope skipping,0,1,31,2,1-2,10,playing bass drum,0.9912335724808928,14,playing french horn,0.9940396433751141
+1,6,"child speech, kid speaking",0,1,80,4,1-2,14,playing french horn,0.9882510316066752,17,people whispering,0.9896705190348933
+1,7,baby laughter,0,1,37,2,1-2,10,playing bass drum,0.9873129934334721,17,people whispering,0.9837739556697784
+1,8,playing table tennis,0,1,3,1,1-2,10,playing bass drum,0.995314324532774,15,civil defense siren,0.9898114955465854
+1,9,lighting firecrackers,0,1,95,4,1-2,18,lathe spinning,0.9917310146554845,12,fire truck siren,0.9782199726549301
+2,0,playing volleyball,0,2,13,1,1-2,21,playing hammond organ,0.9894257241598146,22,police car (siren),0.9924830728907041
+2,1,child singing,0,2,88,4,1-2,26,people marching,0.9926119897582654,23,people cheering,0.9890448519684424
+2,2,"heart sounds, heartbeat",0,2,11,1,1-2,20,playing glockenspiel,0.9070538629015894,29,playing trombone,0.9897088184914122
+2,3,singing bowl,0,2,35,2,1-2,20,playing glockenspiel,0.9498533092637746,29,playing trombone,0.9945766713216732
+2,4,cap gun shooting,0,2,58,3,1-2,28,goose honking,0.9818705108870465,25,bowling impact,0.9889230951608037
+2,5,rope skipping,0,2,31,2,1-2,25,bowling impact,0.9981334304689405,20,playing glockenspiel,0.993875488763712
+2,6,"child speech, kid speaking",0,2,80,4,1-2,28,goose honking,0.9969741154967304,23,people cheering,0.9834292604843958
+2,7,baby laughter,0,2,37,2,1-2,28,goose honking,0.9912123021291113,26,people marching,0.9774280647946111
+2,8,playing table tennis,0,2,3,1,1-2,25,bowling impact,0.9884899194376475,20,playing glockenspiel,0.9887786810583066
+2,9,lighting firecrackers,0,2,95,4,1-2,25,bowling impact,0.9959346945846621,28,goose honking,0.9863731880510699
+2,10,playing bass drum,1,1,44,2,1-2,27,playing bass guitar,0.9885337967761669,20,playing glockenspiel,0.996307824230201
+2,11,playing banjo,1,1,66,3,1-2,26,people marching,0.9890606383234375,27,playing bass guitar,0.9974481748413888
+2,12,fire truck siren,1,1,72,3,1-2,22,police car (siren),0.989370875595534,22,police car (siren),0.9967284876200498
+2,13,playing bagpipes,1,1,15,1,1-2,23,people cheering,0.9811329185221678,29,playing trombone,0.9941024980006563
+2,14,playing french horn,1,1,73,3,1-2,20,playing glockenspiel,0.9888454988284903,29,playing trombone,0.9976251561321111
+2,15,civil defense siren,1,1,27,2,1-2,24,playing electronic organ,0.9913911871241908,25,bowling impact,0.9868516955243395
+2,16,tractor digging,1,1,10,1,1-2,26,people marching,0.991922889780864,26,people marching,0.9945637594367949
+2,17,people whispering,1,1,23,1,1-2,20,playing glockenspiel,0.9554739180726884,29,playing trombone,0.9919743693537563
+2,18,lathe spinning,1,1,6,1,1-2,23,people cheering,0.9922393291329907,29,playing trombone,0.9967440338785084
+2,19,playing theremin,1,1,85,4,1-2,27,playing bass guitar,0.9923139507117904,29,playing trombone,0.9960867286766849
+3,0,playing volleyball,0,3,13,1,3-5,35,skiing,0.9963970617314194,39,driving motorcycle,0.9900082706948273
+3,1,child singing,0,3,88,4,3-5,31,playing erhu,0.9871474769715389,38,playing tambourine,0.9937097263052337
+3,2,"heart sounds, heartbeat",0,3,11,1,3-5,34,cat purring,0.9862211106110141,38,playing tambourine,0.9942337707775478
+3,3,singing bowl,0,3,35,2,3-5,34,cat purring,0.9872871374159606,38,playing tambourine,0.9942230714610418
+3,4,cap gun shooting,0,3,58,3,3-5,36,wood thrush calling,0.993340189148682,38,playing tambourine,0.9916061165448213
+3,5,rope skipping,0,3,31,2,3-5,38,playing tambourine,0.9920643264152595,31,playing erhu,0.995917439705804
+3,6,"child speech, kid speaking",0,3,80,4,3-5,37,scuba diving,0.9881420222281088,32,dog howling,0.9955109433563956
+3,7,baby laughter,0,3,37,2,3-5,38,playing tambourine,0.9870764583862955,32,dog howling,0.9936822161028769
+3,8,playing table tennis,0,3,3,1,3-5,35,skiing,0.998090433761775,31,playing erhu,0.9882908982948163
+3,9,lighting firecrackers,0,3,95,4,3-5,39,driving motorcycle,0.9915211789058687,37,scuba diving,0.9874952231002131
+3,10,playing bass drum,1,2,44,2,1-2,38,playing tambourine,0.997515007211409,31,playing erhu,0.9943103487958185
+3,11,playing banjo,1,2,66,3,1-2,31,playing erhu,0.9842608863276101,31,playing erhu,0.995517083219861
+3,12,fire truck siren,1,2,72,3,1-2,31,playing erhu,0.9892946783154266,30,helicopter,0.9887627713181849
+3,13,playing bagpipes,1,2,15,1,1-2,30,helicopter,0.9743358225472747,31,playing erhu,0.9941200023265964
+3,14,playing french horn,1,2,73,3,1-2,32,dog howling,0.9878584571391975,31,playing erhu,0.9975890880956602
+3,15,civil defense siren,1,2,27,2,1-2,31,playing erhu,0.9936587042878305,38,playing tambourine,0.9855638321263348
+3,16,tractor digging,1,2,10,1,1-2,39,driving motorcycle,0.9946520051116668,39,driving motorcycle,0.990827349719567
+3,17,people whispering,1,2,23,1,1-2,34,cat purring,0.993402322605694,38,playing tambourine,0.9951446851823869
+3,18,lathe spinning,1,2,6,1,1-2,39,driving motorcycle,0.9904883549369516,31,playing erhu,0.9963602456463941
+3,19,playing theremin,1,2,85,4,1-2,33,playing synthesizer,0.9811357166345047,31,playing erhu,0.9946693161341837
+3,20,playing glockenspiel,2,1,28,2,1-2,32,dog howling,0.9922637828573796,31,playing erhu,0.9960800426117599
+3,21,playing hammond organ,2,1,90,4,1-2,33,playing synthesizer,0.9873755419263748,33,playing synthesizer,0.9917795296486978
+3,22,police car (siren),2,1,68,3,1-2,31,playing erhu,0.9908523202607176,39,driving motorcycle,0.9894724320776582
+3,23,people cheering,2,1,60,3,1-2,30,helicopter,0.9931812237788183,39,driving motorcycle,0.9869638064163616
+3,24,playing electronic organ,2,1,91,4,1-2,31,playing erhu,0.9973111275153349,33,playing synthesizer,0.9918103831088121
+3,25,bowling impact,2,1,8,1,1-2,39,driving motorcycle,0.9932708550861085,39,driving motorcycle,0.9873168922808157
+3,26,people marching,2,1,24,1,1-2,30,helicopter,0.986281355641711,39,driving motorcycle,0.9911352969871605
+3,27,playing bass guitar,2,1,81,4,1-2,33,playing synthesizer,0.9902043213674628,31,playing erhu,0.9938867960383936
+3,28,goose honking,2,1,74,3,1-2,37,scuba diving,0.992329956503635,39,driving motorcycle,0.9943893666648446
+3,29,playing trombone,2,1,69,3,1-2,31,playing erhu,0.9928656279391126,31,playing erhu,0.9983671338759376
+4,0,playing volleyball,0,4,13,1,3-5,41,playing squash,0.9982776178952072,40,vacuum cleaner cleaning floors,0.9841354062350556
+4,1,child singing,0,4,88,4,3-5,48,orchestra,0.9970825984013902,43,beat boxing,0.9951129938305859
+4,2,"heart sounds, heartbeat",0,4,11,1,3-5,40,vacuum cleaner cleaning floors,0.8780272363232826,47,"playing steel guitar, slide guitar",0.9891021032406101
+4,3,singing bowl,0,4,35,2,3-5,49,playing harp,0.9339064168915725,47,"playing steel guitar, slide guitar",0.9937449843818957
+4,4,cap gun shooting,0,4,58,3,3-5,40,vacuum cleaner cleaning floors,0.9720967753518053,43,beat boxing,0.995175315720075
+4,5,rope skipping,0,4,31,2,3-5,42,slot machine,0.9967905316710819,44,playing cello,0.9944020750577182
+4,6,"child speech, kid speaking",0,4,80,4,3-5,40,vacuum cleaner cleaning floors,0.9933187153055892,43,beat boxing,0.9941297858671969
+4,7,baby laughter,0,4,37,2,3-5,40,vacuum cleaner cleaning floors,0.992062747159822,43,beat boxing,0.9878740154480866
+4,8,playing table tennis,0,4,3,1,3-5,41,playing squash,0.997289440086067,41,playing squash,0.9891954934269419
+4,9,lighting firecrackers,0,4,95,4,3-5,43,beat boxing,0.9959100387789613,40,vacuum cleaner cleaning floors,0.9895372311245415
+4,10,playing bass drum,1,3,44,2,3-5,41,playing squash,0.9943861435190082,47,"playing steel guitar, slide guitar",0.9963751649185025
+4,11,playing banjo,1,3,66,3,3-5,48,orchestra,0.9963564052155778,47,"playing steel guitar, slide guitar",0.9974304329139713
+4,12,fire truck siren,1,3,72,3,3-5,48,orchestra,0.9945904726935535,46,wind noise,0.9856040036307235
+4,13,playing bagpipes,1,3,15,1,3-5,48,orchestra,0.9885616588351688,47,"playing steel guitar, slide guitar",0.9928413746369825
+4,14,playing french horn,1,3,73,3,3-5,49,playing harp,0.9952575196726107,44,playing cello,0.9988339113454284
+4,15,civil defense siren,1,3,27,2,3-5,47,"playing steel guitar, slide guitar",0.9924456563506225,41,playing squash,0.9919199857547834
+4,16,tractor digging,1,3,10,1,3-5,48,orchestra,0.9841537090988823,46,wind noise,0.9855419920575522
+4,17,people whispering,1,3,23,1,3-5,40,vacuum cleaner cleaning floors,0.9390099757614389,47,"playing steel guitar, slide guitar",0.9915428761222784
+4,18,lathe spinning,1,3,6,1,3-5,48,orchestra,0.9881613987065647,47,"playing steel guitar, slide guitar",0.9959786640414625
+4,19,playing theremin,1,3,85,4,3-5,45,playing cornet,0.9930782937449407,44,playing cello,0.9968279505741845
+4,20,playing glockenspiel,2,2,28,2,1-2,49,playing harp,0.9839338876342185,44,playing cello,0.9963507890038572
+4,21,playing hammond organ,2,2,90,4,1-2,44,playing cello,0.9950452378409682,47,"playing steel guitar, slide guitar",0.9948528982744314
+4,22,police car (siren),2,2,68,3,1-2,42,slot machine,0.9937676367816931,46,wind noise,0.9852489358515579
+4,23,people cheering,2,2,60,3,1-2,48,orchestra,0.9898862541543045,43,beat boxing,0.9900898288018344
+4,24,playing electronic organ,2,2,91,4,1-2,47,"playing steel guitar, slide guitar",0.9950687808130969,47,"playing steel guitar, slide guitar",0.9918525283581197
+4,25,bowling impact,2,2,8,1,1-2,42,slot machine,0.9950457096308892,43,beat boxing,0.9890505246999257
+4,26,people marching,2,2,24,1,1-2,48,orchestra,0.9919394195982412,43,beat boxing,0.9879634137888373
+4,27,playing bass guitar,2,2,81,4,1-2,41,playing squash,0.9924333393494578,47,"playing steel guitar, slide guitar",0.9967728334589592
+4,28,goose honking,2,2,74,3,1-2,40,vacuum cleaner cleaning floors,0.9951253854315657,46,wind noise,0.9931169142750941
+4,29,playing trombone,2,2,69,3,1-2,47,"playing steel guitar, slide guitar",0.9971285373928208,47,"playing steel guitar, slide guitar",0.9982710574077964
+4,30,helicopter,3,1,50,3,1-2,48,orchestra,0.9746704445205924,46,wind noise,0.9951640565181592
+4,31,playing erhu,3,1,18,1,1-2,47,"playing steel guitar, slide guitar",0.9961274918939547,47,"playing steel guitar, slide guitar",0.9970931288616486
+4,32,dog howling,3,1,29,2,1-2,49,playing harp,0.9843245620969174,43,beat boxing,0.9883371898718853
+4,33,playing synthesizer,3,1,52,3,1-2,41,playing squash,0.9895434298243156,47,"playing steel guitar, slide guitar",0.9887416470360525
+4,34,cat purring,3,1,32,2,1-2,40,vacuum cleaner cleaning floors,0.9277726331087555,40,vacuum cleaner cleaning floors,0.9909538752900658
+4,35,skiing,3,1,1,1,1-2,41,playing squash,0.9962315352158755,40,vacuum cleaner cleaning floors,0.987266464722001
+4,36,wood thrush calling,3,1,49,2,1-2,40,vacuum cleaner cleaning floors,0.9745112402002435,47,"playing steel guitar, slide guitar",0.992988288892408
+4,37,scuba diving,3,1,0,1,1-2,40,vacuum cleaner cleaning floors,0.9891473019962913,40,vacuum cleaner cleaning floors,0.984406707132531
+4,38,playing tambourine,3,1,36,2,1-2,41,playing squash,0.9919506596202925,47,"playing steel guitar, slide guitar",0.995767643162232
+4,39,driving motorcycle,3,1,48,2,1-2,42,slot machine,0.9892147183187147,40,vacuum cleaner cleaning floors,0.9927655007974328
+5,0,playing volleyball,0,5,13,1,3-5,56,arc welding,0.9908338819895297,56,arc welding,0.974407432047197
+5,1,child singing,0,5,88,4,3-5,54,playing saxophone,0.9977062323876899,54,playing saxophone,0.9908506552427143
+5,2,"heart sounds, heartbeat",0,5,11,1,3-5,57,mynah bird singing,0.9501633161861653,54,playing saxophone,0.9932089905051611
+5,3,singing bowl,0,5,35,2,3-5,57,mynah bird singing,0.9724283762343604,54,playing saxophone,0.9929316018796818
+5,4,cap gun shooting,0,5,58,3,3-5,57,mynah bird singing,0.9952729230889171,56,arc welding,0.9939848175339012
+5,5,rope skipping,0,5,31,2,3-5,56,arc welding,0.9968432857455796,54,playing saxophone,0.992378978991999
+5,6,"child speech, kid speaking",0,5,80,4,3-5,57,mynah bird singing,0.9801712592871534,56,arc welding,0.9929733458374008
+5,7,baby laughter,0,5,37,2,3-5,52,"playing marimba, xylophone",0.9785630698585395,56,arc welding,0.9917958586642494
+5,8,playing table tennis,0,5,3,1,3-5,56,arc welding,0.9934440636118449,55,"subway, metro, underground",0.9919700717975574
+5,9,lighting firecrackers,0,5,95,4,3-5,56,arc welding,0.9971803957324051,56,arc welding,0.9858400705607105
+5,10,playing bass drum,1,4,44,2,3-5,59,playing bongo,0.9932438075682529,59,playing bongo,0.9970880114917949
+5,11,playing banjo,1,4,66,3,3-5,54,playing saxophone,0.9959666753914234,59,playing bongo,0.9966008702042304
+5,12,fire truck siren,1,4,72,3,3-5,54,playing saxophone,0.9911953642517877,55,"subway, metro, underground",0.9803633683064432
+5,13,playing bagpipes,1,4,15,1,3-5,54,playing saxophone,0.9865662395373902,54,playing saxophone,0.9939607611203939
+5,14,playing french horn,1,4,73,3,3-5,58,playing piano,0.9910284731627038,54,playing saxophone,0.9970657000469156
+5,15,civil defense siren,1,4,27,2,3-5,52,"playing marimba, xylophone",0.9866142097410401,55,"subway, metro, underground",0.9907479096379015
+5,16,tractor digging,1,4,10,1,3-5,50,roller coaster running,0.9965794985828867,55,"subway, metro, underground",0.9863537781145022
+5,17,people whispering,1,4,23,1,3-5,57,mynah bird singing,0.9865618113122626,54,playing saxophone,0.9949165063996364
+5,18,lathe spinning,1,4,6,1,3-5,53,airplane flyby,0.9949893050797434,54,playing saxophone,0.9952396389900382
+5,19,playing theremin,1,4,85,4,3-5,58,playing piano,0.9949187900491757,52,"playing marimba, xylophone",0.9962834480208608
+5,20,playing glockenspiel,2,3,28,2,3-5,57,mynah bird singing,0.9802959959587454,52,"playing marimba, xylophone",0.9957180980921668
+5,21,playing hammond organ,2,3,90,4,3-5,52,"playing marimba, xylophone",0.9960832370296868,59,playing bongo,0.9955209476092661
+5,22,police car (siren),2,3,68,3,3-5,51,missile launch,0.9902159961752329,55,"subway, metro, underground",0.9840919314916505
+5,23,people cheering,2,3,60,3,3-5,55,"subway, metro, underground",0.9944833691951529,55,"subway, metro, underground",0.9833621548463473
+5,24,playing electronic organ,2,3,91,4,3-5,54,playing saxophone,0.9860380312191153,58,playing piano,0.9945921197068257
+5,25,bowling impact,2,3,8,1,3-5,51,missile launch,0.9964849702870427,55,"subway, metro, underground",0.9896870756527676
+5,26,people marching,2,3,24,1,3-5,50,roller coaster running,0.997311366452729,55,"subway, metro, underground",0.986801541469591
+5,27,playing bass guitar,2,3,81,4,3-5,52,"playing marimba, xylophone",0.9935095824849709,59,playing bongo,0.9958539695018148
+5,28,goose honking,2,3,74,3,3-5,57,mynah bird singing,0.9847758778517925,56,arc welding,0.9784802770022459
+5,29,playing trombone,2,3,69,3,3-5,52,"playing marimba, xylophone",0.9886813771103863,54,playing saxophone,0.9978627010379719
+5,30,helicopter,3,2,50,3,1-2,55,"subway, metro, underground",0.9934838707484263,56,arc welding,0.9811675211535466
+5,31,playing erhu,3,2,18,1,1-2,54,playing saxophone,0.9876016321289736,54,playing saxophone,0.9967761367924693
+5,32,dog howling,3,2,29,2,1-2,57,mynah bird singing,0.9896269925211028,56,arc welding,0.9887958985441175
+5,33,playing synthesizer,3,2,52,3,1-2,59,playing bongo,0.9915945647489286,52,"playing marimba, xylophone",0.9917211190925224
+5,34,cat purring,3,2,32,2,1-2,57,mynah bird singing,0.978164699669141,56,arc welding,0.9876068743474467
+5,35,skiing,3,2,1,1,1-2,56,arc welding,0.9943163311115486,53,airplane flyby,0.9849144918736862
+5,36,wood thrush calling,3,2,49,2,1-2,57,mynah bird singing,0.9989068781851674,57,mynah bird singing,0.9955768234698922
+5,37,scuba diving,3,2,0,1,1-2,57,mynah bird singing,0.9819010051143682,50,roller coaster running,0.984766739239221
+5,38,playing tambourine,3,2,36,2,1-2,56,arc welding,0.99330880333194,54,playing saxophone,0.996301673701747
+5,39,driving motorcycle,3,2,48,2,1-2,51,missile launch,0.9971407122541379,56,arc welding,0.9872738679826517
+5,40,vacuum cleaner cleaning floors,4,1,57,3,1-2,52,"playing marimba, xylophone",0.9781293657635859,56,arc welding,0.9903735968708025
+5,41,playing squash,4,1,4,1,1-2,56,arc welding,0.9902597925732441,55,"subway, metro, underground",0.9876997605841059
+5,42,slot machine,4,1,12,1,1-2,56,arc welding,0.99253614371243,52,"playing marimba, xylophone",0.9769605179276485
+5,43,beat boxing,4,1,41,2,1-2,56,arc welding,0.9939748954385438,56,arc welding,0.99245301420234
+5,44,playing cello,4,1,82,4,1-2,58,playing piano,0.9950898990700026,54,playing saxophone,0.9961623910498172
+5,45,playing cornet,4,1,7,1,1-2,58,playing piano,0.9944465808806024,54,playing saxophone,0.9931934709581931
+5,46,wind noise,4,1,78,4,1-2,56,arc welding,0.9916074608717925,56,arc welding,0.9855168466991221
+5,47,"playing steel guitar, slide guitar",4,1,45,2,1-2,52,"playing marimba, xylophone",0.9871684782991319,59,playing bongo,0.9976377502922965
+5,48,orchestra,4,1,86,4,1-2,54,playing saxophone,0.9958015366012198,52,"playing marimba, xylophone",0.9967638728636826
+5,49,playing harp,4,1,59,3,1-2,58,playing piano,0.9881492807686029,54,playing saxophone,0.9926522408044778
+6,0,playing volleyball,0,6,13,1,6+,64,playing mandolin,0.9886202395876785,60,"pigeon, dove cooing",0.9907441780809122
+6,1,child singing,0,6,88,4,6+,68,singing choir,0.9906337842989514,64,playing mandolin,0.9927354549861845
+6,2,"heart sounds, heartbeat",0,6,11,1,6+,60,"pigeon, dove cooing",0.9464282904130121,64,playing mandolin,0.9924572068739914
+6,3,singing bowl,0,6,35,2,6+,60,"pigeon, dove cooing",0.9706432786036603,65,"female speech, woman speaking",0.9948735043100159
+6,4,cap gun shooting,0,6,58,3,6+,60,"pigeon, dove cooing",0.9868066126595954,66,volcano explosion,0.9921364551028777
+6,5,rope skipping,0,6,31,2,6+,67,ocean burbling,0.9889233396609236,65,"female speech, woman speaking",0.994671402344064
+6,6,"child speech, kid speaking",0,6,80,4,6+,65,"female speech, woman speaking",0.9978216444120962,64,playing mandolin,0.989241935497582
+6,7,baby laughter,0,6,37,2,6+,65,"female speech, woman speaking",0.9910666216170126,64,playing mandolin,0.9832950561656955
+6,8,playing table tennis,0,6,3,1,6+,66,volcano explosion,0.9877996800994544,63,playing vibraphone,0.9894942175605171
+6,9,lighting firecrackers,0,6,95,4,6+,67,ocean burbling,0.9902773116746473,62,people crowd,0.9878054109488884
+6,10,playing bass drum,1,5,44,2,3-5,64,playing mandolin,0.9850549888373741,63,playing vibraphone,0.9935448204316404
+6,11,playing banjo,1,5,66,3,3-5,68,singing choir,0.9892395023771839,69,playing flute,0.9955625551123993
+6,12,fire truck siren,1,5,72,3,3-5,68,singing choir,0.9874286880035484,61,"race car, auto racing",0.9915085472308991
+6,13,playing bagpipes,1,5,15,1,3-5,68,singing choir,0.9830962904624261,65,"female speech, woman speaking",0.9933114526456994
+6,14,playing french horn,1,5,73,3,3-5,63,playing vibraphone,0.9973459580242947,69,playing flute,0.9983460661952095
+6,15,civil defense siren,1,5,27,2,3-5,64,playing mandolin,0.9843482904330206,66,volcano explosion,0.9902401961691327
+6,16,tractor digging,1,5,10,1,3-5,67,ocean burbling,0.9956951478287334,66,volcano explosion,0.9869237566023856
+6,17,people whispering,1,5,23,1,3-5,60,"pigeon, dove cooing",0.9857705542982813,64,playing mandolin,0.9959255538747774
+6,18,lathe spinning,1,5,6,1,3-5,61,"race car, auto racing",0.9946542756636076,65,"female speech, woman speaking",0.9970538353777546
+6,19,playing theremin,1,5,85,4,3-5,69,playing flute,0.9959010389919103,68,singing choir,0.9965688098576807
+6,20,playing glockenspiel,2,4,28,2,3-5,63,playing vibraphone,0.9902648475309568,69,playing flute,0.9944766847790907
+6,21,playing hammond organ,2,4,90,4,3-5,64,playing mandolin,0.9925909461735354,63,playing vibraphone,0.9905120788447472
+6,22,police car (siren),2,4,68,3,3-5,67,ocean burbling,0.9871943728764389,61,"race car, auto racing",0.9933448964725065
+6,23,people cheering,2,4,60,3,3-5,68,singing choir,0.9984008331362217,62,people crowd,0.9913367561526002
+6,24,playing electronic organ,2,4,91,4,3-5,64,playing mandolin,0.9784793063967037,63,playing vibraphone,0.9900151475740255
+6,25,bowling impact,2,4,8,1,3-5,67,ocean burbling,0.9928984940013608,66,volcano explosion,0.9892458815131431
+6,26,people marching,2,4,24,1,3-5,68,singing choir,0.9959335923314934,66,volcano explosion,0.9879260029697832
+6,27,playing bass guitar,2,4,81,4,3-5,64,playing mandolin,0.9908104094323781,69,playing flute,0.995255618498536
+6,28,goose honking,2,4,74,3,3-5,65,"female speech, woman speaking",0.9955540687774129,66,volcano explosion,0.9922507129922276
+6,29,playing trombone,2,4,69,3,3-5,64,playing mandolin,0.9881203575624531,65,"female speech, woman speaking",0.9981754910594307
+6,30,helicopter,3,3,50,3,3-5,62,people crowd,0.9955997063340953,67,ocean burbling,0.9928305561236356
+6,31,playing erhu,3,3,18,1,3-5,64,playing mandolin,0.9782563803732146,65,"female speech, woman speaking",0.9982864133127916
+6,32,dog howling,3,3,29,2,3-5,63,playing vibraphone,0.9897698825941343,64,playing mandolin,0.9922082471742041
+6,33,playing synthesizer,3,3,52,3,3-5,64,playing mandolin,0.9876335985581439,63,playing vibraphone,0.9936297665636977
+6,34,cat purring,3,3,32,2,3-5,60,"pigeon, dove cooing",0.980651733413709,60,"pigeon, dove cooing",0.986212083992637
+6,35,skiing,3,3,1,1,3-5,66,volcano explosion,0.9869124569216392,67,ocean burbling,0.9882433794999465
+6,36,wood thrush calling,3,3,49,2,3-5,60,"pigeon, dove cooing",0.9924893129349328,69,playing flute,0.9933883202899492
+6,37,scuba diving,3,3,0,1,3-5,66,volcano explosion,0.9945846687632982,60,"pigeon, dove cooing",0.9824438057465499
+6,38,playing tambourine,3,3,36,2,3-5,64,playing mandolin,0.9858666358611157,64,playing mandolin,0.9973291618887512
+6,39,driving motorcycle,3,3,48,2,3-5,67,ocean burbling,0.9961934036561584,60,"pigeon, dove cooing",0.9954236024391119
+6,40,vacuum cleaner cleaning floors,4,2,57,3,1-2,66,volcano explosion,0.9929066885109388,60,"pigeon, dove cooing",0.991260073940199
+6,41,playing squash,4,2,4,1,1-2,66,volcano explosion,0.9909313572735726,65,"female speech, woman speaking",0.9846010686400145
+6,42,slot machine,4,2,12,1,1-2,67,ocean burbling,0.9846296487555154,63,playing vibraphone,0.9782087166235025
+6,43,beat boxing,4,2,41,2,1-2,67,ocean burbling,0.9815832776712474,66,volcano explosion,0.9913994735493966
+6,44,playing cello,4,2,82,4,1-2,64,playing mandolin,0.9914674798463095,69,playing flute,0.9973881997810984
+6,45,playing cornet,4,2,7,1,1-2,69,playing flute,0.996444084604707,69,playing flute,0.996916269869793
+6,46,wind noise,4,2,78,4,1-2,66,volcano explosion,0.9854913000231824,66,volcano explosion,0.9940250759687065
+6,47,"playing steel guitar, slide guitar",4,2,45,2,1-2,64,playing mandolin,0.9883332781198602,65,"female speech, woman speaking",0.9972368274003768
+6,48,orchestra,4,2,86,4,1-2,68,singing choir,0.9930191891268366,68,singing choir,0.9964753737377302
+6,49,playing harp,4,2,59,3,1-2,63,playing vibraphone,0.9975284852973514,69,playing flute,0.991672303083498
+6,50,roller coaster running,5,1,30,2,1-2,61,"race car, auto racing",0.9957370686494788,60,"pigeon, dove cooing",0.981029390188577
+6,51,missile launch,5,1,21,1,1-2,67,ocean burbling,0.9964028294947407,66,volcano explosion,0.9803971826633562
+6,52,"playing marimba, xylophone",5,1,97,4,1-2,64,playing mandolin,0.9945095860700777,68,singing choir,0.9962064857414238
+6,53,airplane flyby,5,1,5,1,1-2,61,"race car, auto racing",0.9980625710687789,67,ocean burbling,0.9778280596416038
+6,54,playing saxophone,5,1,89,4,1-2,68,singing choir,0.9845034411927425,65,"female speech, woman speaking",0.9981555150293417
+6,55,"subway, metro, underground",5,1,33,2,1-2,61,"race car, auto racing",0.9932280809633711,65,"female speech, woman speaking",0.9898858654926633
+6,56,arc welding,5,1,17,1,1-2,67,ocean burbling,0.9857486071161894,66,volcano explosion,0.987625307163702
+6,57,mynah bird singing,5,1,62,3,1-2,60,"pigeon, dove cooing",0.9922210188715667,69,playing flute,0.9926171399534665
+6,58,playing piano,5,1,79,4,1-2,69,playing flute,0.9950861476595195,63,playing vibraphone,0.9951458143015057
+6,59,playing bongo,5,1,14,1,1-2,64,playing mandolin,0.9857038003534775,63,playing vibraphone,0.9949207047459057
+7,0,playing volleyball,0,7,13,1,6+,77,printer printing,0.9884360912394622,79,lawn mowing,0.986457730502315
+7,1,child singing,0,7,88,4,6+,74,yodelling,0.9960815707148347,76,"playing violin, fiddle",0.9929997017573106
+7,2,"heart sounds, heartbeat",0,7,11,1,6+,73,woodpecker pecking tree,0.9643506192907606,76,"playing violin, fiddle",0.993060645729534
+7,3,singing bowl,0,7,35,2,6+,73,woodpecker pecking tree,0.9805699669847122,75,sharpen knife,0.9934901494349851
+7,4,cap gun shooting,0,7,58,3,6+,71,canary calling,0.9956470761966034,78,planing timber,0.9957829982077363
+7,5,rope skipping,0,7,31,2,6+,78,planing timber,0.9942435640603363,71,canary calling,0.9934207609584845
+7,6,"child speech, kid speaking",0,7,80,4,6+,75,sharpen knife,0.9962390515201222,78,planing timber,0.9940370977107241
+7,7,baby laughter,0,7,37,2,6+,75,sharpen knife,0.9945979522085046,79,lawn mowing,0.9889442336936839
+7,8,playing table tennis,0,7,3,1,6+,77,printer printing,0.9896917288564386,77,printer printing,0.9899401831710511
+7,9,lighting firecrackers,0,7,95,4,6+,78,planing timber,0.993521879383308,79,lawn mowing,0.9849716913832625
+7,10,playing bass drum,1,6,44,2,6+,78,planing timber,0.9897563559521716,74,yodelling,0.9955862145954419
+7,11,playing banjo,1,6,66,3,6+,74,yodelling,0.9920487501007194,70,playing acoustic guitar,0.9944636075524872
+7,12,fire truck siren,1,6,72,3,6+,74,yodelling,0.9932732665847641,78,planing timber,0.9844609757715979
+7,13,playing bagpipes,1,6,15,1,6+,74,yodelling,0.9777959460582626,76,"playing violin, fiddle",0.9932061160575787
+7,14,playing french horn,1,6,73,3,6+,70,playing acoustic guitar,0.9884263882674758,76,"playing violin, fiddle",0.9953640803228087
+7,15,civil defense siren,1,6,27,2,6+,76,"playing violin, fiddle",0.9947823694012452,77,printer printing,0.9932421093236867
+7,16,tractor digging,1,6,10,1,6+,79,lawn mowing,0.9895118336807376,79,lawn mowing,0.9945769542986718
+7,17,people whispering,1,6,23,1,6+,73,woodpecker pecking tree,0.9907348572451247,76,"playing violin, fiddle",0.9934468844685739
+7,18,lathe spinning,1,6,6,1,6+,74,yodelling,0.9895375433972058,76,"playing violin, fiddle",0.9937689720688281
+7,19,playing theremin,1,6,85,4,6+,70,playing acoustic guitar,0.9941102321523515,76,"playing violin, fiddle",0.995019226084001
+7,20,playing glockenspiel,2,5,28,2,3-5,71,canary calling,0.9863360032826802,71,canary calling,0.9943090771695539
+7,21,playing hammond organ,2,5,90,4,3-5,70,playing acoustic guitar,0.9962782309074422,70,playing acoustic guitar,0.9921336032648828
+7,22,police car (siren),2,5,68,3,3-5,74,yodelling,0.9940889824255651,78,planing timber,0.9861940032936334
+7,23,people cheering,2,5,60,3,3-5,79,lawn mowing,0.9957959058745531,78,planing timber,0.9882285170097888
+7,24,playing electronic organ,2,5,91,4,3-5,76,"playing violin, fiddle",0.9957457642189737,70,playing acoustic guitar,0.9918464385274088
+7,25,bowling impact,2,5,8,1,3-5,78,planing timber,0.9909391974048927,78,planing timber,0.9913757720762127
+7,26,people marching,2,5,24,1,3-5,79,lawn mowing,0.9923192790478329,79,lawn mowing,0.9930860794970692
+7,27,playing bass guitar,2,5,81,4,3-5,70,playing acoustic guitar,0.9946899567721362,70,playing acoustic guitar,0.9974765476016312
+7,28,goose honking,2,5,74,3,3-5,75,sharpen knife,0.9960690202399316,79,lawn mowing,0.9888685792914345
+7,29,playing trombone,2,5,69,3,3-5,76,"playing violin, fiddle",0.9946531351739757,76,"playing violin, fiddle",0.9964304774133106
+7,30,helicopter,3,4,50,3,3-5,79,lawn mowing,0.9961586575948995,79,lawn mowing,0.9868707103898645
+7,31,playing erhu,3,4,18,1,3-5,76,"playing violin, fiddle",0.9967260536288928,76,"playing violin, fiddle",0.995820847490294
+7,32,dog howling,3,4,29,2,3-5,72,pheasant crowing,0.9918471857936103,75,sharpen knife,0.9912068369857565
+7,33,playing synthesizer,3,4,52,3,3-5,70,playing acoustic guitar,0.9867816445580946,74,yodelling,0.9884855895652267
+7,34,cat purring,3,4,32,2,3-5,73,woodpecker pecking tree,0.9917516267808015,79,lawn mowing,0.9841385240398675
+7,35,skiing,3,4,1,1,3-5,77,printer printing,0.9882663352461785,79,lawn mowing,0.9753976648674444
+7,36,wood thrush calling,3,4,49,2,3-5,71,canary calling,0.9975637206638666,73,woodpecker pecking tree,0.9944893998339966
+7,37,scuba diving,3,4,0,1,3-5,77,printer printing,0.9917518875606546,79,lawn mowing,0.9812703382721382
+7,38,playing tambourine,3,4,36,2,3-5,78,planing timber,0.9928019741104426,76,"playing violin, fiddle",0.9977647060928887
+7,39,driving motorcycle,3,4,48,2,3-5,74,yodelling,0.9870923877224839,79,lawn mowing,0.9961997993132541
+7,40,vacuum cleaner cleaning floors,4,3,57,3,3-5,75,sharpen knife,0.9956935413678967,78,planing timber,0.9893642246411356
+7,41,playing squash,4,3,4,1,3-5,77,printer printing,0.9925542157113907,77,printer printing,0.9881998130195015
+7,42,slot machine,4,3,12,1,3-5,78,planing timber,0.9940269663383164,71,canary calling,0.9795693994010082
+7,43,beat boxing,4,3,41,2,3-5,78,planing timber,0.9895069816129872,78,planing timber,0.9937317372367839
+7,44,playing cello,4,3,82,4,3-5,70,playing acoustic guitar,0.9950742477875523,76,"playing violin, fiddle",0.9953229411518258
+7,45,playing cornet,4,3,7,1,3-5,70,playing acoustic guitar,0.9927200371297075,71,canary calling,0.9941905481519722
+7,46,wind noise,4,3,78,4,3-5,77,printer printing,0.986723131099686,77,printer printing,0.9877125184930233
+7,47,"playing steel guitar, slide guitar",4,3,45,2,3-5,76,"playing violin, fiddle",0.9964245922887116,76,"playing violin, fiddle",0.9961448309845856
+7,48,orchestra,4,3,86,4,3-5,74,yodelling,0.9954854815284351,74,yodelling,0.9908220898355836
+7,49,playing harp,4,3,59,3,3-5,70,playing acoustic guitar,0.9878533663746631,73,woodpecker pecking tree,0.9872209640156434
+7,50,roller coaster running,5,2,30,2,1-2,79,lawn mowing,0.9919852927880783,79,lawn mowing,0.9692669974942609
+7,51,missile launch,5,2,21,1,1-2,74,yodelling,0.9878329479547072,77,printer printing,0.9671401700932128
+7,52,"playing marimba, xylophone",5,2,97,4,1-2,70,playing acoustic guitar,0.9965920201683156,74,yodelling,0.9940433715989546
+7,53,airplane flyby,5,2,5,1,1-2,79,lawn mowing,0.9936469659705961,79,lawn mowing,0.9424019278503384
+7,54,playing saxophone,5,2,89,4,1-2,74,yodelling,0.9944829452073338,76,"playing violin, fiddle",0.9974172032089119
+7,55,"subway, metro, underground",5,2,33,2,1-2,79,lawn mowing,0.9970987121297259,77,printer printing,0.9938830142653972
+7,56,arc welding,5,2,17,1,1-2,78,planing timber,0.9927105648947487,78,planing timber,0.9932295336346111
+7,57,mynah bird singing,5,2,62,3,1-2,71,canary calling,0.998218359011751,74,yodelling,0.9935287566803277
+7,58,playing piano,5,2,79,4,1-2,70,playing acoustic guitar,0.9973343958412106,70,playing acoustic guitar,0.9947280104969942
+7,59,playing bongo,5,2,14,1,1-2,78,planing timber,0.9853145512353889,76,"playing violin, fiddle",0.9952867784346928
+7,60,"pigeon, dove cooing",6,1,51,3,1-2,72,pheasant crowing,0.9947647779497555,79,lawn mowing,0.9914915355920367
+7,61,"race car, auto racing",6,1,47,2,1-2,79,lawn mowing,0.9944860845907479,79,lawn mowing,0.9779154580517744
+7,62,people crowd,6,1,70,3,1-2,79,lawn mowing,0.9908523116780685,79,lawn mowing,0.9856974733085515
+7,63,playing vibraphone,6,1,94,4,1-2,70,playing acoustic guitar,0.987876142027988,74,yodelling,0.9942763646911312
+7,64,playing mandolin,6,1,55,3,1-2,70,playing acoustic guitar,0.9954421182998754,76,"playing violin, fiddle",0.9954848781219819
+7,65,"female speech, woman speaking",6,1,76,4,1-2,75,sharpen knife,0.994297988272727,76,"playing violin, fiddle",0.9966968375381863
+7,66,volcano explosion,6,1,42,2,1-2,77,printer printing,0.996226898319421,77,printer printing,0.992211299882461
+7,67,ocean burbling,6,1,71,3,1-2,74,yodelling,0.985094211800172,77,printer printing,0.9760490304724899
+7,68,singing choir,6,1,87,4,1-2,79,lawn mowing,0.9939803735500072,74,yodelling,0.9942121403448436
+7,69,playing flute,6,1,83,4,1-2,70,playing acoustic guitar,0.9936856471136617,76,"playing violin, fiddle",0.9951817873950504
+8,0,playing volleyball,0,8,13,1,6+,80,"electric shaver, electric razor shaving",0.9965297245873974,84,stream burbling,0.9884096249254006
+8,1,child singing,0,8,88,4,6+,87,playing sitar,0.996588638400244,89,people whistling,0.9927021982396007
+8,2,"heart sounds, heartbeat",0,8,11,1,6+,89,people whistling,0.9143388907949015,89,people whistling,0.995451887565306
+8,3,singing bowl,0,8,35,2,6+,89,people whistling,0.9535345044073112,89,people whistling,0.9938854504099148
+8,4,cap gun shooting,0,8,58,3,6+,89,people whistling,0.9888165220760496,80,"electric shaver, electric razor shaving",0.9937458517366695
+8,5,rope skipping,0,8,31,2,6+,82,tap dancing,0.9969924206034196,82,tap dancing,0.993490158092741
+8,6,"child speech, kid speaking",0,8,80,4,6+,89,people whistling,0.9953259244802365,80,"electric shaver, electric razor shaving",0.996150175477337
+8,7,baby laughter,0,8,37,2,6+,86,police radio chatter,0.9945727432714913,80,"electric shaver, electric razor shaving",0.9961059502999163
+8,8,playing table tennis,0,8,3,1,6+,80,"electric shaver, electric razor shaving",0.9964110744780472,82,tap dancing,0.9924100321378463
+8,9,lighting firecrackers,0,8,95,4,6+,82,tap dancing,0.996925660155568,84,stream burbling,0.9817624318220592
+8,10,playing bass drum,1,7,44,2,6+,80,"electric shaver, electric razor shaving",0.9942360953779741,83,tapping guitar,0.996356421567503
+8,11,playing banjo,1,7,66,3,6+,87,playing sitar,0.9955729204975847,88,playing electric guitar,0.9977475556088873
+8,12,fire truck siren,1,7,72,3,6+,87,playing sitar,0.9940024756934391,84,stream burbling,0.9865795117774467
+8,13,playing bagpipes,1,7,15,1,6+,87,playing sitar,0.9860053027022668,87,playing sitar,0.9933759170217118
+8,14,playing french horn,1,7,73,3,6+,85,playing bassoon,0.9957071126956141,85,playing bassoon,0.9980668267206659
+8,15,civil defense siren,1,7,27,2,6+,83,tapping guitar,0.9895020741937934,82,tap dancing,0.9905541776429378
+8,16,tractor digging,1,7,10,1,6+,88,playing electric guitar,0.9815528134677525,84,stream burbling,0.9939098957769664
+8,17,people whispering,1,7,23,1,6+,89,people whistling,0.9670876279550955,89,people whistling,0.9964149593340532
+8,18,lathe spinning,1,7,6,1,6+,88,playing electric guitar,0.9875440356404425,89,people whistling,0.9960368125441786
+8,19,playing theremin,1,7,85,4,6+,85,playing bassoon,0.9970259269826343,88,playing electric guitar,0.995921436829411
+8,20,playing glockenspiel,2,6,28,2,6+,89,people whistling,0.9926848997261969,85,playing bassoon,0.9971302114476738
+8,21,playing hammond organ,2,6,90,4,6+,85,playing bassoon,0.9911442925154281,88,playing electric guitar,0.9948776674213196
+8,22,police car (siren),2,6,68,3,6+,83,tapping guitar,0.9913889356841115,84,stream burbling,0.9898882378703373
+8,23,people cheering,2,6,60,3,6+,88,playing electric guitar,0.9843431698758209,82,tap dancing,0.9859838972564104
+8,24,playing electronic organ,2,6,91,4,6+,83,tapping guitar,0.992252345381214,83,tapping guitar,0.992771375558874
+8,25,bowling impact,2,6,8,1,6+,82,tap dancing,0.9947657228574598,82,tap dancing,0.9917174285111896
+8,26,people marching,2,6,24,1,6+,88,playing electric guitar,0.9872881061815298,84,stream burbling,0.9925065842176503
+8,27,playing bass guitar,2,6,81,4,6+,85,playing bassoon,0.9924423628830104,88,playing electric guitar,0.9977184877526708
+8,28,goose honking,2,6,74,3,6+,89,people whistling,0.9945259894315499,84,stream burbling,0.9933685011826848
+8,29,playing trombone,2,6,69,3,6+,83,tapping guitar,0.9955049932743205,88,playing electric guitar,0.997956539386652
+8,30,helicopter,3,5,50,3,3-5,88,playing electric guitar,0.9641936095127398,84,stream burbling,0.9877841492114907
+8,31,playing erhu,3,5,18,1,3-5,83,tapping guitar,0.9944694771841887,85,playing bassoon,0.9963803183160947
+8,32,dog howling,3,5,29,2,3-5,89,people whistling,0.9956090772301261,80,"electric shaver, electric razor shaving",0.9925371033516102
+8,33,playing synthesizer,3,5,52,3,3-5,80,"electric shaver, electric razor shaving",0.9889424895084534,86,police radio chatter,0.9908489493759904
+8,34,cat purring,3,5,32,2,3-5,89,people whistling,0.9523025480374585,80,"electric shaver, electric razor shaving",0.9903210491180305
+8,35,skiing,3,5,1,1,3-5,84,stream burbling,0.9950644845145433,84,stream burbling,0.9809011236889864
+8,36,wood thrush calling,3,5,49,2,3-5,89,people whistling,0.9884614952390472,87,playing sitar,0.993925201722891
+8,37,scuba diving,3,5,0,1,3-5,89,people whistling,0.9874370779518313,80,"electric shaver, electric razor shaving",0.9757522453310812
+8,38,playing tambourine,3,5,36,2,3-5,80,"electric shaver, electric razor shaving",0.993794770908099,89,people whistling,0.9966814893134518
+8,39,driving motorcycle,3,5,48,2,3-5,82,tap dancing,0.9884375842801839,84,stream burbling,0.9938372518630482
+8,40,vacuum cleaner cleaning floors,4,4,57,3,3-5,86,police radio chatter,0.9903423076968879,80,"electric shaver, electric razor shaving",0.9870884919754149
+8,41,playing squash,4,4,4,1,3-5,80,"electric shaver, electric razor shaving",0.9961906610446248,82,tap dancing,0.9903171828932104
+8,42,slot machine,4,4,12,1,3-5,82,tap dancing,0.9936756278811769,82,tap dancing,0.9760994557214395
+8,43,beat boxing,4,4,41,2,3-5,82,tap dancing,0.996517177941866,82,tap dancing,0.9937712550125568
+8,44,playing cello,4,4,82,4,3-5,85,playing bassoon,0.9892873782365781,85,playing bassoon,0.9976013818431786
+8,45,playing cornet,4,4,7,1,3-5,85,playing bassoon,0.9961061506794011,85,playing bassoon,0.9977787927278061
+8,46,wind noise,4,4,78,4,3-5,84,stream burbling,0.9940720001513366,84,stream burbling,0.9866258941449287
+8,47,"playing steel guitar, slide guitar",4,4,45,2,3-5,83,tapping guitar,0.996362788388181,88,playing electric guitar,0.9985968204099708
+8,48,orchestra,4,4,86,4,3-5,87,playing sitar,0.996755596658443,85,playing bassoon,0.9905839536101827
+8,49,playing harp,4,4,59,3,3-5,85,playing bassoon,0.9910317348161853,87,playing sitar,0.9917979985700671
+8,50,roller coaster running,5,3,30,2,3-5,88,playing electric guitar,0.9846915875887292,84,stream burbling,0.9656161503645264
+8,51,missile launch,5,3,21,1,3-5,82,tap dancing,0.9911137107737911,80,"electric shaver, electric razor shaving",0.9697685899615993
+8,52,"playing marimba, xylophone",5,3,97,4,3-5,85,playing bassoon,0.9935725426169493,85,playing bassoon,0.9939883836399986
+8,53,airplane flyby,5,3,5,1,3-5,88,playing electric guitar,0.9841310181520296,84,stream burbling,0.94823319654424
+8,54,playing saxophone,5,3,89,4,3-5,87,playing sitar,0.9967720405806767,89,people whistling,0.997940143270914
+8,55,"subway, metro, underground",5,3,33,2,3-5,88,playing electric guitar,0.971754261030722,82,tap dancing,0.9945513633601041
+8,56,arc welding,5,3,17,1,3-5,81,fireworks banging,0.997279710796599,80,"electric shaver, electric razor shaving",0.9945449673300858
+8,57,mynah bird singing,5,3,62,3,3-5,89,people whistling,0.9903128602032445,83,tapping guitar,0.994584212265613
+8,58,playing piano,5,3,79,4,3-5,85,playing bassoon,0.9953242376914564,83,tapping guitar,0.9951321730344502
+8,59,playing bongo,5,3,14,1,3-5,82,tap dancing,0.9912272511395623,88,playing electric guitar,0.9975716143964342
+8,60,"pigeon, dove cooing",6,2,51,3,1-2,89,people whistling,0.9861186216339282,84,stream burbling,0.9903773904764778
+8,61,"race car, auto racing",6,2,47,2,1-2,88,playing electric guitar,0.9871835285104822,84,stream burbling,0.9843247793285043
+8,62,people crowd,6,2,70,3,1-2,88,playing electric guitar,0.9704979008118699,84,stream burbling,0.9822503797281248
+8,63,playing vibraphone,6,2,94,4,1-2,85,playing bassoon,0.9933899040962856,83,tapping guitar,0.9934449071954194
+8,64,playing mandolin,6,2,55,3,1-2,85,playing bassoon,0.9949187117585069,87,playing sitar,0.997528575853345
+8,65,"female speech, woman speaking",6,2,76,4,1-2,89,people whistling,0.9960081207726957,89,people whistling,0.9969853302038053
+8,66,volcano explosion,6,2,42,2,1-2,80,"electric shaver, electric razor shaving",0.9852045046746603,84,stream burbling,0.9883066895588546
+8,67,ocean burbling,6,2,71,3,1-2,82,tap dancing,0.9862455500936862,84,stream burbling,0.9824576680500589
+8,68,singing choir,6,2,87,4,1-2,88,playing electric guitar,0.986586226565167,88,playing electric guitar,0.9919266197803905
+8,69,playing flute,6,2,83,4,1-2,85,playing bassoon,0.9964627344920102,89,people whistling,0.9968329438789969
+8,70,playing acoustic guitar,7,1,64,3,1-2,85,playing bassoon,0.9955716507051249,83,tapping guitar,0.9962443186770799
+8,71,canary calling,7,1,25,2,1-2,89,people whistling,0.993863245661033,85,playing bassoon,0.9936939059435977
+8,72,pheasant crowing,7,1,53,3,1-2,89,people whistling,0.9924276518868638,87,playing sitar,0.9837955201887255
+8,73,woodpecker pecking tree,7,1,19,1,1-2,89,people whistling,0.9755296088388714,87,playing sitar,0.9920272425166827
+8,74,yodelling,7,1,65,3,1-2,87,playing sitar,0.9971404189207828,83,tapping guitar,0.9944628884571897
+8,75,sharpen knife,7,1,26,2,1-2,86,police radio chatter,0.992698386641161,89,people whistling,0.9931019855184771
+8,76,"playing violin, fiddle",7,1,67,3,1-2,83,tapping guitar,0.9948381583287645,89,people whistling,0.9973888605523016
+8,77,printer printing,7,1,39,2,1-2,80,"electric shaver, electric razor shaving",0.9881029306041577,82,tap dancing,0.9922151306086072
+8,78,planing timber,7,1,38,2,1-2,83,tapping guitar,0.9915399322903934,80,"electric shaver, electric razor shaving",0.9916261316554282
+8,79,lawn mowing,7,1,46,2,1-2,88,playing electric guitar,0.9741947523730834,84,stream burbling,0.9939578121949073
+9,0,playing volleyball,0,9,13,1,6+,97,playing cymbal,0.9946845195210838,98,people booing,0.9902336970992027
+9,1,child singing,0,9,88,4,6+,92,playing accordion,0.9925588034418994,93,playing tabla,0.9910378454235814
+9,2,"heart sounds, heartbeat",0,9,11,1,6+,99,dog growling,0.9250354473518786,90,playing double bass,0.9927688761803838
+9,3,singing bowl,0,9,35,2,6+,90,playing double bass,0.9587073711538294,93,playing tabla,0.9946980831009314
+9,4,cap gun shooting,0,9,58,3,6+,99,dog growling,0.9905032483028757,93,playing tabla,0.9889518990971642
+9,5,rope skipping,0,9,31,2,6+,93,playing tabla,0.9934668157038589,91,"male speech, man speaking",0.9942390802326313
+9,6,"child speech, kid speaking",0,9,80,4,6+,91,"male speech, man speaking",0.9970104773097006,99,dog growling,0.9943134731913849
+9,7,baby laughter,0,9,37,2,6+,91,"male speech, man speaking",0.990287562393602,99,dog growling,0.9930778566088135
+9,8,playing table tennis,0,9,3,1,6+,97,playing cymbal,0.9967089647089653,91,"male speech, man speaking",0.9922763340044924
+9,9,lighting firecrackers,0,9,95,4,6+,93,playing tabla,0.9919146248748728,98,people booing,0.9885291050057577
+9,10,playing bass drum,1,8,44,2,6+,97,playing cymbal,0.9958908102055551,97,playing cymbal,0.9969455019250982
+9,11,playing banjo,1,8,66,3,6+,92,playing accordion,0.9949163570290589,97,playing cymbal,0.9964297103048598
+9,12,fire truck siren,1,8,72,3,6+,92,playing accordion,0.9910869096629815,98,people booing,0.9931825889940583
+9,13,playing bagpipes,1,8,15,1,6+,92,playing accordion,0.9879371525613868,93,playing tabla,0.9942378316778687
+9,14,playing french horn,1,8,73,3,6+,94,playing clarinet,0.9921216242725657,94,playing clarinet,0.9970330074168107
+9,15,civil defense siren,1,8,27,2,6+,95,playing harpsichord,0.9872665572360244,91,"male speech, man speaking",0.9878351340656337
+9,16,tractor digging,1,8,10,1,6+,98,people booing,0.9915356956605372,98,people booing,0.9840346823083825
+9,17,people whispering,1,8,23,1,6+,99,dog growling,0.9723876116395717,90,playing double bass,0.9940514171550169
+9,18,lathe spinning,1,8,6,1,6+,98,people booing,0.9954904059576927,93,playing tabla,0.9971997451290395
+9,19,playing theremin,1,8,85,4,6+,94,playing clarinet,0.9943187820083547,94,playing clarinet,0.997089221926036
+9,20,playing glockenspiel,2,7,28,2,6+,90,playing double bass,0.9892931749005152,95,playing harpsichord,0.9964122203717672
+9,21,playing hammond organ,2,7,90,4,6+,94,playing clarinet,0.9911963373513413,95,playing harpsichord,0.9968068626535195
+9,22,police car (siren),2,7,68,3,6+,98,people booing,0.9928579203493119,98,people booing,0.9933999595066121
+9,23,people cheering,2,7,60,3,6+,96,hail,0.9930102365324753,98,people booing,0.9908188734957345
+9,24,playing electronic organ,2,7,91,4,6+,95,playing harpsichord,0.9945145897613075,95,playing harpsichord,0.9954899625098613
+9,25,bowling impact,2,7,8,1,6+,98,people booing,0.991359237615441,98,people booing,0.9889521253209924
+9,26,people marching,2,7,24,1,6+,98,people booing,0.9914911403385873,98,people booing,0.9915101529835464
+9,27,playing bass guitar,2,7,81,4,6+,94,playing clarinet,0.9897121997752159,94,playing clarinet,0.9961560917835774
+9,28,goose honking,2,7,74,3,6+,91,"male speech, man speaking",0.9960757659437045,98,people booing,0.9914295214885108
+9,29,playing trombone,2,7,69,3,6+,95,playing harpsichord,0.991494765079929,93,playing tabla,0.9975910012360536
+9,30,helicopter,3,6,50,3,6+,96,hail,0.99683722083198,96,hail,0.990716014669063
+9,31,playing erhu,3,6,18,1,6+,95,playing harpsichord,0.9955555528665384,93,playing tabla,0.9978786908835863
+9,32,dog howling,3,6,29,2,6+,90,playing double bass,0.9930537596091247,93,playing tabla,0.9907221229002272
+9,33,playing synthesizer,3,6,52,3,6+,97,playing cymbal,0.9879887077307448,95,playing harpsichord,0.9928999764897132
+9,34,cat purring,3,6,32,2,6+,99,dog growling,0.9631620091100672,99,dog growling,0.9947216810242504
+9,35,skiing,3,6,1,1,6+,97,playing cymbal,0.9944053367695254,96,hail,0.9837926493495059
+9,36,wood thrush calling,3,6,49,2,6+,99,dog growling,0.9917795122804558,93,playing tabla,0.9937912784003389
+9,37,scuba diving,3,6,0,1,6+,99,dog growling,0.9928503779235063,96,hail,0.9860971227406553
+9,38,playing tambourine,3,6,36,2,6+,97,playing cymbal,0.9949023387849911,90,playing double bass,0.9972232375283121
+9,39,driving motorcycle,3,6,48,2,6+,98,people booing,0.9917247215535354,96,hail,0.9917387813012921
+9,40,vacuum cleaner cleaning floors,4,5,57,3,3-5,91,"male speech, man speaking",0.9906726568510705,96,hail,0.9876011291833864
+9,41,playing squash,4,5,4,1,3-5,97,playing cymbal,0.9947682409789584,93,playing tabla,0.9838972143399622
+9,42,slot machine,4,5,12,1,3-5,93,playing tabla,0.9954214546511565,91,"male speech, man speaking",0.9766222242061728
+9,43,beat boxing,4,5,41,2,3-5,93,playing tabla,0.9930981482732864,98,people booing,0.9900395869079831
+9,44,playing cello,4,5,82,4,3-5,94,playing clarinet,0.9929776108128509,94,playing clarinet,0.9972513450157133
+9,45,playing cornet,4,5,7,1,3-5,94,playing clarinet,0.9982604698077562,94,playing clarinet,0.9940125162316429
+9,46,wind noise,4,5,78,4,3-5,97,playing cymbal,0.9879919606668834,98,people booing,0.985985509218435
+9,47,"playing steel guitar, slide guitar",4,5,45,2,3-5,95,playing harpsichord,0.9935101357570852,90,playing double bass,0.9968489220082747
+9,48,orchestra,4,5,86,4,3-5,92,playing accordion,0.9937260621394777,91,"male speech, man speaking",0.9943818026299468
+9,49,playing harp,4,5,59,3,3-5,90,playing double bass,0.989786677194475,92,playing accordion,0.9936506122472515
+9,50,roller coaster running,5,4,30,2,3-5,98,people booing,0.9912423889562161,96,hail,0.9762087361073031
+9,51,missile launch,5,4,21,1,3-5,98,people booing,0.9931793998908783,98,people booing,0.9725221091180807
+9,52,"playing marimba, xylophone",5,4,97,4,3-5,94,playing clarinet,0.9949960624894097,91,"male speech, man speaking",0.9963397304009951
+9,53,airplane flyby,5,4,5,1,3-5,98,people booing,0.9928835674085552,96,hail,0.9674656432561045
+9,54,playing saxophone,5,4,89,4,3-5,92,playing accordion,0.994478012226502,93,playing tabla,0.9979112952358541
+9,55,"subway, metro, underground",5,4,33,2,3-5,96,hail,0.9914850796056139,91,"male speech, man speaking",0.9920578418547785
+9,56,arc welding,5,4,17,1,3-5,97,playing cymbal,0.9916621295173891,99,dog growling,0.9874231189785674
+9,57,mynah bird singing,5,4,62,3,3-5,99,dog growling,0.9938546532336183,95,playing harpsichord,0.9930278561640488
+9,58,playing piano,5,4,79,4,3-5,94,playing clarinet,0.9973534401468604,95,playing harpsichord,0.9966473700035688
+9,59,playing bongo,5,4,14,1,3-5,93,playing tabla,0.9937519873827214,97,playing cymbal,0.9974071602244704
+9,60,"pigeon, dove cooing",6,3,51,3,3-5,99,dog growling,0.9908939880587124,96,hail,0.990797911857296
+9,61,"race car, auto racing",6,3,47,2,3-5,98,people booing,0.9944007338466414,98,people booing,0.9893474948190017
+9,62,people crowd,6,3,70,3,3-5,96,hail,0.9916694150426095,98,people booing,0.9933176751539161
+9,63,playing vibraphone,6,3,94,4,3-5,90,playing double bass,0.9932952344666194,91,"male speech, man speaking",0.9962512042389009
+9,64,playing mandolin,6,3,55,3,3-5,94,playing clarinet,0.9963345715651413,93,playing tabla,0.9957898513142468
+9,65,"female speech, woman speaking",6,3,76,4,3-5,91,"male speech, man speaking",0.9986856492155453,93,playing tabla,0.997944974110067
+9,66,volcano explosion,6,3,42,2,3-5,91,"male speech, man speaking",0.9879707972878604,98,people booing,0.9926381052422583
+9,67,ocean burbling,6,3,71,3,3-5,98,people booing,0.9931314339473319,98,people booing,0.9798850768037642
+9,68,singing choir,6,3,87,4,3-5,98,people booing,0.9925494061745848,91,"male speech, man speaking",0.9937477652687817
+9,69,playing flute,6,3,83,4,3-5,94,playing clarinet,0.9967490129938916,93,playing tabla,0.9978273148944933
+9,70,playing acoustic guitar,7,2,64,3,1-2,94,playing clarinet,0.9951503342545543,94,playing clarinet,0.9944558310688353
+9,71,canary calling,7,2,25,2,1-2,99,dog growling,0.994685367925698,94,playing clarinet,0.9916119242422121
+9,72,pheasant crowing,7,2,53,3,1-2,99,dog growling,0.9950954327728811,93,playing tabla,0.98453704786575
+9,73,woodpecker pecking tree,7,2,19,1,1-2,99,dog growling,0.9828928679447142,93,playing tabla,0.9914890310644688
+9,74,yodelling,7,2,65,3,1-2,95,playing harpsichord,0.9959753332687897,91,"male speech, man speaking",0.995391456495389
+9,75,sharpen knife,7,2,26,2,1-2,91,"male speech, man speaking",0.9945196367611877,93,playing tabla,0.9932723086604233
+9,76,"playing violin, fiddle",7,2,67,3,1-2,95,playing harpsichord,0.9936456122822838,90,playing double bass,0.9966436427324314
+9,77,printer printing,7,2,39,2,1-2,91,"male speech, man speaking",0.9857605785632204,93,playing tabla,0.9866072161216531
+9,78,planing timber,7,2,38,2,1-2,93,playing tabla,0.9908781143075795,98,people booing,0.9883357395187011
+9,79,lawn mowing,7,2,46,2,1-2,96,hail,0.9954862046290406,98,people booing,0.9878799961275586
+9,80,"electric shaver, electric razor shaving",8,1,20,1,1-2,97,playing cymbal,0.9972255339384241,99,dog growling,0.9926707139892942
+9,81,fireworks banging,8,1,43,2,1-2,97,playing cymbal,0.9921084323965949,98,people booing,0.9404130801815019
+9,82,tap dancing,8,1,9,1,1-2,93,playing tabla,0.9942067577239883,91,"male speech, man speaking",0.9925503350601808
+9,83,tapping guitar,8,1,93,4,1-2,95,playing harpsichord,0.995055773273894,95,playing harpsichord,0.9961553363998927
+9,84,stream burbling,8,1,61,3,1-2,97,playing cymbal,0.9897721504897863,98,people booing,0.9890053013021493
+9,85,playing bassoon,8,1,16,1,1-2,94,playing clarinet,0.9959742723643032,94,playing clarinet,0.9963863237219868
+9,86,police radio chatter,8,1,22,1,1-2,91,"male speech, man speaking",0.9942878230318579,91,"male speech, man speaking",0.990435815249737
+9,87,playing sitar,8,1,96,4,1-2,95,playing harpsichord,0.9966958382920497,93,playing tabla,0.9957758887042109
+9,88,playing electric guitar,8,1,84,4,1-2,95,playing harpsichord,0.9957702300476383,94,playing clarinet,0.9971835253157149
+9,89,people whistling,8,1,75,4,1-2,91,"male speech, man speaking",0.9973324600686244,93,playing tabla,0.9982081521132313

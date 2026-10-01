@@ -1,0 +1,28 @@
+{
+  "signature": "af8f24ac31441cc2ac3403918f0ad86d21bbd86982d66fe2f9db13d3b3dbe2ce",
+  "config": {
+    "feature_root": "/groups/ytian/lujing/lujing/datasets/VGGSound",
+    "meta_root": "data2/balance",
+    "archive_root": "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch",
+    "metrics_seeds": [
+      42,
+      43,
+      44
+    ],
+    "geometry_seeds": [
+      42
+    ],
+    "steps": [
+      1,
+      5,
+      9
+    ],
+    "reference_per_class": 20,
+    "query_per_class": 0,
+    "sample_seed": 20261001,
+    "threads": 4,
+    "batch_size": 4,
+    "device": "cpu"
+  },
+  "attribution": "A/B versus AVCIL compares CrossSDC-I + CMR against AVCIL, not CMR alone. A versus B changes both lambda and alpha. Seeds share one class order."
+}

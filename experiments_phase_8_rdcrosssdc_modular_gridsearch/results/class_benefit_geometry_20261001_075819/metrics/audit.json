@@ -1,0 +1,48 @@
+{
+  "runs": [
+    {
+      "method": "hinge_A",
+      "seed": 42,
+      "n_class_step_rows": 550,
+      "step0_counts_identical": true
+    },
+    {
+      "method": "hinge_B",
+      "seed": 42,
+      "n_class_step_rows": 550,
+      "step0_counts_identical": true
+    },
+    {
+      "method": "hinge_A",
+      "seed": 43,
+      "n_class_step_rows": 550,
+      "step0_counts_identical": true
+    },
+    {
+      "method": "hinge_B",
+      "seed": 43,
+      "n_class_step_rows": 550,
+      "step0_counts_identical": true
+    },
+    {
+      "method": "hinge_A",
+      "seed": 44,
+      "n_class_step_rows": 550,
+      "step0_counts_identical": true
+    },
+    {
+      "method": "hinge_B",
+      "seed": 44,
+      "n_class_step_rows": 550,
+      "step0_counts_identical": true
+    }
+  ],
+  "class_order_shared": true,
+  "difficulty_join": "category_name, not class_id",
+  "paired_unit": "seed + class + evaluation_step",
+  "uncertainty": "SD across seeds; no independence assumed across steps, classes or repeated test samples",
+  "retention": "delta_f1(t) - delta_f1(first_seen); not the max-history forget_f1 column",
+  "support_values": [
+    50
+  ]
+}

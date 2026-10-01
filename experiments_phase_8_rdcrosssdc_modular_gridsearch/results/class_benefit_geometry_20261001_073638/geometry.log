@@ -1,0 +1,40 @@
+Input reference: 652/2000
+Input reference: 1184/2000
+Input reference: 1752/2000
+Input query: 388/5000
+Input query: 1272/5000
+Input query: 1892/5000
+Input query: 2516/5000
+Input query: 3200/5000
+Input query: 3832/5000
+Input query: 4372/5000
+Input query: 4808/5000
+Fixed input features cached
+Seed 42 step 0 query: 444/500; 3 models
+Completed extraction: seed 42, step 0
+Seed 42 step 1 query: 644/1000; 3 models
+Completed extraction: seed 42, step 1
+Seed 42 step 4 reference: 848/1000; 3 models
+Seed 42 step 4 query: 772/2500; 3 models
+Seed 42 step 4 query: 1440/2500; 3 models
+Seed 42 step 4 query: 2048/2500; 3 models
+Completed extraction: seed 42, step 4
+Seed 42 step 5 reference: 1096/1200; 3 models
+Seed 42 step 5 query: 812/3000; 3 models
+Seed 42 step 5 query: 2036/3000; 3 models
+Traceback (most recent call last):
+  File "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch/probe_class_geometry.py", line 439, in <module>
+    run(args)
+  File "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch/probe_class_geometry.py", line 346, in run
+    extract_states(store,plan,runs,args.steps,args,out)
+  File "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch/probe_class_geometry.py", line 196, in extract_states
+    result = model(visual=visual,audio=audio,return_dict=True,out_analysis_features=True)
+  File "/groups/ytian/lujing/miniconda3/envs/avcil-h200/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/groups/ytian/lujing/miniconda3/envs/avcil-h200/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/model/audio_visual_model_incremental.py", line 246, in forward
+    spatial_attn_score, temporal_attn_score = self.audio_visual_attention(audio, visual_4d)
+  File "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/model/audio_visual_model_incremental.py", line 391, in audio_visual_attention
+    spatial_attned_proj_visual_features = torch.sum(spatial_attn_score * proj_visual_features, dim=2)
+RuntimeError: [enforce fail at alloc_cpu.cpp:118] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 19267584 bytes. Error code 12 (Cannot allocate memory)

@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "parameters_and_buffers_unchanged": true,
+  "historical_count_mismatch_rows": [],
+  "confusion_changes": 3177,
+  "optimizer_updates": 0,
+  "backward_calls": 0,
+  "query_split": "test",
+  "reference_split": "train",
+  "geometry_candidates": "all seen classes; comparisons only within the same evaluation step",
+  "retention_candidates": "old classes only, own previous-step teacher; fixed TRAIN references, not original memory",
+  "fixed_input_candidates": 100,
+  "reference_ids_shared": true,
+  "query_ids_shared": true,
+  "cross_model_coordinate_comparison": false,
+  "uncertainty": "Default geometry uses one seed and one reference draw; descriptive only"
+}
