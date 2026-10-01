@@ -1,0 +1,155 @@
+{
+  "source": "offline_checkpoint_fixed_train_probe",
+  "input_files": {
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p03_alpha_0p5\\metadata.json": "db7b37702fe3f5bb36aa1a16da4d2fca4f4fafab37bb654f50f9b9d94e2ace55",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p03_alpha_0p5\\probe_manifest.json": "3bfaddb7dcfa0945696b832ebea06583af4d9651fa38277dc60ce7abdcc8b5f9",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p03_alpha_0p5\\components.csv": "62bea790aea5f90704b17bbe039ebbb700323b20faa426f0cf8dfcb899738357",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p03_alpha_0p5\\component_summary.csv": "0d53b52626f8c219273c3d71798abc522c61b01565578b0d99840cca0fa92569",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p03_alpha_0p5\\gradient_pairs.csv": "be5a15ead355c6f46e263e455021b0b299f3139232ed0d8b9aa620dfb7d5e3e6",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p03_alpha_0p5\\lambda_sweep.csv": "bf2bf521fb8c71b685c5b16fcce9e4a3715d2691003853528209c93be59c344d",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\probe_checkpoint_losses.py": "5a24ac6d76dbb795173df05dc54d605be88a1ce8b48a1472985bf5491762c381",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\rd_crosssdc\\exact_losses.py": "44819408ccf6215ca39d9ee11f2f4f8389aa754aa7860b6e8d541ca761b7b137",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\rd_crosssdc\\rd_method.py": "44692d12569072a5cba237bbb163dbb04417010118f66a28bd0aa4fd8613fdea",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\rd_crosssdc\\cmr_penalties.py": "4a3aecefa09f454b78707b6400987c9f0c397232289648c5a6451a3094a3bbed",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\dataloader_ours.py": "6b3a6508beacc21dc04fc9701a6f058f5d54f221cc5fabda8f159b48e973fd33",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\model\\audio_visual_model_incremental.py": "b3d5424e156ced04d7cb0ac3e8b60a93dca69482dcbd8b2da0a8db479873e144",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\data2\\balance\\all_id_category_dict.npy": "01fb8dfb130288b30bb9dff64aae2ae8425f2ced6df336e1b14c4e623d4df66d",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\data2\\balance\\category_encode_dict.npy": "2aa2734120815f1d79121f868d67746f50ed4339d1d9a5589f72ba853d796d33",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\data2\\balance\\all_classId_vid_dict.npy": "a912327bab73fc3eb88e27f87bcc5c9c3105fc6b3b445becfea81448700a23b7",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\epoch_summary.csv": "a319277aca3d28e6bd18644eafa5b5afa2d4d7247c73e8501067644bdca48261",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42\\per_class_metrics.csv": "0709a1251d120af4baab451d90c8deacf91c1dc67fe398237041ac61c7ee3c6c",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p1_alpha_1p0\\metadata.json": "5a5d6e7701e9f7ec1445e16bd43571b1c8962d90e2880b23b767ee87d898d4dd",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p1_alpha_1p0\\probe_manifest.json": "3bfaddb7dcfa0945696b832ebea06583af4d9651fa38277dc60ce7abdcc8b5f9",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p1_alpha_1p0\\components.csv": "3d0f587b4687b4a8e2228f99fc2125bf63bf9b7a8caf6f3d13ee51f4330097b5",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p1_alpha_1p0\\component_summary.csv": "5e0fb964781221dcbf2729da5c1a35a2ceee480aba260b62568e8ec52f2d73af",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p1_alpha_1p0\\gradient_pairs.csv": "c58ad57afc27d2446bba8b1d30d016775398821475cf0aa6260502f57893f182",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\results\\gradient_cpu_hinge_tol001_seed42_20260930_172453\\lambda_0p1_alpha_1p0\\lambda_sweep.csv": "41c3c182f90e97a388be93e7ef69025f4ad046dd5ad2a836b7c43afe0d3583d0",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\rd_crosssdc\\epoch_summary.csv": "ac2042e728aea406e51df9c6b2fede37cd2f294f43dbe8425cb003c21ea7421a",
+    "\\\\?\\E:\\School\\Projects\\AVCIL\\avcil-research\\experiments_phase_8_rdcrosssdc_modular_gridsearch\\save_commands_cmr_hinge_tolerance_focus_3seeds\\metrics\\VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42\\per_class_metrics.csv": "17b2b0cf7b5530e672fdf3cdc4af531f9983ef08e5c72d5db7c7fbcb5b709bdb"
+  },
+  "runs": {
+    "A": {
+      "folder": "lambda_0p03_alpha_0p5",
+      "completed": true,
+      "batches": 9,
+      "steps": [
+        1,
+        5,
+        9
+      ],
+      "scope_count": 3,
+      "max_gradient_reconstruction_residual": 1.0235670742986258e-05,
+      "max_relative_gradient_reconstruction_residual": 4.999939470358321e-06,
+      "code_files_verified": [
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/probe_checkpoint_losses.py",
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/rd_crosssdc/exact_losses.py",
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/rd_crosssdc/rd_method.py",
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/rd_crosssdc/cmr_penalties.py",
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/dataloader_ours.py",
+        "model/audio_visual_model_incremental.py"
+      ]
+    },
+    "B": {
+      "folder": "lambda_0p1_alpha_1p0",
+      "completed": true,
+      "batches": 9,
+      "steps": [
+        1,
+        5,
+        9
+      ],
+      "scope_count": 3,
+      "max_gradient_reconstruction_residual": 1.0519689567445312e-05,
+      "max_relative_gradient_reconstruction_residual": 4.463469390517757e-06,
+      "code_files_verified": [
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/probe_checkpoint_losses.py",
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/rd_crosssdc/exact_losses.py",
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/rd_crosssdc/rd_method.py",
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/rd_crosssdc/cmr_penalties.py",
+        "experiments_phase_8_rdcrosssdc_modular_gridsearch/dataloader_ours.py",
+        "model/audio_visual_model_incremental.py"
+      ]
+    }
+  },
+  "checkpoints_match_archive": true,
+  "code_matches_after_lf_normalization": true,
+  "summary_reconstruction": true,
+  "gram_matrix_reconstruction": true,
+  "new_model_evaluations": 0,
+  "optimizer_updates": 0,
+  "identical_manifests": true,
+  "coverage": [
+    {
+      "run": "A",
+      "step": 1,
+      "memory_size": 500,
+      "unique_current": 344,
+      "unique_replay": 289
+    },
+    {
+      "run": "A",
+      "step": 5,
+      "memory_size": 500,
+      "unique_current": 338,
+      "unique_replay": 297
+    },
+    {
+      "run": "A",
+      "step": 9,
+      "memory_size": 450,
+      "unique_current": 353,
+      "unique_replay": 291
+    },
+    {
+      "run": "B",
+      "step": 1,
+      "memory_size": 500,
+      "unique_current": 344,
+      "unique_replay": 289
+    },
+    {
+      "run": "B",
+      "step": 5,
+      "memory_size": 500,
+      "unique_current": 338,
+      "unique_replay": 297
+    },
+    {
+      "run": "B",
+      "step": 9,
+      "memory_size": 450,
+      "unique_current": 353,
+      "unique_replay": 291
+    }
+  ],
+  "configuration_differences": {
+    "rd_class_weight_alpha": [
+      0.5,
+      1.0
+    ],
+    "lam_cmr": [
+      0.03,
+      0.1
+    ],
+    "experiment_name": [
+      "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42",
+      "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42"
+    ]
+  },
+  "limitations": [
+    "One training seed, three probe batches per checkpoint; no population significance claims.",
+    "Lambda and alpha both differ; each run uses its own previous-step teacher.",
+    "Fresh probe memory and reconstructed Trust, not the original training replay.",
+    "Historical scalars are within-epoch batch averages, not checkpoint probe quantities.",
+    "Gradient norms are not Adam update fractions or additive shares."
+  ],
+  "interpretation_correction": {
+    "date": "2026-09-30",
+    "historical_training_gradient_estimates_validated": false,
+    "historical_replay_ids_recovered": false,
+    "different_sampling_and_reference_confirmed": true,
+    "individual_causes_of_scalar_gap_quantified": false,
+    "withdrawn_inference": "The 19x/69x gap alone does not establish a retention-generalization gap or training-time gradient balance.",
+    "required_next_check": "Reconstruct and validate historical memory and reference/weights, then compare scalars at saved checkpoints before computing gradients."
+  }
+}

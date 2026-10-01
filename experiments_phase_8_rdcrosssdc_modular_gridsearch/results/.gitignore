@@ -1,0 +1,7 @@
+# Curated result summaries and offline probe logs are part of the research record.
+# Override the repository's general training-log exclusions only within results/.
+!/logs_direct/
+!/logs_exp_selected/
+!/logs_hinge_selected/
+!/logs_log1p_selected/
+!*.log

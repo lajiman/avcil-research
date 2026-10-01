@@ -1,0 +1,9 @@
+此目录是此前仅基于 results 顶层不完整 exp 汇总的历史分析。
+它不能代表 results 中的所有实验，候选排序及补实验建议已被更正。
+
+当前报告：../cmr_selected_analysis/report.html
+复现脚本：../cmr_selected_analysis/reanalyze_selected_results.py
+
+更正报告明确使用 logs_direct、logs_exp_selected、logs_hinge_selected、
+logs_log1p_selected 四个子文件夹各自的 summary.csv/md。
+原始实验汇总未修改。

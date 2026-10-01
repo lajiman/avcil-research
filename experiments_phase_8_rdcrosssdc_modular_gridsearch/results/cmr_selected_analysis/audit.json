@@ -1,0 +1,134 @@
+{
+  "sources": [
+    {
+      "folder": "logs_direct",
+      "files": [
+        "logs_direct\\summary.csv",
+        "logs_direct\\summary.md"
+      ],
+      "hashes": {
+        "summary.csv": "df2bcaddc92ee8257b00243fb524e40f072915b2b5f984ab9a61f19098c75f5e",
+        "summary.md": "d6db8bcb469331721d3ee26dd6962898a8ceed7df294f0ab8edefb1357171a98"
+      },
+      "configurations": 9,
+      "run_slots": 27,
+      "statuses": {
+        "error": 8,
+        "complete": 19
+      },
+      "raw_logs_present": false
+    },
+    {
+      "folder": "logs_exp_selected",
+      "files": [
+        "logs_exp_selected\\summary.csv",
+        "logs_exp_selected\\summary.md"
+      ],
+      "hashes": {
+        "summary.csv": "22dc146230632790b1db6ee72430bfcc8cc320effa71fe59cd150277343441d7",
+        "summary.md": "8e6a6d7e4aec3daa0833a4bf4a1b40dbbdc55e2c357cdc4e456847223cb627a9"
+      },
+      "configurations": 6,
+      "run_slots": 18,
+      "statuses": {
+        "complete": 18
+      },
+      "raw_logs_present": false
+    },
+    {
+      "folder": "logs_hinge_selected",
+      "files": [
+        "logs_hinge_selected\\summary.csv",
+        "logs_hinge_selected\\summary.md"
+      ],
+      "hashes": {
+        "summary.csv": "66670e0cc181c0ed5e0caa9a15cd6a4eb8f3381072d48b918b38cc3606178846",
+        "summary.md": "cf5af950014f29959af6958b1afffcc8a8fbf640f0a3d2e3118869a2c3b794f1"
+      },
+      "configurations": 8,
+      "run_slots": 24,
+      "statuses": {
+        "complete": 24
+      },
+      "raw_logs_present": false
+    },
+    {
+      "folder": "logs_log1p_selected",
+      "files": [
+        "logs_log1p_selected\\summary.csv",
+        "logs_log1p_selected\\summary.md"
+      ],
+      "hashes": {
+        "summary.csv": "7352fcb984aab09fcb6f23eb51a81f98f02c13891400a52346d25a2cba6be36d",
+        "summary.md": "7c96fe7d51ce0e803a858dbd30d11a65d94cce1b3043f443f61b4c90a2d02ced"
+      },
+      "configurations": 8,
+      "run_slots": 24,
+      "statuses": {
+        "complete": 24
+      },
+      "raw_logs_present": false
+    }
+  ],
+  "total_configs": 31,
+  "total_run_slots": 93,
+  "complete_runs": 85,
+  "excluded_runs": 8,
+  "configs_with_three_complete_seeds": 27,
+  "max_aggregate_reconstruction_error_pp": 4.999843740383092e-05,
+  "md_csv_agreement": true,
+  "hinge_archive_max_error_pp": 4.5657730105119754e-05,
+  "step0_accuracy_pct": {
+    "direct": {
+      "42": [
+        78.2
+      ],
+      "43": [
+        77.8
+      ],
+      "44": [
+        77.2
+      ]
+    },
+    "exp": {
+      "42": [
+        78.4
+      ],
+      "43": [
+        78.0
+      ],
+      "44": [
+        75.8
+      ]
+    },
+    "hinge": {
+      "42": [
+        78.4
+      ],
+      "43": [
+        78.0
+      ],
+      "44": [
+        75.8
+      ]
+    },
+    "log1p": {
+      "42": [
+        78.4
+      ],
+      "43": [
+        78.0
+      ],
+      "44": [
+        75.8
+      ]
+    }
+  },
+  "root_summary_used": false,
+  "notes": [
+    "Input contains per-folder summaries, not raw logs.",
+    "Direct errors are num_workers manifest disagreements, not evidence of training failure.",
+    "Selected exp/hinge/log1p share observed step0, which is a consistency check rather than proof of identical complete protocols.",
+    "The earlier root-summary-only analysis is superseded."
+  ]
+}

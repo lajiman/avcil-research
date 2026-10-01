@@ -1,0 +1,36 @@
+{
+  "source_sha256": "cf6aaa95c1b3f25d72fca53d9df8885777a33dee22ec70f9c7ea0e6de6fcc52b",
+  "planned_configs": 27,
+  "planned_runs": 81,
+  "statuses": {
+    "partial": 5,
+    "complete": 27,
+    "missing": 49
+  },
+  "configs_with_observations": 11,
+  "configs_complete_three_seeds": 6,
+  "aggregate_reconstruction_max_error_pp": 5.000000000165983e-05,
+  "exp_step0_pct": {
+    "42": [
+      78.0
+    ],
+    "43": [
+      77.0
+    ],
+    "44": [
+      75.8
+    ]
+  },
+  "archived_hinge_step0_pct": {
+    "42": [
+      78.4
+    ],
+    "43": [
+      78.0
+    ],
+    "44": [
+      75.8
+    ]
+  },
+  "interpretation": "Descriptive, exploratory results; SD across seeds is not a confidence interval. Missing runs are not failed runs. No imputation. No current-exp checkpoints, raw logs or feature stores found locally."
+}

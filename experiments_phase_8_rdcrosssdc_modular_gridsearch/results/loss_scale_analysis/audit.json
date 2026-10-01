@@ -1,0 +1,136 @@
+{
+  "source_files": [
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed42",
+      "rows": 2000,
+      "sha256": "a319277aca3d28e6bd18644eafa5b5afa2d4d7247c73e8501067644bdca48261"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed43",
+      "rows": 2000,
+      "sha256": "f2c4478e8d68118f047ac4148b4f64a2a213de5325175c37b2ccff19c1a9389f"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p01_s1p0_h200_seed44",
+      "rows": 2000,
+      "sha256": "50cde786b43ccfd6d61705523f65eb75f38b24d7848e4c40bdb12c441c8f29da"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p05_s1p0_h200_seed42",
+      "rows": 2000,
+      "sha256": "ffe62c4a6c3ca5a87f0ba046f4657d76bdf96b0a0d5ae51d1a0e6d4563d4ddeb"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p05_s1p0_h200_seed43",
+      "rows": 2000,
+      "sha256": "26c29214236edf99a555385adcfe2edd630ecca6f4d30056f112d3469ea2794a"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p05_s1p0_h200_seed44",
+      "rows": 2000,
+      "sha256": "cc33681afeef8340a76e88b91d2663aa988f83c7ec0551a63c7f9cf1d662a1b0"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p0_s1p0_h200_seed42",
+      "rows": 2000,
+      "sha256": "f3e9e94172a768c5e860175b0eefc7b9854d5635cea0188892c34baffd3b3c2e"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p0_s1p0_h200_seed43",
+      "rows": 2000,
+      "sha256": "b9967402a33e8bdfcd1fa98238a2699286da50186540e8c475cfa8f5c517c35a"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p0_s1p0_h200_seed44",
+      "rows": 2000,
+      "sha256": "6f0400cac21b471edcd56a75ff13b3f5905a7b6f9cc19e008ba871e86db7b632"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p1_s1p0_h200_seed42",
+      "rows": 2000,
+      "sha256": "4d6e8db552d0a9eaf565ee05a33f623c377a1d6b51f401e40974414bf330fd0d"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p1_s1p0_h200_seed43",
+      "rows": 2000,
+      "sha256": "17ff9a9d8571465d592aaa9ea75586371d9d06b0fb7b001d92b86ebbd7688831"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_A_lc0p03_a0p5_tol0p1_s1p0_h200_seed44",
+      "rows": 2000,
+      "sha256": "96aab8a73b7c228bdd7c45c7263e8eed2070eda58df579adcd5791919c8797c3"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed42",
+      "rows": 2000,
+      "sha256": "ac2042e728aea406e51df9c6b2fede37cd2f294f43dbe8425cb003c21ea7421a"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed43",
+      "rows": 2000,
+      "sha256": "a8b05277c1d2749669c683da34f79edf70da0114f231a70480360102f817b2a2"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p01_s1p0_h200_seed44",
+      "rows": 2000,
+      "sha256": "32c01e41275dce8265c36435d30de4c74ba539c6578043d50d2a82c06baef7e8"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p05_s1p0_h200_seed42",
+      "rows": 2000,
+      "sha256": "2bdc7e7238e61de2c00c57cd24a56825d33be3160f84c9acc4b7f02939217926"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p05_s1p0_h200_seed43",
+      "rows": 2000,
+      "sha256": "9c21ef059f8e5d3020ba98c29aec21ba263b8543cf407c8796a7f62e1f38da36"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p05_s1p0_h200_seed44",
+      "rows": 2000,
+      "sha256": "e465da63626fee2c62bf9b5810dc5599727267e8b3d5ee9ab55a52b297bd262c"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p0_s1p0_h200_seed42",
+      "rows": 2000,
+      "sha256": "dc8df73032bd33e39536448229e8ac79afff99189020c499319b8d19d7e79620"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p0_s1p0_h200_seed43",
+      "rows": 2000,
+      "sha256": "5decdd6d1cd955efbee5757eb9aafc1b090105112314ef47886d82a002094902"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p0_s1p0_h200_seed44",
+      "rows": 2000,
+      "sha256": "646053e71f8f07c81ae234f4a7d6dfa000968ae6f1a028c12a530d3bfa1df22e"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p1_s1p0_h200_seed42",
+      "rows": 2000,
+      "sha256": "2b7b1786f68697bfd7aa2db816cadd8f544076723ce7642054d4c37e4f839f96"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p1_s1p0_h200_seed43",
+      "rows": 2000,
+      "sha256": "7c5d6a23a83da1b8ba9d2d60fd024255bf4577f5765e23c002284339740299a8"
+    },
+    {
+      "run": "VGGSound_random_balance_rd_crosssdc_replace_c_trust_only_tol_focus_v1_hinge_B_lc0p1_a1p0_tol0p1_s1p0_h200_seed44",
+      "rows": 2000,
+      "sha256": "07eea028248e9507eca0ec323a84dbfdde0ec14bdb3443b05ca623272621c19a"
+    }
+  ],
+  "total_rows": 48000,
+  "incremental_rows": 43200,
+  "missing_component_history": [
+    "ce",
+    "kd",
+    "instance_contrastive",
+    "class_contrastive",
+    "attn_spatial",
+    "attn_temporal"
+  ],
+  "source_kind": "recorded_training_epoch_means",
+  "source_files_modified": false
+}
