@@ -1,0 +1,10 @@
+﻿experiment_group,step,reference_memory_size,query_slots,unique_queries,queries_in_original_memory,unique_current
+original_memory,1,500,384,292,292,342
+heldout_fixed_reference,1,500,384,294,0,342
+fresh_memory,1,500,384,294,0,342
+original_memory,5,500,384,286,286,335
+heldout_fixed_reference,5,500,384,288,0,335
+fresh_memory,5,500,384,288,0,335
+original_memory,9,450,384,285,285,358
+heldout_fixed_reference,9,450,384,291,0,358
+fresh_memory,9,450,384,291,0,358

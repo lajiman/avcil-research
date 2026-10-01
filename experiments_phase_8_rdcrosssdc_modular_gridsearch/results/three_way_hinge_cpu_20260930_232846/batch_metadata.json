@@ -1,0 +1,31 @@
+{
+  "status": "complete",
+  "runs": [
+    {
+      "run": "lambda_0p03_alpha_0p5",
+      "status": "complete",
+      "output": "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch/results/three_way_hinge_cpu_20260930_232846/lambda_0p03_alpha_0p5"
+    },
+    {
+      "run": "lambda_0p1_alpha_1p0",
+      "status": "complete",
+      "output": "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch/results/three_way_hinge_cpu_20260930_232846/lambda_0p1_alpha_1p0"
+    }
+  ],
+  "cli": {
+    "feature_root": "/groups/ytian/lujing/lujing/datasets/VGGSound",
+    "meta_root": "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/data2/balance",
+    "archive_root": "/groups/ytian/lujing/lujing/Projects/AV-CIL_ICCV2023_share_h200/experiments_phase_8_rdcrosssdc_modular_gridsearch/save_commands_cmr_hinge_tolerance_focus_3seeds",
+    "output": null,
+    "steps": [
+      1,
+      5,
+      9
+    ],
+    "batches": 3,
+    "threads": 4,
+    "probe_seed": 42,
+    "loss_only": false,
+    "dry_run": false
+  }
+}
