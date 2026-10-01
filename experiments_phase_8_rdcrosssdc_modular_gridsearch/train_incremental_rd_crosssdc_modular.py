@@ -69,6 +69,7 @@ from rd_crosssdc.rd_method import (
     restore_rng_state,
 )
 from rd_crosssdc.cmr_penalties import CMR_PENALTIES
+from rd_crosssdc.loss_diagnostics import LossEpochRecorder, gradient_probe_rows
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -298,6 +299,9 @@ def _train_step(
     best_val_res = float("-inf")  # Save the first epoch even if accuracy is zero.
 
     epoch_csv = os.path.join(metrics_dir(args), "rd_crosssdc", "epoch_summary.csv")
+    record_components = getattr(args, "log_loss_components", False) or getattr(args, "loss_grad_probe_every", 0) > 0
+    component_csv = os.path.join(metrics_dir(args), "rd_crosssdc", "loss_components.csv")
+    gradient_csv = os.path.join(metrics_dir(args), "rd_crosssdc", "loss_gradient_probes.csv")
     epoch_header = [
         "step", "epoch", "rd_mode",
         "cmr_penalty", "cmr_scale", "cmr_tolerance",
@@ -314,6 +318,7 @@ def _train_step(
     for epoch in range(args.max_epoches):
         train_loss = 0.0
         num_steps = 0
+        loss_recorder = LossEpochRecorder() if record_components else None
 
         cross_i_sum = 0.0
         cross_c_sum = 0.0
@@ -584,6 +589,27 @@ def _train_step(
                     deficit_a_sum += current_cmr_stats.mean_deficit_a_from_v.item()
                     deficit_v_sum += current_cmr_stats.mean_deficit_v_from_a.item()
 
+            if record_components:
+                # Observe the exact tensors used above without changing addition order.
+                components = {
+                    "ce": (loss if step == 0 else loss_CE, 1.0),
+                    "kd": (loss_KD if step > 0 else None, 1.0),
+                    "instance_contrastive": (instance_contra_loss if step > 0 and args.instance_contrastive else None, args.lam_I),
+                    "class_contrastive": (class_contra_loss if step > 0 and args.class_contrastive else None, args.lam_C),
+                    "cross_sdc_i": (cross_sdc_inst_loss if step > 0 else None, args.lam_cross_sdc_i),
+                    "cross_sdc_c": (cross_sdc_cls_loss if step > 0 else None, args.lam_cross_sdc_c),
+                    "cmr": (current_cmr_loss if step > 0 and uses_cmr(args) else None, args.lam_cmr),
+                    "attn_spatial": (spatial_attn_dist_loss if step > 0 and args.attn_score_distil else None, args.lam),
+                    "attn_temporal": (temporal_attn_dist_loss if step > 0 and args.attn_score_distil else None, 1.0-args.lam),
+                }
+                loss_recorder.add(loss, components)
+                interval = getattr(args, "loss_grad_probe_every", 0)
+                if interval > 0 and epoch % interval == 0 and num_steps == 0:
+                    for probe_row in gradient_probe_rows(
+                        loss, components, model.parameters(), step=step, epoch=epoch, batch=num_steps,
+                    ):
+                        append_csv_row(gradient_csv, list(probe_row), probe_row)
+
             model.zero_grad()
             loss.backward()
             optimizer.step()
@@ -714,6 +740,10 @@ def _train_step(
             },
         )
 
+        if loss_recorder is not None:
+            for component_row in loss_recorder.rows(step=step, epoch=epoch, val_acc=val_top1):
+                append_csv_row(component_csv, list(component_row), component_row)
+
         plt.figure()
         plt.plot(range(len(train_loss_list)), train_loss_list, label="train_loss")
         plt.legend()
@@ -797,6 +827,15 @@ def build_parser():
         help="Initial retry delay in seconds; doubles up to 30 seconds.",
     )
     parser.add_argument("--max_epoches", type=int, default=500)
+    parser.add_argument(
+        "--log_loss_components", action="store_true",
+        help="Save per-epoch raw/weighted components and objective reconstruction checks.",
+    )
+    parser.add_argument(
+        "--loss_grad_probe_every", type=int, default=0,
+        help="Opt in to full-model gradient probes on the first batch every N epochs; "
+             "0 disables. Adds autograd cost and implies --log_loss_components.",
+    )
     parser.add_argument("--num_classes", type=int, default=28)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--weight_decay", type=float, default=1e-4)
@@ -859,6 +898,8 @@ def build_parser():
 
 
 def validate_args(parser, args):
+    if args.loss_grad_probe_every < 0:
+        parser.error("--loss_grad_probe_every must be non-negative")
     if args.h5_read_retries < 0:
         parser.error("--h5_read_retries must be non-negative")
     if not np.isfinite(args.h5_retry_delay) or args.h5_retry_delay < 0:
@@ -927,6 +968,18 @@ def main():
     epoch_csv = os.path.join(metrics_dir(args), "rd_crosssdc", "epoch_summary.csv")
     if os.path.exists(epoch_csv):
         os.remove(epoch_csv)
+
+    if not args.test_only and (args.log_loss_components or args.loss_grad_probe_every > 0):
+        for filename in ("loss_components.csv", "loss_gradient_probes.csv"):
+            diagnostic_path = os.path.join(metrics_dir(args), "rd_crosssdc", filename)
+            if os.path.exists(diagnostic_path):
+                os.remove(diagnostic_path)
+        save_json({"args": vars(args), "scalar_aggregation": "mean_of_training_batches",
+                   "gradient_sampling": "first_batch_every_N_epochs_before_optimizer_step",
+                   "gradient_scope": "all_trainable_parameters",
+                   "non_cmr_reference": "sum_of_all_weighted_non_cmr_components",
+                   "optimizer_weight_decay_included_in_loss": False},
+                  os.path.join(metrics_dir(args), "rd_crosssdc", "loss_diagnostics_metadata.json"))
 
     metrics_state = {"best_f1": {}, "first_seen_step": {}}
     save_json(metrics_state, os.path.join(metrics_dir(args), "per_class_state.json"))

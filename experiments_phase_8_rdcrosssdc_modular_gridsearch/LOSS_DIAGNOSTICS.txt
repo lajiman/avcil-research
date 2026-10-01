@@ -1,0 +1,49 @@
+训练 loss 尺度诊断
+
+一、现有记录（无需 PyTorch、无需重训）
+在仓库根目录执行：
+  python experiments_phase_8_rdcrosssdc_modular_gridsearch/analyze_loss_scales.py
+输出 results/loss_scale_analysis/report.html、两张图、逐 epoch CSV、配置/训练时期统计、best_epochs.csv。
+该脚本用于当前 24 次 hinge 存档，核对 48,000 条记录和加权关系；不会修改输入。
+CE/KD/当前模态对比/注意力蒸馏的历史分项未记录，只能得到合计。
+
+二、后续训练记录全部分项
+在原训练命令中、重定向日志的 > 符号之前添加：
+  --log_loss_components
+记录 ce、kd、instance_contrastive、class_contrastive、cross_sdc_i、cross_sdc_c、cmr、
+attn_spatial、attn_temporal。CE/KD 系数为 1；其他系数取实际运行参数。
+输出 save/metrics/<experiment_name>/rd_crosssdc/loss_components.csv。
+每个 epoch 每个 loss 一行，包含 raw_mean、weighted_mean、batch 标准差、min/max、系数，
+以及所有加权项之和与实际总 loss 的残差；残差应只有浮点舍入误差。
+禁用项 enabled=0、raw_mean 空白；计算但系数为 0 的项仍保留原始值。
+raw CMR 已经包含 Trust 类别权重和两个方向的 reduction，仅未乘全局 lambda。
+统计方式与旧 train_loss 相同：对 batch 均值取平均，而不是按独立样本加权。
+默认关闭，不添加开关时不改变原训练目标、顺序或采样。
+使用新的 experiment_name，防止原训练程序覆盖原有检查点和测试/训练汇总。
+
+三、可选梯度诊断（有额外 autograd 时间/显存开销）
+在原命令中添加：
+  --log_loss_components --loss_grad_probe_every 10
+每个阶段 epoch 0、10、20…的第一个训练 batch 上，利用原 forward 的计算图测量：
+  raw_grad_norm、weighted_grad_norm、non_cmr_grad_norm、
+  weighted_grad_over_non_cmr、cosine_with_non_cmr。
+参数范围为所有 requires_grad=True 的模型参数；参照为全部加权非 CMR 项之和。
+梯度探针用 autograd.grad(retain_graph=True)，不调用 optimizer.step、额外 forward 或 RNG。
+正常训练仍只执行原来的一次 backward 和 optimizer.step。
+输出同目录 loss_gradient_probes.csv；完整运行参数存 loss_diagnostics_metadata.json。
+这是抽样训练 batch 的诊断，不能代表每个 epoch 的全部梯度，也不是 Adam 更新比例。
+余弦正值为同向、负值为冲突；零梯度时余弦/零分母比值为空白。
+Direct 可为负：signed_weighted_over_total 不能解释为组成百分比。
+
+四、checkpoint 能补什么
+模型 + 输入特征可以在固定 probe 上重新计算各 loss。
+蒸馏需要前一阶段教师；CMR 还需要回放样本/标签、教师原型和对应权重。
+有原 replay IDs 才能尽量匹配原口径；重新采样应标为新 probe。
+最佳 checkpoint 只给出选定状态，无法恢复未保存 epoch 的真实 loss 轨迹。
+同一 checkpoint 上改变 lambda 可测瞬时 loss/梯度缩放，不能模拟另一个 lambda 训练后的模型。
+本地未发现输入特征 HDF5，尚未运行 checkpoint loss 补算。
+
+五、验证
+  python -m unittest discover -s experiments_phase_8_rdcrosssdc_modular_gridsearch/tests -p test_loss_diagnostics.py -v
+标量与实际训练代码的分支核对不依赖 PyTorch。
+梯度无副作用和优化器更新一致性测试需要 PyTorch；缺失时明确报告 skipped。
