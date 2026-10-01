@@ -69,7 +69,8 @@ def load_runtime():
     from rd_crosssdc import exact_losses as exact, rd_method as rd
 
 
-def probe_components(model, teacher, current, replay, args, step, bank, weights):
+def probe_components(model, teacher, current, replay, args, step, bank, weights,
+                     replay_membership=None, return_terms=False):
     """Same loss definitions/reductions as the modular trainer, for steps > 0."""
     (visual, audio), labels = current
     (old_visual, old_audio), old_labels = replay
@@ -104,8 +105,13 @@ def probe_components(model, teacher, current, replay, args, step, bank, weights)
     else:
         cross_i, cross_c = exact.cross_sdc_z1_loss(**cross_args, labels=old_labels)
     # Measure CMR even if the saved lambda is zero, for the local lambda sweep.
-    terms = rd.compute_margin_terms(af[n:], vf[n:], taf[n:], tvf[n:], old_labels, bank,
-                                    args.rd_margin_temperature, args.rd_margin_tolerance)
+    if replay_membership is None:
+        terms = rd.compute_margin_terms(af[n:], vf[n:], taf[n:], tvf[n:], old_labels, bank,
+                                        args.rd_margin_temperature, args.rd_margin_tolerance)
+    else:
+        from offline_memory_protocols import membership_margin_terms
+        terms = membership_margin_terms(af[n:], vf[n:], taf[n:], tvf[n:], old_labels, bank,
+            args.rd_margin_temperature, args.rd_margin_tolerance, replay_membership)
     cmr, stats = rd.cmr_loss(terms, old_labels, weights[0], weights[1],
                             penalty=args.rd_cmr_penalty, penalty_scale=args.rd_cmr_scale,
                             tolerance=args.rd_margin_tolerance)
@@ -122,6 +128,8 @@ def probe_components(model, teacher, current, replay, args, step, bank, weights)
                       cross_sdc_c=(cross_c, args.lam_cross_sdc_c), cmr=(cmr, args.lam_cmr),
                       attn_spatial=(sa, args.lam), attn_temporal=(ta, 1-args.lam))
     total = sum(value*coefficient for value, coefficient in components.values() if value is not None)
+    if return_terms:
+        return components, total, stats, terms
     return components, total, stats
 
 

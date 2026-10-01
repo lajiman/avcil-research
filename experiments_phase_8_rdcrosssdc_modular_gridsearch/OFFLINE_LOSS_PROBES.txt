@@ -1,5 +1,7 @@
 离线分析已有实验：不改训练代码，不重复训练
 
+更新：三组受控评估及 CPU 一键运行见第 7 节。旧的单探针入口保持兼容。
+
 1. 先看真实历史记录
 在仓库根目录运行：
   python experiments_phase_8_rdcrosssdc_modular_gridsearch/analyze_loss_scales.py
@@ -74,3 +76,100 @@ PyTorch 测试还核对真实模型的离线计算与训练代码中的实际 ba
 覆盖 hinge/direct/exp/log1p、自适应与均匀权重，以及可选损失关闭情形。
 本机缺失运行依赖时这些运行时测试会明确标为 skipped，不能当作已通过。
 先在原训练环境完成这两项运行时测试，再执行真实实验的探针。
+
+7. 三组受控评估（推荐用于这次分析）
+
+新增入口：probe_checkpoint_three_way.py。
+同一个 checkpoint 依次完成下面三组，并在所有 CSV 中写 experiment_group：
+
+  original_memory
+    原 replay memory 上抽取查询，用原 memory 构建原型，使用历史 CSV 的原权重。
+    衡量最佳 checkpoint 对训练回放约束的满足程度与剩余梯度。
+
+  heldout_fixed_reference
+    查询来自原 memory 之外的旧类 train 样本；保持上一组原型、权重完全不变。
+    查询不属于原型库，因此不从正类原型中减去该查询的 teacher 特征。
+    这里 heldout 仅表示未进入该阶段 memory，不是 val/test 或从未训练过的数据。
+
+  fresh_memory
+    与第二组使用完全相同的查询，但改用一份新的 memory 重建原型和 Trust/权重。
+    查询属于新 memory，因此恢复 leave-one-out。
+    衡量换一套 memory/参考体系之后的损失与梯度；第二、三组仍共同改变了原型与权重，
+    不把两者各自的影响单独归因。
+
+采样控制：
+  新 memory 与原 memory 严格不相交，每类样本数相同。
+  每个 batch 三组使用完全相同的 current IDs 和完全相同的旧类标签序列。
+  第二、三组的旧类 query IDs 也完全相同；batch 内不重复，batch 之间可重复。
+  每个 step 只有一份新 memory。batch 标准差不能表示更换 memory 或 seed 的不确定性。
+  因为增加了“不相交、类别匹配”控制，新 memory 不会复用旧版探针的采样清单。
+  类别样本不足时明确报错，不会偷偷缩小 batch、改变类比例或使用重复样本。
+
+原 memory 如何恢复：
+  默认按 checkpoint 的训练 seed、本地元数据的原始顺序、feature 可用性，
+  从 step1 顺序重放 Python random.sample 及旧类列表前缀截断；不执行训练。
+  这仅产生候选历史 IDs。构建 teacher 原型后，逐类核对历史 prototype_count、
+  两个方向的 Reliability、Trust 和权重（atol=2e-5, rtol=2e-4；count 必须完全一致）。
+  任一项失败就停止，保存 reference_checks.csv，不降级为新 memory 冒充原 memory。
+  校验是历史统计指纹的一致性证据，并非原始 ID 日志的替代品。
+  如果拥有原始 ID 日志，可用 --replay-ids JSON；仍执行上述数值校验。
+  --probe-seed 只控制评估查询/新 memory，原 memory 使用 checkpoint 的训练 seed。
+  当前入口要求 adaptive_crosssdc_cmr、Trust-only 权重及完整历史指标。
+  原型构建按原公式计算；第一、二组最终直接使用 CSV 记录的权重，不使用其重算近似值。
+  best epoch 按验证准确率的第一次最大值选取，与训练保存策略一致。
+
+单个设置的 CPU 命令（仓库根目录）：
+  python experiments_phase_8_rdcrosssdc_modular_gridsearch/probe_checkpoint_three_way.py --run-dir /path/to/experiment --feature-root /path/to/VGGSound --meta-root data2/balance --steps 1 5 9 --batches 3 --device cpu --threads 4 --output experiments_phase_8_rdcrosssdc_modular_gridsearch/results/three_way_one_run
+
+默认寻找 run-dir 同级的 metrics/<实验目录名>/rd_crosssdc。
+如果历史指标放在其他位置，补 --metrics-dir /path/to/metrics/<实验名>/rd_crosssdc。
+省略 --output 时自动写入本文件所在目录的 results/three_way_<时间>_<实验名>。
+省略 --lambdas 时只测该 checkpoint 保存的实际 lambda，不会默认扫描其他系数。
+指定 --lambdas 则额外生成该模型、该 batch 下的局部缩放比较，仍包含实际训练 lambda。
+
+一次运行先前两个 hinge 设置（tol=.01，seed42，lambda=.03/alpha=.5 与 lambda=.1/alpha=1）：
+  python experiments_phase_8_rdcrosssdc_modular_gridsearch/run_three_way_hinge_cpu.py --feature-root /path/to/VGGSound --threads 4
+
+这条命令不需要 Slurm；两个设置顺序执行，默认 steps=1,5,9，每组各 3 batch。
+自动使用仓库 data2/balance 与 save_commands_cmr_hinge_tolerance_focus_3seeds；
+可通过 --meta-root 和 --archive-root 指向服务器上的实际位置。
+第二个设置复用第一个设置的三组采样清单；它自己的原 memory 仍需独立重建并通过校验。
+输出：results/three_way_hinge_cpu_<时间>/
+        batch_metadata.json
+        lambda_0p03_alpha_0p5.log
+        lambda_0p1_alpha_1p0.log
+        lambda_0p03_alpha_0p5/<下面列出的 CSV/JSON>
+        lambda_0p1_alpha_1p0/<下面列出的 CSV/JSON>
+
+CPU 开销控制：
+  默认做三组完整梯度评估，主要梯度计算次数约为之前单探针的 3 倍。
+  可先加 --steps 9 --batches 1 检查一阶段；正式测量须选择另一个新输出目录。
+  --loss-only 只前向计算 loss/margin/违反比例，不计算梯度，梯度列留空而不是填 0。
+  --dry-run（仅 CPU 两设置入口）只检查 checkpoint 路径并打印命令。
+  不能通过缩小 batch 后直接与原训练 batch 的对比损失混为同一口径。
+
+每个设置的输出：
+  component_summary.csv：按 experiment_group/step/parameter_scope/component 汇总尺度。
+  components.csv、gradient_pairs.csv、lambda_sweep.csv：保留原探针逐 batch 梯度输出格式，
+    增加 experiment_group；loss-only 不产生后两个文件。
+  cmr_batches.csv：CMR 原始/加权 loss、两个方向的违反比例、平均违反幅度、
+    仅活跃样本的平均违反幅度，以及旧定义的 mean_deficit。
+  cmr_samples.csv：实际 query ID、类别、是否属于参考 memory、teacher/student margin、
+    有符号 margin 差、deficit、超过 tolerance 的 violation、实际 penalty、类别权重，
+    及该样本对 batch CMR 的原始/加权贡献（贡献在 batch 内相加可恢复 CMR）。
+    非 hinge 情形中 violation>0 不等于该 penalty 的梯度非零。
+  class_reference.csv：原、新参考体系的每类 count、Reliability、Trust 和使用的权重。
+  reference_checks.csv：原 memory 重建的逐类校验值、误差、容差和通过标记。
+  historical_comparison.csv：三组 checkpoint 测量与原 best epoch 均值/违反比例并列。
+    原 epoch 均值在模型不断更新时测得，不要求它等于保存后 checkpoint 的重算值。
+  coverage.csv：查询覆盖数、参考 memory 大小及与原 memory 的重合数量。
+  probe_manifest.json、original_replay_ids.json：三组可重放的完整采样清单与候选历史 IDs。
+  metadata.json：complete/failed/running 状态、历史 CSV/代码/checkpoint 哈希、
+    参考校验和参数/buffer 未修改检查；只有 complete 才能作为完整测量结果使用。
+
+这些输出仍是最佳 checkpoint 上的局部测量，不会恢复未保存 epoch 的梯度，
+也不是 Adam 实际更新比例。三组用于分开检查原约束满足、memory 外样本保持、
+换参考体系后的敏感性；不从单个 seed 或单份新 memory 推断总体最优 lambda。
+
+完整测试（包含真实 CPU autograd、实际训练公式一致性与合成 HDF5/checkpoint 全流程）：
+  python -m unittest discover -s experiments_phase_8_rdcrosssdc_modular_gridsearch/tests -p "test_offline*probe.py" -v
