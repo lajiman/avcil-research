@@ -147,11 +147,11 @@ python -u train_incremental_fusion_modular.py --feature_root /absolute/path/to/V
 以下生成器输出 Bash 命令，供 Linux/Slurm 使用；`--output_dir` 可以指定两个文件的输出目录：
 
 ```bash
-python generate_commands.py --feature_root /absolute/path/to/VGGSound
-mkdir -p logs
-# 激活服务器的 PyTorch 环境后，按集群需要添加 partition/account：
-sbatch --job-name=phase9_fixed run.slurm grid_commands/commands_periodic_fixed.txt
-sbatch --job-name=phase9_sample_aware run.slurm grid_commands/commands_periodic_sample_aware.txt
+# 如需修改数据路径，可单独运行生成器；预置命令可直接提交。
+python experiments_phase_9/generate_commands.py --feature_root /absolute/path/to/VGGSound
+# 在仓库根目录提交，无需预先激活环境、切换到 phase 9 或创建 logs：
+sbatch --job-name=phase9_fixed experiments_phase_9/run.slurm grid_commands/commands_periodic_fixed.txt
+sbatch --job-name=phase9_sample_aware experiments_phase_9/run.slurm grid_commands/commands_periodic_sample_aware.txt
 ```
 
 这是两个独立的 Slurm 作业，每个作业在同一节点申请 **1 GPU、12 CPU、300G 主机内存**。一个 `srun` 调用 `run_shared_gpu.sh`，在该 step 内并行启动三个独立训练进程，共享同一张 GPU 和 300G 内存。每个 seed 的 OMP/MKL/OpenBLAS/NumExpr 计算线程默认限制为 4；任意 seed 失败会使作业返回失败，三个训练日志仍独立保存。两个作业同时运行合计申请 **2 GPU、600G 主机内存**。
@@ -162,7 +162,11 @@ sbatch --job-name=phase9_sample_aware run.slurm grid_commands/commands_periodic_
 sbatch --gres=gpu:a100:1 --job-name=phase9_fixed run.slurm grid_commands/commands_periodic_fixed.txt
 ```
 
-脚本要求命令文件恰好包含三条实验命令，没有作业数组。预置命令使用相对特征路径 `../../../datasets/VGGSound`，运行前应核对或重新生成。命令显式指定 `--device cuda`，避免 GPU 不可用时静默进行 CPU 训练。`run.slurm` 从提交目录执行，不包含某台机器的 Conda/项目绝对路径；`logs` 必须在 sbatch 提交前创建。
+脚本要求命令文件恰好包含三条实验命令，没有作业数组。预置命令使用相对特征路径 `../../../datasets/VGGSound`，运行前应核对或重新生成。命令显式指定 `--device cuda`，避免 GPU 不可用时静默进行 CPU 训练。
+
+`run.slurm` 默认申请 `h200` 分区的 `gpu:nvidia_h200_nvl:1`，并自行加载 `/groups/ytian/lujing/miniconda3/etc/profile.d/conda.sh`、激活 `/groups/ytian/lujing/miniconda3/envs/avcil-h200`，不依赖提交终端当前的 Conda 环境。脚本支持从仓库根目录或 `experiments_phase_9` 提交，自动进入 phase 9 并创建训练日志目录；从其他目录提交时可设置 `AVCIL_PROJECT_ROOT` 为仓库绝对路径。命令文件相对路径以 phase 9 为基准。其他服务器可通过 `AVCIL_CONDA_ROOT`、`AVCIL_CONDA_ENV` 覆盖环境路径，分区和 GPU 类型可由 sbatch 参数覆盖。
+
+Slurm 在执行脚本之前打开输出文件，因此调度日志 `slurm_作业名_作业ID.out/.err` 写入已存在的提交目录；每个 seed 的训练日志写入自动创建的 `experiments_phase_9/logs/`。不需要提交前手动 `mkdir`。
 
 针对单卡并发，目前采用以下内存处理，保留原 batch size、FP32、loss 和 gate 更新日程：
 
