@@ -154,9 +154,9 @@ sbatch --job-name=phase9_fixed experiments_phase_9/run.slurm grid_commands/comma
 sbatch --job-name=phase9_sample_aware experiments_phase_9/run.slurm grid_commands/commands_periodic_sample_aware.txt
 ```
 
-这是两个独立的 Slurm 作业，每个作业在同一节点申请 **1 GPU、12 CPU、300G 主机内存**。一个 `srun` 调用 `run_shared_gpu.sh`，在该 step 内并行启动三个独立训练进程，共享同一张 GPU 和 300G 内存。每个 seed 的 OMP/MKL/OpenBLAS/NumExpr 计算线程默认限制为 4；任意 seed 失败会使作业返回失败，三个训练日志仍独立保存。两个作业同时运行合计申请 **2 GPU、600G 主机内存**。
+这是两个独立的 Slurm 作业，每个作业在同一节点申请 **1 GPU、12 CPU、180G 主机内存**。一个 `srun` 调用 `run_shared_gpu.sh`，在该 step 内并行启动三个独立训练进程，共享同一张 GPU 和 180G 内存。每个 seed 的 OMP/MKL/OpenBLAS/NumExpr 计算线程默认限制为 4；任意 seed 失败会使作业返回失败，三个训练日志仍独立保存。两个作业同时运行合计申请 **2 GPU、24 CPU、360G 主机内存**，可放入 Juno 配置为 375G 内存的双 H200 节点，保留 15G 分配余量。
 
-`300G` 是主机内存的总申请量，不是实际占用，也不是每个 seed 独立的 100G 硬限制。三个进程继承 Slurm 设置的同一个 `CUDA_VISIBLE_DEVICES`，不手动填写物理卡号，不分别申请独占 GPU step；单卡可见时训练器不会进入 DataParallel。参见 [Slurm GPU 管理文档](https://slurm.schedmd.com/gres.html#GPU_Management)。若集群需要特定 GPU 类型，只需在 sbatch 指定，例如：
+`180G` 是主机内存的总申请量，不是实际占用，也不是每个 seed 独立的 60G 硬限制。三个进程继承 Slurm 设置的同一个 `CUDA_VISIBLE_DEVICES`，不手动填写物理卡号，不分别申请独占 GPU step；单卡可见时训练器不会进入 DataParallel。参见 [Slurm GPU 管理文档](https://slurm.schedmd.com/gres.html#GPU_Management)。若集群需要特定 GPU 类型，只需在 sbatch 指定，例如：
 
 ```bash
 sbatch --gres=gpu:a100:1 --job-name=phase9_fixed run.slurm grid_commands/commands_periodic_fixed.txt
@@ -167,6 +167,8 @@ sbatch --gres=gpu:a100:1 --job-name=phase9_fixed run.slurm grid_commands/command
 `run.slurm` 默认申请 `h200` 分区的 `gpu:nvidia_h200_nvl:1`，并自行加载 `/groups/ytian/lujing/miniconda3/etc/profile.d/conda.sh`、激活 `/groups/ytian/lujing/miniconda3/envs/avcil-h200`，不依赖提交终端当前的 Conda 环境。脚本支持从仓库根目录或 `experiments_phase_9` 提交，自动进入 phase 9 并创建训练日志目录；从其他目录提交时可设置 `AVCIL_PROJECT_ROOT` 为仓库绝对路径。命令文件相对路径以 phase 9 为基准。其他服务器可通过 `AVCIL_CONDA_ROOT`、`AVCIL_CONDA_ENV` 覆盖环境路径，分区和 GPU 类型可由 sbatch 参数覆盖。
 
 Slurm 在执行脚本之前打开输出文件，因此调度日志 `slurm_作业名_作业ID.out/.err` 写入已存在的提交目录；每个 seed 的训练日志写入自动创建的 `experiments_phase_9/logs/`。不需要提交前手动 `mkdir`。
+
+默认时长为 `2-00:00:00`（48 小时），与 Juno 已获调度作业的设置一致；预留节点时另加 `--reservation=xie`，预留本身不豁免分区时长限制。脚本修改只影响新提交的作业。Slurm 25.11 对 `MinMemoryNode` 的更新仅支持待运行作业，例如 `scontrol update JobId=待运行作业ID MinMemoryNode=184320` 将申请改为 180 GiB；运行中的作业需要先停止并重新排队或重新提交，不能原地释放其内存配额。重新排队会重新执行脚本，不等于恢复训练进度。当前训练器没有断点续训入口，并拒绝复用非空实验目录；已经启动过的实验重跑时必须使用新的 `experiment_name` 和日志名，保留原结果。
 
 针对单卡并发，目前采用以下内存处理，保留原 batch size、FP32、loss 和 gate 更新日程：
 
