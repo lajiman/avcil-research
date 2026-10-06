@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-05",
+  "metadata_root": "data2/balance",
+  "sha256": {
+    "all_classId_vid_dict.npy": "a912327bab73fc3eb88e27f87bcc5c9c3105fc6b3b445becfea81448700a23b7",
+    "all_id_category_dict.npy": "01fb8dfb130288b30bb9dff64aae2ae8425f2ced6df336e1b14c4e623d4df66d",
+    "category_encode_dict.npy": "2aa2734120815f1d79121f868d67746f50ed4339d1d9a5589f72ba853d796d33"
+  },
+  "num_classes": 100,
+  "class_ids_contiguous": true,
+  "source_id_rule": "For IDs matching ^(.{11})_([0-9]+)$, group by the 11-character source video ID; this infers source identity from filenames, not raw media.",
+  "splits": {
+    "train": {
+      "clips": 12500,
+      "unique_clip_ids": 12500,
+      "source_videos": 12109,
+      "unparsed_ids": [],
+      "classes": 100,
+      "min_clips_per_class": 125,
+      "max_clips_per_class": 125,
+      "duplicate_clip_ids": 0,
+      "label_mismatches": 0,
+      "class_index_vs_id_map_difference": 0
+    },
+    "val": {
+      "clips": 5000,
+      "unique_clip_ids": 5000,
+      "source_videos": 4954,
+      "unparsed_ids": [],
+      "classes": 100,
+      "min_clips_per_class": 50,
+      "max_clips_per_class": 50,
+      "duplicate_clip_ids": 0,
+      "label_mismatches": 0,
+      "class_index_vs_id_map_difference": 0
+    },
+    "test": {
+      "clips": 5000,
+      "unique_clip_ids": 5000,
+      "source_videos": 4877,
+      "unparsed_ids": [],
+      "classes": 100,
+      "min_clips_per_class": 50,
+      "max_clips_per_class": 50,
+      "duplicate_clip_ids": 0,
+      "label_mismatches": 0,
+      "class_index_vs_id_map_difference": 0
+    }
+  },
+  "overlaps": {
+    "train_val": {
+      "clip_ids": [],
+      "source_video_count": 318,
+      "clips_from_shared_sources": {
+        "train": 318,
+        "val": 318
+      },
+      "examples": [
+        {
+          "train": [
+            "-dYOHMT3xN8_000057"
+          ],
+          "val": [
+            "-dYOHMT3xN8_000009"
+          ]
+        },
+        {
+          "train": [
+            "-e21Kzh-dEU_000091"
+          ],
+          "val": [
+            "-e21Kzh-dEU_000198"
+          ]
+        },
+        {
+          "train": [
+            "-gABTTuw8vo_000052"
+          ],
+          "val": [
+            "-gABTTuw8vo_000062"
+          ]
+        },
+        {
+          "train": [
+            "-lShivzYjGQ_000041"
+          ],
+          "val": [
+            "-lShivzYjGQ_000086"
+          ]
+        },
+        {
+          "train": [
+            "-v6FmvDPYDk_000000"
+          ],
+          "val": [
+            "-v6FmvDPYDk_000350"
+          ]
+        }
+      ]
+    },
+    "train_test": {
+      "clip_ids": [],
+      "source_video_count": 0,
+      "clips_from_shared_sources": {
+        "train": 0,
+        "test": 0
+      },
+      "examples": []
+    },
+    "val_test": {
+      "clip_ids": [],
+      "source_video_count": 0,
+      "clips_from_shared_sources": {
+        "val": 0,
+        "test": 0
+      },
+      "examples": []
+    }
+  },
+  "limits": [
+    "Feature files and upstream pretraining/split generation were not available for audit.",
+    "No raw-media duplicate or near-duplicate detection was performed.",
+    "Training/validation share source videos. Clip-ID disjointness does not imply independent source videos."
+  ]
+}

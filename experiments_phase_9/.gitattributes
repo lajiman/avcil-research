@@ -1,0 +1,4 @@
+# Keep Linux launch scripts and generated commands usable after any checkout.
+*.sh text eol=lf
+*.slurm text eol=lf
+grid_commands/*.txt text eol=lf

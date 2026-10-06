@@ -1,0 +1,110 @@
+Phase 9 validation (2026-10-05)
+
+Environment:
+  Windows / Python 3.13.11
+  PyTorch 2.14.1+cpu, NumPy 2.5.3, h5py 3.16.0, pytest 9.1.1
+  CUDA unavailable. Dependencies installed in experiments_phase_9/.venv,
+  an ignored, project-local environment; no global Python changes.
+
+Command from repository root:
+  python -m pytest experiments_phase_9/tests -q
+Result:
+  35 passed in 11.88s; no warnings (including observation-only CL history).
+
+Verified:
+  - Equal gates reproduce original AVCIL logits, normalized branch features,
+    attention outputs, and parameter gradients exactly on the CPU fixture.
+  - Linear and nonlinear candidate fusion match explicit feature-fusion
+    calculations, including branch/classifier gradients.
+  - LOO reliability matches an independently enumerated reference.
+  - Missing, singleton, zero and nonfinite features do not overwrite history.
+  - Reference video IDs are unique; test/val sources are rejected.
+  - Smaller memory reduces update amplitude without a shared class prior.
+  - Default update epochs are 40/80/120/160, with no final-epoch update.
+  - Gate estimation restores RNG and model modes, including on failure.
+  - Expansion retains old gates and initializes new gates to 0.5.
+  - Teacher gates are independent from student mutations.
+  - Checkpoints restore the exact model/gate state without advancing RNG.
+  - Original CE slicing, KD, contrastive and attention objectives are retained.
+  - Synthetic HDF5 three-step training and test_only round trips succeed for
+    both linear and MLP heads, including decreasing memory counts and correct
+    validation/checkpoint/update order.
+  - HDF5 loading works with a spawned worker after parent-process access.
+  - Invalid CLI arguments fail before training.
+  - CL history uses the newly reduced old memory for BOTH teacher and student,
+    with a fixed cohort, class candidate set and reference identifier.
+  - Controlled audio-only degradation is observed, while a within-modality
+    coordinate rotation alone does not appear as forgetting.
+  - Adding strong new-class logits leaves old-only branch reliability intact
+    and is recorded separately as old-to-new confusion.
+  - Invalid current samples are marked incomparable, not silently removed;
+    replacing reference videos even within the same class is detected.
+  - Teacher exclusions and insufficient-sample flags stay fixed within a task.
+  - CL history scanning restores RNG and mixed model modes on failure too.
+  - Best/last checkpoints contain observations from their exact epoch and gate
+    version, with teacher checkpoint provenance and a sample manifest.
+  - Recording on/off yields bit-identical CPU parameters, gates, selected
+    epochs and validation results for both uniform and periodic fusion.
+  - Schema-2 per-sample old-class scores reproduce saved target probabilities,
+    margins and log odds. Confidence drops and correct-to-wrong transitions
+    are distinguished; wrong-to-correct recovery is retained too.
+  - Paired branch correctness rates partition valid reference samples;
+    per-video IDs/row indices align with teacher/student score tensors.
+  - Actual fused logits and old-only/all-seen predictions round-trip, with
+    explicit invalid masks and -1 prediction sentinels for nonfinite logits.
+  - Perturbing all test features and permuting test labels does not change
+    any best/last model parameter, gate, selected epoch, validation accuracy,
+    or fusion CSV across three incremental steps (CL recording disabled).
+  - Actual gate reference IDs are confined to current new-class training
+    data plus selected old-class replay, with no duplicate or future IDs.
+  - Two generated command files contain fixed/sample-aware controls only,
+    each with seeds 42/43/44, distinct run names/logs, and valid training CLI.
+  - Mock-srun launch tests verify ONE Slurm step launches three simultaneous
+    child experiments with identical GPU visibility and four CPU threads
+    each. An early seed failure propagates even when the others succeed.
+  - The training entry point loads the audio dictionary once for all four
+    datasets. A separate test_only invocation reloads it, with no global cache.
+  - Sharing audio storage preserves sample values, labels and split selection.
+  - Compared 12 pre/post memory-optimization checkpoints from synthetic runs
+    (linear/MLP x 3 steps x best/last): every model/gate tensor is bit-identical,
+    as are the selected epochs and validation accuracies. Comparison excludes
+    serialized run paths/checkpoint hashes, which naturally differ per run.
+
+Other checks:
+  - Training entry point --help succeeds.
+  - All 17 Python source/test files parse.
+  - All 6 generated commands parse/validate and have unique run names.
+  - Bash syntax check passes; Slurm script/command files use LF line endings.
+  - Existing phase-8 and base-model tracked files are unchanged.
+
+Actual metadata audit (see METADATA_AUDIT.json for hashes and examples):
+  - data2/balance: 100 contiguous class IDs; train/val/test have
+    12,500/5,000/5,000 unique clip IDs; class/label mappings agree.
+  - All split pairs have zero exact clip-ID overlap.
+  - Grouping the 11-character source-video prefix reveals 318 shared source
+    videos between train and val (318 clips in each split). This is a
+    validation-independence risk in the existing metadata, not new gate
+    access to validation samples. The split has not been rewritten.
+  - Train/test and val/test have zero source-video-ID overlap.
+
+Design review:
+  - No CMR/CrossSDC loss; original AVCIL loss equations are retained.
+  - Same-modality current-student reliability updates class-wise fusion;
+    test forward uses candidate classes, not ground-truth labels.
+  - At task start old gates are inherited from the previous best checkpoint,
+    new gates are 0.5. There is no additional task-start old-only reestimate.
+  - Best may precede the first periodic update; inspect saved gate_version.
+  - LOO does not make fitted training features a held-out reliability estimate;
+    the visual branch still includes the original audio-guided attention.
+
+Limits:
+  No full VGGSound/AVE/ksounds run, GPU/multi-GPU execution, or actual Slurm
+  submission was performed. Synthetic tests validate implementation behavior,
+  not accuracy gains or the proposed default hyperparameters.
+  Host RAM usage has not been measured: 300G/job is a resource request.
+  Each job now requests 1 GPU/12 CPU/300G shared by all three seeds.
+  Per-step resource_summary.csv records CUDA allocator peaks when run on GPU;
+  that CUDA-only instrumentation and actual shared-GPU throughput/OOM behavior
+  have not been exercised in the CPU environment. No AMP/MPS or batch changes.
+  Raw feature files/upstream pretraining were unavailable; no assurance about
+  upstream test exposure or raw-media near-duplicates follows from this audit.
