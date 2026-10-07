@@ -45,8 +45,7 @@ id_ed25519
 /credentials.json
 
 # --- Checkpoints and training-state directories, at any depth ---
-save/
-save_*/
+save*/
 checkpoints/
 checkpoints_*/
 *.pt

@@ -17,6 +17,13 @@ except ImportError:
 
 
 class GeometryTests(unittest.TestCase):
+    def test_legacy_probes_reject_persistent_banks_instead_of_rebuilding_a(self):
+        probe.require_memory_prototype_policy(SimpleNamespace())
+        probe.require_memory_prototype_policy(SimpleNamespace(rd_prototype_policy='memory'))
+        for policy in ('pre_shrink', 'historical'):
+            with self.subTest(policy=policy), self.assertRaisesRegex(ValueError, 'saved task bank'):
+                probe.require_memory_prototype_policy(SimpleNamespace(rd_prototype_policy=policy))
+
     def test_opposing_gradients_and_cancellation(self):
         r = probe.lambda_geometry(4., 1., -2., 2.)
         self.assertEqual(r['cmr_over_non_cmr'], 1.)
@@ -127,6 +134,7 @@ class RuntimeTests(unittest.TestCase):
                 old_model=teacher, device=torch.device('cpu'), last_step_out_class_num=4,
                 distillation_temperature=2, prototype_bank=bank, adaptive_controller=controller if mode=='adaptive_crosssdc_cmr' else None,
                 uses_cmr=lambda _:True, uses_adaptive_weights=lambda _:mode=='adaptive_crosssdc_cmr',
+                uses_persistent_bank=lambda _:False,  # This parity fixture exercises original A.
                 compute_margin_terms=rd.compute_margin_terms, cmr_loss=rd.cmr_loss,
                 **{n:getattr(exact,n) for n in names})
             exec(code,env)

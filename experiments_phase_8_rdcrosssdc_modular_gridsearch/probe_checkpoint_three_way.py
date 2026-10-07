@@ -67,6 +67,7 @@ def load_historical_reference(directory, args, step, dataset):
 
 
 def build_reference(teacher, dataset, args, step, ids, device):
+    probe.require_memory_prototype_policy(args)
     dataset.exemplar_vids_set = list(ids)
     bank = probe.rd.build_old_teacher_prototype_bank(teacher, dataset, step*args.class_num_per_step,
         min(32, args.exemplar_batch_size), 0, device, args.rd_margin_temperature, True, args.rd_trust_shrinkage_beta)

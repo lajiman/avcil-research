@@ -69,9 +69,18 @@ def load_runtime():
     from rd_crosssdc import exact_losses as exact, rd_method as rd
 
 
+def require_memory_prototype_policy(args):
+    """Legacy offline protocols rebuild A; never silently reinterpret B/C."""
+    if getattr(args, 'rd_prototype_policy', 'memory') != 'memory':
+        raise ValueError('This offline probe reconstructs memory prototypes (A) only. '
+                         'B/C require the saved task bank and original replay query indices; '
+                         'use their training-time loss diagnostics instead.')
+
+
 def probe_components(model, teacher, current, replay, args, step, bank, weights,
                      replay_membership=None, return_terms=False):
     """Same loss definitions/reductions as the modular trainer, for steps > 0."""
+    require_memory_prototype_policy(args)
     (visual, audio), labels = current
     (old_visual, old_audio), old_labels = replay
     n, m = labels.numel(), old_labels.numel()
@@ -341,6 +350,7 @@ def main():
         if hasattr(teacher, 'module'):
             teacher = teacher.module
         args = copy.deepcopy(model.args)
+        require_memory_prototype_policy(args)
         if args.rd_mode not in ['crosssdc_cmr', 'adaptive_crosssdc_cmr']:
             raise ValueError('This probe expects CMR checkpoints; baseline support must specify matching CMR parameters explicitly')
         if args.modality != 'audio-visual' or model.num_classes != (step+1)*args.class_num_per_step or teacher.num_classes != step*args.class_num_per_step:

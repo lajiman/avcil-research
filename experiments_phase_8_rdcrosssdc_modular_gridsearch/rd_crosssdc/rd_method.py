@@ -319,45 +319,54 @@ def compute_margin_terms(
     bank: TeacherPrototypeBank,
     temperature: float,
     tolerance: float,
+    query_indices: Optional[torch.Tensor] = None,
 ) -> MarginTerms:
     """Compute old-only reference/current margins and one-sided deficits."""
+    # A retains the original margin function verbatim. B/C dispatch to a bank
+    # with exact pre-shrink support and (for C) persistent fold-specific history.
+    # Both teacher and student subtract the SAME paired teacher feature.
+    def margin(query, prototypes, sums, teacher_features, modality):
+        if hasattr(bank, "cross_modal_margin"):
+            return bank.cross_modal_margin(
+                query=query, labels=labels,
+                positive_teacher_features=teacher_features,
+                temperature=temperature, modality=modality,
+                query_indices=query_indices,
+            )
+        return _cross_modal_margin(
+            query, labels, prototypes, sums, bank.counts,
+            teacher_features, temperature,
+        )
+
     # Compute the [Bref - Bcur]+, and the [Bref - Bcur - tolerance]+ 
-    ref_a = _cross_modal_margin(
+    ref_a = margin(
         old_audio,
-        labels,
         bank.visual_prototypes,
         bank.visual_sums,
-        bank.counts,
         old_visual,
-        temperature,
+        "visual",
     ).detach()
-    cur_a = _cross_modal_margin(
+    cur_a = margin(
         current_audio,
-        labels,
         bank.visual_prototypes,
         bank.visual_sums,
-        bank.counts,
         old_visual,
-        temperature,
+        "visual",
     )
 
-    ref_v = _cross_modal_margin(
+    ref_v = margin(
         old_visual,
-        labels,
         bank.audio_prototypes,
         bank.audio_sums,
-        bank.counts,
         old_audio,
-        temperature,
+        "audio",
     ).detach()
-    cur_v = _cross_modal_margin(
+    cur_v = margin(
         current_visual,
-        labels,
         bank.audio_prototypes,
         bank.audio_sums,
-        bank.counts,
         old_audio,
-        temperature,
+        "audio",
     )
 
     deficit_a = F.relu(ref_a - cur_a)

@@ -235,7 +235,7 @@ class _LazyVisualH5Mixin:
 
 
 class IcaAVELoader(_LazyVisualH5Mixin, Dataset):
-    def __init__(self, args, mode='train', modality='visual', incremental_step=0):
+    def __init__(self, args, mode='train', modality='visual', incremental_step=0, audio_features=None):
         self.mode = mode
         self.args = args
         self.modality = modality
@@ -261,7 +261,13 @@ class IcaAVELoader(_LazyVisualH5Mixin, Dataset):
             self.all_visual_pretrained_features = None
         
         self.audio_pretrained_feature_path = os.path.join(self.feature_root, 'audio_pretrained_feature', 'audio_pretrained_feature_dict.npy')
-        self.all_audio_pretrained_features = np.load(self.audio_pretrained_feature_path, allow_pickle=True).item()
+        # The trainer can share one read-only feature dictionary among its four
+        # dataset views. Split-specific IDs and labels are still loaded below;
+        # sharing feature storage does not change which samples a view exposes.
+        self.all_audio_pretrained_features = (
+            np.load(self.audio_pretrained_feature_path, allow_pickle=True).item()
+            if audio_features is None else audio_features
+        )
 
         self.all_id_category_dict = np.load(
             os.path.join(self.meta_root, 'all_id_category_dict.npy'), allow_pickle=True
@@ -391,7 +397,7 @@ class IcaAVELoader(_LazyVisualH5Mixin, Dataset):
 
 
 class exemplarLoader(_LazyVisualH5Mixin, Dataset):
-    def __init__(self, args, modality='visual', incremental_step=0):
+    def __init__(self, args, modality='visual', incremental_step=0, audio_features=None):
         self.args = args
         self.modality = modality
         self._visual_h5_owner_pid = None
@@ -420,7 +426,12 @@ class exemplarLoader(_LazyVisualH5Mixin, Dataset):
             self.all_visual_pretrained_features = None
 
         self.audio_pretrained_feature_path = os.path.join(self.feature_root, 'audio_pretrained_feature', 'audio_pretrained_feature_dict.npy')
-        self.all_audio_pretrained_features = np.load(self.audio_pretrained_feature_path, allow_pickle=True).item()
+        # Reuse the caller's store without copying it or modifying its arrays.
+        # Replay membership and labels continue to come only from train metadata.
+        self.all_audio_pretrained_features = (
+            np.load(self.audio_pretrained_feature_path, allow_pickle=True).item()
+            if audio_features is None else audio_features
+        )
 
         self.all_id_category_dict = np.load(
             os.path.join(self.meta_root, 'all_id_category_dict.npy'), allow_pickle=True

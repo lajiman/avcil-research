@@ -30,8 +30,12 @@ import numpy as np
 
 import torch
 
-torch.set_num_threads(8)
-torch.set_num_interop_threads(1)
+from runtime_resources import (
+    configure_torch_threads, configure_cuda_budget,
+    start_resource_phase, record_resource_phase,
+)
+
+configure_torch_threads()
 
 import torch.nn as nn
 from torch.nn import functional as F
@@ -70,6 +74,11 @@ from rd_crosssdc.rd_method import (
 )
 from rd_crosssdc.cmr_penalties import CMR_PENALTIES
 from rd_crosssdc.loss_diagnostics import LossEpochRecorder, gradient_probe_rows
+from rd_crosssdc.prototype_history import (
+    IndexedReplayDataset,
+    load_task_bank,
+    save_task_bank,
+)
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -103,6 +112,31 @@ def run_name(args):
 
 def checkpoint_path(args, step):
     return "./save/{}/step_{}_best_model.pkl".format(run_name(args), step)
+
+
+def prototype_bank_path(args, step):
+    """B/C snapshot made by this step's best model, consumed by step + 1."""
+    return "./save/{}/step_{}_prototype_bank.pt".format(run_name(args), step)
+
+
+def uses_persistent_bank(args):
+    return getattr(args, "rd_prototype_policy", "memory") != "memory"
+
+
+def export_best_prototype_bank(args, step, train_set, exemplar_set, previous_bank):
+    """Scan H before memory shrink, always in the saved best teacher's space.
+
+    This is outside train(): training workers/optimizer have already been
+    released, while the train/exemplar feature caches are still available.
+    Step 0 also exports a snapshot although it has no CMR loss.
+    """
+    path = checkpoint_path(args, step)
+    best_model = torch.load(path, map_location="cpu", weights_only=False).to(device)
+    return save_task_bank(
+        args=args, step=step, best_model=best_model, checkpoint_path=path,
+        train_set=train_set, exemplar_set=exemplar_set, device=device,
+        previous_bank=previous_bank, path=prototype_bank_path(args, step),
+    )
 
 
 def figure_dir(args):
@@ -151,17 +185,28 @@ def _prepare_optional_rd_state(
     # Step-level diagnostic passes must not consume RNG used by training loaders.
     rng_state = capture_rng_state()
     try:
-        bank = build_old_teacher_prototype_bank(
-            old_model=old_model,
-            exemplar_set=exemplar_set,
-            num_old_classes=step * args.class_num_per_step,
-            batch_size=args.exemplar_batch_size,
-            num_workers=args.num_workers,
-            device=device,
-            margin_temperature=args.rd_margin_temperature,
-            compute_trust=uses_adaptive_weights(args),
-            trust_shrinkage_beta=args.rd_trust_shrinkage_beta,
-        )
+        if uses_persistent_bank(args):
+            # B/C: exact support comes from the previous best-model snapshot;
+            # only the Trust queries are drawn from today's reduced memory.
+            bank = load_task_bank(
+                args=args, step=step, old_model=old_model,
+                checkpoint_path=checkpoint_path(args, step - 1),
+                exemplar_set=exemplar_set, device=device,
+                path=prototype_bank_path(args, step - 1),
+            )
+        else:
+            # A: unchanged phase-8 bank construction and numerical path.
+            bank = build_old_teacher_prototype_bank(
+                old_model=old_model,
+                exemplar_set=exemplar_set,
+                num_old_classes=step * args.class_num_per_step,
+                batch_size=args.exemplar_batch_size,
+                num_workers=args.num_workers,
+                device=device,
+                margin_temperature=args.rd_margin_temperature,
+                compute_trust=uses_adaptive_weights(args),
+                trust_shrinkage_beta=args.rd_trust_shrinkage_beta,
+            )
     finally:
         restore_rng_state(rng_state)
 
@@ -195,6 +240,8 @@ def _prepare_optional_rd_state(
         trust_a=bank.trust_a_from_v.detach().cpu(),
         trust_v=bank.trust_v_from_a.detach().cpu(),
         id_to_category=id_to_category,
+        query_counts=(bank.query_counts.detach().cpu() if uses_persistent_bank(args) else None),
+        prototype_policy=getattr(args, "rd_prototype_policy", "memory"),
     )
     return bank, controller
 
@@ -257,7 +304,9 @@ def _train_step(
         )
 
         exemplar_loader = DataLoader(
-            exemplar_set,
+            # Index travels through shuffle/cycle so C chooses the query's
+            # persistent fold. This wrapper does not change sampling or RNG.
+            IndexedReplayDataset(exemplar_set) if uses_persistent_bank(args) else exemplar_set,
             batch_size=min(args.exemplar_batch_size, len(exemplar_set)),
             drop_last=True,
             shuffle=True,
@@ -353,7 +402,11 @@ def _train_step(
                 labels = labels.to(device)
                 local_labels = (labels % args.class_num_per_step).to(device)
 
-                exemplar_data, exemplar_labels = prev
+                if uses_persistent_bank(args):
+                    exemplar_data, exemplar_labels, query_indices = prev
+                else:
+                    exemplar_data, exemplar_labels = prev
+                    query_indices = None
                 exemplar_labels = exemplar_labels.to(device).long()
 
                 data_batch_size = local_labels.shape[0]
@@ -456,6 +509,7 @@ def _train_step(
                         old_visual=old_exem_visual,
                         labels=exemplar_labels,
                         bank=prototype_bank,
+                        query_indices=query_indices,
                         temperature=args.rd_margin_temperature,
                         tolerance=args.rd_margin_tolerance,
                     )
@@ -763,6 +817,10 @@ def _train_step(
         if args.lr_decay and step > 0:
             adjust_learning_rate(args, optimizer, epoch)
 
+    # C needs only the old-teacher features of retained M to recover newly
+    # discarded sums. No per-sample features of discarded data are persisted.
+    return prototype_bank
+
 
 def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category):
     """Run one step and always release that step's persistent DataLoaders."""
@@ -867,6 +925,18 @@ def build_parser():
     parser.add_argument("--rd_cmr_penalty",type=str,choices=CMR_PENALTIES,default="hinge",help="Per-sample CMR objective; weights are configured separately.",)
     parser.add_argument("--rd_cmr_scale",type=float,default=1.0,help=("Positive curvature scale for exp/softplus/log1p; ""unused by hinge/direct."),)
 
+    # Prototype support strategies: A unchanged; B/C need end-of-task snapshots.
+    parser.add_argument(
+        "--rd_prototype_policy", choices=("memory", "pre_shrink", "historical"),
+        default="memory", help="A: reduced replay; B: pre-shrink exact bank; C: B plus migrated history.",
+    )
+    parser.add_argument("--rd_history_folds", type=int, default=5)
+    parser.add_argument("--rd_history_mass_cap", type=float, default=50.0,
+                        help="C only: cap on historical effective mass; 0 recovers B.")
+    parser.add_argument("--rd_history_decay", type=float, default=0.9)
+    parser.add_argument("--rd_history_error_scale", type=float, default=0.25)
+    parser.add_argument("--rd_history_min_anchors", type=int, default=2)
+
     # Adaptive mode only. These parameters do not execute in the other modes.
     parser.add_argument("--rd_class_weight_alpha", type=float, default=0.5)
     parser.add_argument("--rd_trust_offset", type=float, default=0.05)
@@ -931,12 +1001,36 @@ def validate_args(parser, args):
         parser.error("--rd_margin_tolerance must be finite and non-negative")
     if (not np.isfinite(args.rd_cmr_scale) or args.rd_cmr_scale <= 0):
         parser.error("--rd_cmr_scale must be finite and positive")
+    if uses_persistent_bank(args):
+        if not uses_cmr(args):
+            parser.error("B/C prototype policies require a CMR mode with --lam_cmr > 0")
+        if args.class_num_per_step < 2 or args.num_classes % args.class_num_per_step:
+            parser.error("B/C require at least 2 classes per step and complete class increments")
+        if args.memory_size < 2 * (args.num_classes - args.class_num_per_step):
+            parser.error("B/C export a bank at every step and require memory for at least "
+                         "two exact support samples per old class")
+        if args.max_epoches < 1:
+            parser.error("B/C require at least one epoch to produce a best-model snapshot")
+    if args.rd_prototype_policy == "historical":
+        if args.rd_history_folds < 2 or args.rd_history_min_anchors < 2:
+            parser.error("C requires at least 2 folds and at least 2 transport anchors")
+        if not np.isfinite(args.rd_history_mass_cap) or args.rd_history_mass_cap < 0:
+            parser.error("--rd_history_mass_cap must be finite and non-negative")
+        if not np.isfinite(args.rd_history_decay) or not 0 <= args.rd_history_decay <= 1:
+            parser.error("--rd_history_decay must lie in [0, 1]")
+        if not np.isfinite(args.rd_history_error_scale) or args.rd_history_error_scale <= 0:
+            parser.error("--rd_history_error_scale must be finite and positive")
 
 
 def main():
     parser = build_parser()
     args = parser.parse_args()
     validate_args(parser, args)
+    if uses_persistent_bank(args) and not args.test_only:
+        output = Path(checkpoint_path(args, 0)).parent
+        if output.exists() and any(output.iterdir()):
+            parser.error("B/C training requires a new experiment_name: output already contains files. "
+                         "This avoids mixing teacher checkpoints with another prototype history.")
     print(args)
     print("PyTorch: {} | CUDA runtime: {} | device: {}".format(
         torch.__version__, torch.version.cuda, device
@@ -946,15 +1040,19 @@ def main():
             torch.cuda.get_device_name(device),
             torch.cuda.get_device_capability(device), torch.cuda.device_count(),
         ))
+    configure_cuda_budget(device)
 
     total_incremental_steps = args.num_classes // args.class_num_per_step
     setup_seed(args.seed)
     print("Training start time: {}".format(datetime.now()))
 
     train_set = IcaAVELoader(args=args, mode="train", modality=args.modality)
-    val_set = IcaAVELoader(args=args, mode="val", modality=args.modality)
-    test_set = IcaAVELoader(args=args, mode="test", modality=args.modality)
-    exemplar_set = exemplarLoader(args=args, modality=args.modality)
+    # All views read the same immutable audio features; keep one dictionary
+    # per training process instead of loading the complete file four times.
+    audio_features = train_set.all_audio_pretrained_features
+    val_set = IcaAVELoader(args=args, mode="val", modality=args.modality, audio_features=audio_features)
+    test_set = IcaAVELoader(args=args, mode="test", modality=args.modality, audio_features=audio_features)
+    exemplar_set = exemplarLoader(args=args, modality=args.modality, audio_features=audio_features)
 
     id_to_category = {value: key for key, value in train_set.category_encode_dict.items()}
 
@@ -995,12 +1093,13 @@ def main():
         print("Incremental step: {}".format(step))
 
         if not args.test_only:
+            resource_started = start_resource_phase(device)
             try:
                 train_set.preload_visual_features()
                 val_set.preload_visual_features()
                 if step > 0:
                     exemplar_set.preload_visual_features()
-                train(
+                previous_bank = train(
                     args=args,
                     step=step,
                     train_data_set=train_set,
@@ -1008,6 +1107,11 @@ def main():
                     exemplar_set=exemplar_set,
                     id_to_category=id_to_category,
                 )
+                if uses_persistent_bank(args):
+                    export_best_prototype_bank(args, step, train_set, exemplar_set, previous_bank)
+                record_resource_phase(os.path.join(metrics_dir(args), "resource_usage.csv"),
+                                      step, "train_and_bank", resource_started, device)
+                del previous_bank
             finally:
                 # train() closes its workers first; only then release the
                 # parent-side caches shared with those workers by fork.
@@ -1015,6 +1119,7 @@ def main():
                 val_set.clear_visual_features_cache()
                 train_set.clear_visual_features_cache()
 
+        resource_started = start_resource_phase(device)
         try:
             # Test data are loaded only for the test/optional t-SNE phase, so
             # they never overlap with the larger training-phase caches.
@@ -1044,6 +1149,8 @@ def main():
                     feature_type=args.tsne_feature,
                     max_points_per_class=args.tsne_max_points_per_class,
                 )
+            record_resource_phase(os.path.join(metrics_dir(args), "resource_usage.csv"),
+                                  step, "test", resource_started, device)
         finally:
             test_set.clear_visual_features_cache()
 

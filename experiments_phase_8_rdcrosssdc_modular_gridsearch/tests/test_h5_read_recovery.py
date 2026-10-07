@@ -161,7 +161,9 @@ class H5ReadRecoveryTests(unittest.TestCase):
         with self.assertRaises(OSError) as raised:
             self.dataset._visual_feature("vid1")
 
-        self.assertIn(str(self.path), str(raised.exception))
+        # OSError stringifies filename with repr(), escaping Windows backslashes.
+        # Verify the structured filename rather than platform-dependent rendering.
+        self.assertEqual(str(self.path), raised.exception.filename)
         self.assertIn("vid1", str(raised.exception))
         self.assertIs(raised.exception.__cause__, errors[-1])
         self.assertEqual(self.open_file.call_count, 6)

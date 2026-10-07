@@ -26,6 +26,8 @@ def save_static_bank(   # step level
     trust_a: torch.Tensor,
     trust_v: torch.Tensor,
     id_to_category: Dict[int, str],
+    query_counts: torch.Tensor = None,
+    prototype_policy: str = "memory",
 ) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     header = [
@@ -38,11 +40,15 @@ def save_static_bank(   # step level
         "trust_a_from_v",
         "trust_v_from_a",
     ]
+    # A's existing CSV is unchanged. B/C distinguish the larger prototype
+    # support from the reduced replay count used for Trust/shrinkage.
+    if query_counts is not None:
+        header.extend(["trust_query_count", "prototype_policy"])
     with open(path, "w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=header)
         writer.writeheader()
         for class_id in range(int(counts.numel())): # len(counts)
-            writer.writerow({
+            row = {
                 "step": step,
                 "class_id": class_id,
                 "category_name": id_to_category.get(class_id, "class_{}".format(class_id)), # will return "class_i" if there isn't the category_name
@@ -51,7 +57,11 @@ def save_static_bank(   # step level
                 "reliability_v_from_a": float(reliability_v[class_id].item()),
                 "trust_a_from_v": float(trust_a[class_id].item()),
                 "trust_v_from_a": float(trust_v[class_id].item()),
-            })
+            }
+            if query_counts is not None:
+                row["trust_query_count"] = float(query_counts[class_id].item())
+                row["prototype_policy"] = prototype_policy
+            writer.writerow(row)
 
 
 def save_dynamic_weights(   # step level + epoch level
