@@ -28,7 +28,7 @@ else
 fi
 cd "$phase_dir"
 mkdir -p logs
-command_file="${1:?Pass grid_commands/commands_periodic_fixed.txt or commands_periodic_sample_aware.txt}"
+command_file="${1:?Pass a three-seed command file from grid_commands (periodic or uniform_cl_history)}"
 
 # 独立初始化指定的 Conda，不依赖提交终端当前激活的环境或 .bashrc。
 conda_root="${AVCIL_CONDA_ROOT:-/groups/ytian/lujing/miniconda3}"

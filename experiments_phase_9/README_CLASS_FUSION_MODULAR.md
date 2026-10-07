@@ -137,14 +137,15 @@ python -u train_incremental_fusion_modular.py --feature_root /absolute/path/to/V
 
 默认已经设置 `num_classes=100, class_num_per_step=10, max_epoches=200, memory_size=500`，及前述原始 loss 开关。也可以从仓库根目录执行 `python experiments_phase_9/train_incremental_fusion_modular.py ...`。
 
-预置两组实验、每组 seeds 42/43/44，共 6 条命令，分别保存在两个文件中。命令矩阵已移除 uniform；代码仍保留该模式供已有检查点及一致性测试使用。
+预置三组实验、每组 seeds 42/43/44，共 9 条命令，分别保存在三个文件中。新增的 uniform 对照用于补齐原始 AVCIL 的 CL 观测轨迹；原有两组动态融合命令不变。
 
 | 命令文件 | 更新方式 | 每次提交 |
 |---|---|---|
 | `grid_commands/commands_periodic_fixed.txt` | 固定 `eta=0.5` | 并行运行 seeds 42/43/44 |
 | `grid_commands/commands_periodic_sample_aware.txt` | `eta[c]=0.5*n[c]/(n[c]+10)` | 并行运行 seeds 42/43/44 |
+| `grid_commands/commands_uniform_cl_history.txt` | 所有类别始终 `g=0.5`，只记录 CL 历史 | 并行运行 seeds 42/43/44 |
 
-以下生成器输出 Bash 命令，供 Linux/Slurm 使用；`--output_dir` 可以指定两个文件的输出目录：
+以下生成器输出 Bash 命令，供 Linux/Slurm 使用；默认生成三组，`--output_dir` 指定输出目录，`--settings` 可以只生成选定的组：
 
 ```bash
 # 如需修改数据路径，可单独运行生成器；预置命令可直接提交。
@@ -152,9 +153,25 @@ python experiments_phase_9/generate_commands.py --feature_root /absolute/path/to
 # 在仓库根目录提交，无需预先激活环境、切换到 phase 9 或创建 logs：
 sbatch --job-name=phase9_fixed experiments_phase_9/run.slurm grid_commands/commands_periodic_fixed.txt
 sbatch --job-name=phase9_sample_aware experiments_phase_9/run.slurm grid_commands/commands_periodic_sample_aware.txt
+# 单独提交新增的 AVCIL + CL history 对照，不必重新提交上面两组：
+sbatch --job-name=phase9_avcil_history experiments_phase_9/run.slurm grid_commands/commands_uniform_cl_history.txt
 ```
 
-这是两个独立的 Slurm 作业，每个作业在同一节点申请 **1 GPU、12 CPU、180G 主机内存**。一个 `srun` 调用 `run_shared_gpu.sh`，在该 step 内并行启动三个独立训练进程，共享同一张 GPU 和 180G 内存。每个 seed 的 OMP/MKL/OpenBLAS/NumExpr 计算线程默认限制为 4；任意 seed 失败会使作业返回失败，三个训练日志仍独立保存。两个作业同时运行合计申请 **2 GPU、24 CPU、360G 主机内存**，可放入 Juno 配置为 375G 内存的双 H200 节点，保留 15G 分配余量。
+每条 sbatch 对应一个独立作业，每个作业在同一节点申请 **1 GPU、12 CPU、180G 主机内存**。一个 `srun` 调用 `run_shared_gpu.sh`，在该 step 内并行启动三个独立训练进程，共享同一张 GPU 和 180G 内存。每个 seed 的 OMP/MKL/OpenBLAS/NumExpr 计算线程默认限制为 4；任意 seed 失败会使作业返回失败，三个训练日志仍独立保存。两个作业同时运行合计申请 **2 GPU、24 CPU、360G 主机内存**，可放入 Juno 配置为 375G 内存的双 H200 节点，保留 15G 分配余量。新增的第三组沿用该配置，由调度器等待空闲资源。
+
+只生成新增对照时，可以执行：
+
+```bash
+python experiments_phase_9/generate_commands.py --settings uniform_cl_history --feature_root /absolute/path/to/VGGSound
+```
+
+此选项只写 `commands_uniform_cl_history.txt`，保留已有动态融合命令文件及其服务器路径设置。新实验名称为 `phase9_uniform_cl_history_h200_seed42/43/44`，与动态融合实验及此前的 `phase9_uniform_h200_seed*` 区分开。
+
+新增对照显式指定 `--fusion_mode uniform --fusion_classifier linear --record_cl_history --cl_history_interval 40`。所有 step 的 gate 均为 0.5、版本为 0，不构造用于更新 gate 的可靠性库；CL 观测仍在旧类 memory 上执行。保留原始 AVCIL 的 CE、logit KD、L_i/L_c 与空间/时间注意力蒸馏，首任务仍只有 CE；没有 CMR/CrossSDC 或新的训练 loss。
+
+重跑的价值在于取得同一实现、相同超参数和 seed 下的遗忘轨迹，而不是仅重复最终准确率。CL 历史从第二个任务起，在任务开始、第 40/80/120/160/200 轮及新的最佳 checkpoint 处记录。若旧实验只有 best/last 模型且没有当时的回放 ID，就不能完整重建这些中间时刻；如果已经保存全部所需模型、回放 ID 和统计配置，离线补算也是可选方案。当前 `--test_only` 只执行正式测试，不会补写 CL 历史。
+
+比较时对齐 seed、step、epoch、参考视频 ID、候选旧类和有效性标记；各方法的最佳 epoch 可能不同，不宜仅比较各自 best 并把差异都归因于融合。两个运行的 reference_id 还包含教师 checkpoint 来源，因此不能要求跨方法 reference_id 字符串相等。新增 uniform 对照与原模型的计算一致，但不同服务器/数据过滤/随机状态可能使数值结果不同于历史实验；旧结果仍保留作为参考。
 
 `180G` 是主机内存的总申请量，不是实际占用，也不是每个 seed 独立的 60G 硬限制。三个进程继承 Slurm 设置的同一个 `CUDA_VISIBLE_DEVICES`，不手动填写物理卡号，不分别申请独占 GPU step；单卡可见时训练器不会进入 DataParallel。参见 [Slurm GPU 管理文档](https://slurm.schedmd.com/gres.html#GPU_Management)。若集群需要特定 GPU 类型，只需在 sbatch 指定，例如：
 
@@ -254,4 +271,4 @@ python -m pytest experiments_phase_9/tests -q
 
 两个方法上的限制也需要保留：LOO 去掉的是原型中的当前样本，分支表征仍经过训练数据拟合，可靠性不等同于独立测试泛化率；视觉分支保留原 AVCIL 的音频引导注意力，因此称作“视觉分支可靠性”比“完全独立的视觉模态可靠性”更准确。最佳 checkpoint 也可能早于首次 gate 更新，应结合 gate_version 解读结果。
 
-本地没有实际 VGGSound 特征文件，无法追溯预训练特征是否接触测试数据，也没有做原始媒体近重复检测。GPU、集群实际调度和内存峰值未验证；Slurm 本地检查使用模拟 srun，验证单个 step 内的三进程并发、相同 GPU 可见性、线程数限制及失败状态汇总。CPU 上对比内存优化前后的 12 份检查点（线性/MLP × 三个 step × best/last），模型参数、gate、最佳 epoch 和验证准确率逐位一致；35 项测试通过。
+本地没有实际 VGGSound 特征文件，无法追溯预训练特征是否接触测试数据，也没有做原始媒体近重复检测。GPU、集群实际调度和内存峰值未验证；Slurm 本地检查使用模拟 srun，验证单个 step 内的三进程并发、相同 GPU 可见性、线程数限制及失败状态汇总。CPU 上对比内存优化前后的 12 份检查点（线性/MLP × 三个 step × best/last），模型参数、gate、最佳 epoch 和验证准确率逐位一致；2026-10-06 新增 uniform CL-history 命令检查后，36 项测试通过。

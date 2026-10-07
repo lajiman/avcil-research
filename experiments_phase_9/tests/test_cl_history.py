@@ -236,6 +236,10 @@ def test_recording_on_off_leaves_training_parameters_and_gates_identical(tmp_pat
             for key in observed["state_dict"]:
                 torch.testing.assert_close(observed["state_dict"][key], unobserved["state_dict"][key], rtol=0, atol=0)
             assert observed["epoch"] == unobserved["epoch"] and observed["val_acc"] == unobserved["val_acc"]
+            if fusion_mode == "uniform":
+                gate = observed["state_dict"]["fusion_gate"]
+                torch.testing.assert_close(gate, torch.full_like(gate, 0.5), rtol=0, atol=0)
+                assert int(observed["state_dict"]["fusion_version"]) == 0
             assert unobserved["cl_history"] is None
             if step == 1:
                 history = observed["cl_history"]

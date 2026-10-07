@@ -1,4 +1,4 @@
-Phase 9 validation (2026-10-05)
+Phase 9 validation (2026-10-06)
 
 Environment:
   Windows / Python 3.13.11
@@ -9,7 +9,7 @@ Environment:
 Command from repository root:
   python -m pytest experiments_phase_9/tests -q
 Result:
-  35 passed in 11.88s; no warnings (including observation-only CL history).
+  36 passed in 10.56s; no warnings (including the uniform CL-history grid).
 
 Verified:
   - Equal gates reproduce original AVCIL logits, normalized branch features,
@@ -57,8 +57,13 @@ Verified:
     or fusion CSV across three incremental steps (CL recording disabled).
   - Actual gate reference IDs are confined to current new-class training
     data plus selected old-class replay, with no duplicate or future IDs.
-  - Two generated command files contain fixed/sample-aware controls only,
-    each with seeds 42/43/44, distinct run names/logs, and valid training CLI.
+  - Three generated command files contain fixed/sample-aware fusion and an
+    explicit uniform AVCIL CL-history baseline, each with seeds 42/43/44,
+    distinct run names/logs, and valid training CLI.
+  - Uniform commands disable gate updates throughout all 10 tasks/200 epochs;
+    CL observations remain enabled. Synthetic uniform best/last checkpoints
+    retain gate=0.5 and version=0 with identical training when recording is off.
+  - Generating only uniform_cl_history preserves existing periodic command files.
   - Mock-srun launch tests verify ONE Slurm step launches three simultaneous
     child experiments with identical GPU visibility and four CPU threads
     each. An early seed failure propagates even when the others succeed.
@@ -73,7 +78,9 @@ Verified:
 Other checks:
   - Training entry point --help succeeds.
   - All 17 Python source/test files parse.
-  - All 6 generated commands parse/validate and have unique run names.
+  - All 9 generated commands parse/validate and have unique run names.
+  - Launcher tests use the current Juno H200/180G allocation and mock its
+    in-job Conda initialization; this does not submit a cluster job.
   - Bash syntax check passes; Slurm script/command files use LF line endings.
   - Existing phase-8 and base-model tracked files are unchanged.
 
@@ -101,8 +108,8 @@ Limits:
   No full VGGSound/AVE/ksounds run, GPU/multi-GPU execution, or actual Slurm
   submission was performed. Synthetic tests validate implementation behavior,
   not accuracy gains or the proposed default hyperparameters.
-  Host RAM usage has not been measured: 300G/job is a resource request.
-  Each job now requests 1 GPU/12 CPU/300G shared by all three seeds.
+  Host RAM usage has not been measured: 180G/job is a resource request.
+  Each job requests 1 H200 GPU/12 CPU/180G shared by all three seeds.
   Per-step resource_summary.csv records CUDA allocator peaks when run on GPU;
   that CUDA-only instrumentation and actual shared-GPU throughput/OOM behavior
   have not been exercised in the CPU environment. No AMP/MPS or batch changes.
