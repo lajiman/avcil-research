@@ -23,14 +23,15 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from experiments_phase_9.dataloader_ours import IcaAVELoader, exemplarLoader
-from experiments_phase_9.class_fusion.checkpoints import load_model, save_checkpoint
+from experiments_phase_9.class_fusion.checkpoints import load_model, load_prototype_bank, save_checkpoint
 from experiments_phase_9.class_fusion.cl_history import CLHistoryRecorder, should_record_cl_history
-from experiments_phase_9.class_fusion.diagnostics import append_csv_row, save_gate_snapshot
+from experiments_phase_9.class_fusion.diagnostics import append_csv_row, save_gate_snapshot, save_prototype_snapshot
 from experiments_phase_9.class_fusion.exact_losses import avcil_loss
 from experiments_phase_9.class_fusion.fusion_method import (
     FusionReferenceDataset, build_reliability_bank, should_update_gate, unwrap_model, update_class_gates,
 )
 from experiments_phase_9.class_fusion.metrics import detailed_test, save_json
+from experiments_phase_9.class_fusion.prototype_bank import prepare_prototype_bank, build_bank_reliability
 from model.audio_visual_model_incremental_class_fusion import ClassFusionAudioVisualNet
 
 # 本文件的 P8 来源：experiments_phase_8_rdcrosssdc_modular/train_incremental_rd_crosssdc_modular.py。
@@ -55,7 +56,8 @@ def boolean_string(value):
 
 # [P8 逻辑沿用] 同名函数仍优先使用 experiment_name；默认名新增融合配置和 seed。
 def run_name(args):
-    return args.experiment_name or f"{args.dataset}_{args.fusion_mode}_{args.fusion_update_rule}_seed{args.seed}"
+    suffix = "_history_bank" if getattr(args, "fusion_prototype_mode", "fresh") == "history_bank" else ""
+    return args.experiment_name or f"{args.dataset}_{args.fusion_mode}{suffix}_{args.fusion_update_rule}_seed{args.seed}"
 
 
 # [P8 逻辑沿用] 按实验/step 定位 checkpoint；改为可配置根目录、best/last 和 .pt 格式。
@@ -121,6 +123,14 @@ def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats(device)
     net = unwrap_model(model)
+    # [P9 新增] 可选历史 bank。在任务交界仅总结刚结束任务的训练类；
+    # 更早旧类仅保留已选 memory 的历史特征。统计恢复 RNG，不改变回放抽样。
+    prototype_bank = None
+    if args.fusion_prototype_mode == "history_bank" and step > 0:
+        previous_bank = load_prototype_bank(checkpoint_path(args, step - 1))
+        prototype_bank = prepare_prototype_bank(
+            previous_bank, old_model, exemplar_set, step, args.class_num_per_step,
+            args.fusion_batch_size, args.num_workers, device, teacher_metadata)
     # [P9 新增] 每个 step 固定统计参考集，保存初始 gate；不对应 P8 的 RD loss 状态。
     reference_set = None
     if args.fusion_mode == "periodic" and (step > 0 or args.fusion_update_first_step):
@@ -209,10 +219,12 @@ def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category
         # [P8 逻辑沿用] 验证准确率严格提高才保存 best；初始 best 改为 -inf，确保首轮可保存。
         if is_best:
             best_acc = val_acc
-            save_checkpoint(checkpoint_path(args, step), model, args, step, epoch, val_acc, last_snapshot, cl_state)
+            save_checkpoint(checkpoint_path(args, step), model, args, step, epoch, val_acc,
+                            last_snapshot, cl_state, prototype_bank=prototype_bank)
         # [P9 新增] 另外保存 last，且 checkpoint 包含 gate/统计/观测状态。
         if epoch == args.max_epoches:
-            save_checkpoint(checkpoint_path(args, step, "last"), model, args, step, epoch, val_acc, last_snapshot, cl_state)
+            save_checkpoint(checkpoint_path(args, step, "last"), model, args, step, epoch, val_acc,
+                            last_snapshot, cl_state, prototype_bank=prototype_bank)
         # [P8 逻辑沿用] 只在增量任务的 milestone 将 lr 乘 0.1；已适配从 1 开始的 epoch。
         if args.lr_decay and step > 0 and epoch in args.milestones:
             for group in optimizer.param_groups:
@@ -221,8 +233,18 @@ def train(args, step, train_data_set, val_data_set, exemplar_set, id_to_category
         # New gates take effect in the NEXT epoch, never retroactively in this
         # epoch's validation. No post-final-epoch update is permitted.
         if should_update_gate(args, step, epoch):
-            bank = build_reliability_bank(model, reference_set, net.num_classes, args.fusion_batch_size,
-                                          args.num_workers, device, args.fusion_temperature, args.fusion_min_samples)
+            if prototype_bank is not None:
+                bank, prototype_diagnostics = build_bank_reliability(
+                    model, reference_set, prototype_bank, net.num_classes, args.fusion_batch_size,
+                    args.num_workers, device, args.fusion_temperature, args.fusion_min_samples,
+                    args.prototype_prior_strength)
+                save_prototype_snapshot(metrics_dir(args) / "prototype_bank" /
+                                        f"step_{step}_after_epoch_{epoch}.csv",
+                                        step, epoch, prototype_diagnostics)
+            else:
+                # 默认 fresh 完整保留旧版两遍流式重建算法；首任务也没有历史 bank。
+                bank = build_reliability_bank(model, reference_set, net.num_classes, args.fusion_batch_size,
+                                              args.num_workers, device, args.fusion_temperature, args.fusion_min_samples)
             last_snapshot = update_class_gates(net.fusion_gate, bank, args.fusion_update_rule,
                                                args.fusion_eta_max, args.fusion_n_ref)
             if (last_snapshot["eta"] > 0).any():
@@ -270,7 +292,11 @@ def build_parser():
     parser.add_argument("--class_contrastive_temperature", type=float, default=0.05)
     # [P9 新增] 融合、周期更新和 CL 历史记录相关配置。
     parser.add_argument("--fusion_mode", choices=["uniform", "periodic"], default="periodic")
-    parser.add_argument("--fusion_update_rule", choices=["fixed", "sample_aware"], default="sample_aware")
+    parser.add_argument("--fusion_update_rule", choices=["fixed", "sample_aware", "direct"], default="sample_aware")
+    parser.add_argument("--fusion_prototype_mode", choices=["fresh", "history_bank"], default="fresh",
+                        help="fresh preserves phase-9 behavior; history_bank transports fixed birth prototypes")
+    parser.add_argument("--prototype_prior_strength", type=float, default=10.0,
+                        help="Maximum historical pseudo-support, capped by birth samples absent from current reference")
     parser.add_argument("--fusion_warmup_epochs", type=int, default=40)
     parser.add_argument("--fusion_update_interval", type=int, default=40)
     parser.add_argument("--fusion_eta_max", type=float, default=0.5)
@@ -309,11 +335,13 @@ def validate_args(parser, args):
     for key in ("lr", "fusion_n_ref", "fusion_temperature", "instance_contrastive_temperature", "class_contrastive_temperature"):
         if not math.isfinite(getattr(args, key)) or getattr(args, key) <= 0:
             parser.error(f"--{key} must be finite and positive")
-    for key in ("weight_decay", "lam_I", "lam_C"):
+    for key in ("weight_decay", "lam_I", "lam_C", "prototype_prior_strength"):
         if not math.isfinite(getattr(args, key)) or getattr(args, key) < 0:
             parser.error(f"--{key} must be finite and nonnegative")
     if not 0 <= args.lam <= 1 or not 0 < args.fusion_eta_max <= 1:
         parser.error("lam must be in [0,1]; fusion_eta_max must be in (0,1]")
+    if args.fusion_prototype_mode == "history_bank" and args.fusion_mode != "periodic":
+        parser.error("history_bank requires periodic fusion; use fresh for the uniform AVCIL baseline")
     if not (args.dataset in ("AVE", "ksounds") or "VGGSound" in args.dataset):
         parser.error("dataset must be AVE, ksounds, or contain VGGSound")
     name = run_name(args)

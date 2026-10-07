@@ -13,7 +13,8 @@ from .fusion_method import preserve_rng_state, unwrap_model
 # torch.save/torch.load 流程；显式保存 state_dict、gate、配置和观测状态，格式不兼容 P8。
 # P8 指 experiments_phase_8_rdcrosssdc_modular。
 
-def save_checkpoint(path, model, args, step, epoch, val_acc, fusion_state=None, cl_history=None):
+def save_checkpoint(path, model, args, step, epoch, val_acc, fusion_state=None, cl_history=None,
+                    prototype_bank=None):
     net = unwrap_model(model)
     payload = {
         "format_version": 1,
@@ -24,6 +25,10 @@ def save_checkpoint(path, model, args, step, epoch, val_acc, fusion_state=None, 
         "fusion_state": fusion_state,
         "cl_history": cl_history,
     }
+    # [P9 新增] 历史原型是训练方法状态，不加入模型 state_dict，测试无需读取它。
+    # 旧实验/旧 checkpoint 不要求此字段；旧加载接口继续保持兼容。
+    if prototype_bank is not None:
+        payload["prototype_bank"] = prototype_bank
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
@@ -45,3 +50,11 @@ def load_model(path, return_metadata=False):
         metadata["checkpoint_sha256"] = hashlib.sha256(Path(path).read_bytes()).hexdigest()
         return model, metadata
     return model
+
+
+def load_prototype_bank(path):
+    """Load optional training state; old phase-9 checkpoints remain readable."""
+    payload = torch.load(path, map_location="cpu", weights_only=True)
+    if payload.get("format_version") != 1:
+        raise ValueError("Expected a phase-9 checkpoint")
+    return payload.get("prototype_bank")

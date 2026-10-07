@@ -59,7 +59,8 @@ def test_three_command_files_have_the_correct_controls_and_three_seeds(tmp_path)
     generate_commands(["--output_dir", str(tmp_path)])
     committed_dir = Path(__file__).resolve().parents[1] / "grid_commands"
     assert {p.name for p in committed_dir.glob("commands*.txt")} == {
-        "commands_periodic_fixed.txt", "commands_periodic_sample_aware.txt", "commands_uniform_cl_history.txt"}
+        "commands_periodic_fixed.txt", "commands_periodic_sample_aware.txt", "commands_uniform_cl_history.txt",
+        "commands_prototype_bank_smooth.txt", "commands_prototype_bank_direct.txt"}
     for generated in tmp_path.glob("commands*.txt"):
         assert generated.read_text(encoding="utf-8") == (committed_dir / generated.name).read_text(encoding="utf-8")
 
@@ -72,6 +73,52 @@ def test_generate_only_uniform_preserves_existing_periodic_files(tmp_path):
     assert existing.read_bytes() == before
     assert len((tmp_path / "commands_uniform_cl_history.txt").read_text().splitlines()) == 3
     assert not (tmp_path / "commands_periodic_sample_aware.txt").exists()
+
+
+def test_prototype_bank_commands_are_two_new_three_seed_controls(tmp_path):
+    """The two bank settings change only the gate rule and run/log identifiers."""
+    existing = {}
+    for label in ("periodic_fixed", "periodic_sample_aware", "uniform_cl_history"):
+        path = tmp_path / f"commands_{label}.txt"
+        path.write_bytes(f"existing custom {label} commands\r\n".encode())
+        existing[path] = path.read_bytes()
+    generate_commands(["--output_dir", str(tmp_path), "--settings",
+                       "prototype_bank_smooth", "prototype_bank_direct"])
+    assert all(path.read_bytes() == contents for path, contents in existing.items())
+    parsed = {}
+    logs, names = set(), set()
+    committed_dir = Path(__file__).resolve().parents[1] / "grid_commands"
+    for label, rule in (("prototype_bank_smooth", "sample_aware"), ("prototype_bank_direct", "direct")):
+        path = tmp_path / f"commands_{label}.txt"
+        assert path.read_bytes() == (committed_dir / path.name).read_bytes()
+        commands = path.read_text(encoding="utf-8").splitlines()
+        assert len(commands) == 3
+        parsed[label] = []
+        for command in commands:
+            words = shlex.split(command)
+            redirect = words.index(">")
+            parser = build_parser()
+            args = parser.parse_args(words[3:redirect])
+            validate_args(parser, args)
+            assert args.fusion_mode == "periodic"
+            assert args.fusion_prototype_mode == "history_bank"
+            assert args.prototype_prior_strength == 10
+            assert args.fusion_update_rule == rule
+            assert args.fusion_eta_max == 0.5 and args.fusion_n_ref == 10
+            assert args.record_cl_history and args.cl_history_interval == 40
+            assert args.fusion_warmup_epochs == args.fusion_update_interval == 40
+            assert args.fusion_classifier == "linear" and args.device == "cuda"
+            assert args.max_epoches == 200 and args.num_workers == 0
+            assert args.instance_contrastive and args.class_contrastive and args.attn_score_distil
+            assert args.experiment_name not in names and words[redirect + 1] not in logs
+            names.add(args.experiment_name)
+            logs.add(words[redirect + 1])
+            parsed[label].append(vars(args))
+        assert [args["seed"] for args in parsed[label]] == [42, 43, 44]
+    assert len(names) == len(logs) == 6
+    for smooth, direct in zip(parsed["prototype_bank_smooth"], parsed["prototype_bank_direct"]):
+        assert {key for key in smooth if smooth[key] != direct[key]} == {
+            "fusion_update_rule", "experiment_name"}
 
 
 @pytest.mark.parametrize("failing_seed", [None, 0])

@@ -177,7 +177,7 @@ def build_reliability_bank(model, reference_set, num_classes, batch_size,
 # 样本量控制更新幅度 eta，不是 P8 normalize_class_weights 的跨类别归一化/收缩。
 def update_class_gates(previous, bank, update_rule="sample_aware", eta_max=0.5, n_ref=10.0):
     """Smooth toward each class's new estimate, never toward a global mean."""
-    if update_rule not in ("fixed", "sample_aware"):
+    if update_rule not in ("fixed", "sample_aware", "direct"):
         raise ValueError("Unknown gate update rule")
     if not 0 < eta_max <= 1 or n_ref <= 0:
         raise ValueError("eta_max must be in (0, 1], n_ref must be positive")
@@ -186,11 +186,12 @@ def update_class_gates(previous, bank, update_rule="sample_aware", eta_max=0.5, 
         raise ValueError("Gate and reliability class orders differ")
     raw = bank.reliability_a / (bank.reliability_a + bank.reliability_v).clamp_min(1e-12)
     raw = torch.where(bank.valid, raw, previous)
-    eta = torch.full_like(previous, eta_max)
+    # [P9 新增] direct 是 prototype-bank 的无 gate 平滑对照；无效类仍保留历史。
+    eta = torch.full_like(previous, 1.0 if update_rule == "direct" else eta_max)
     if update_rule == "sample_aware":
         eta *= bank.counts.float() / (bank.counts.float() + n_ref)
     eta = torch.where(bank.valid, eta, torch.zeros_like(eta))
-    updated = previous + eta * (raw - previous)
+    updated = torch.where(bank.valid, raw, previous) if update_rule == "direct" else previous + eta * (raw - previous)
     return {
         "previous_gate": previous, "raw_gate": raw, "gate": updated,
         "eta": eta, "counts": bank.counts, "scored_counts": bank.scored_counts,

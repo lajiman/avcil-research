@@ -1,4 +1,4 @@
-"""Generate separate Bash command files for periodic fusion and AVCIL CL history."""
+"""Generate Bash command files for fresh-prototype fusion and optional history banks."""
 
 import argparse
 from pathlib import Path
@@ -11,7 +11,10 @@ SETTINGS = {
     "periodic_fixed": ("periodic", "fixed"),
     "periodic_sample_aware": ("periodic", "sample_aware"),
     "uniform_cl_history": ("uniform", None),
+    "prototype_bank_smooth": ("periodic", "sample_aware"),
+    "prototype_bank_direct": ("periodic", "direct"),
 }
+DEFAULT_SETTINGS = ("periodic_fixed", "periodic_sample_aware", "uniform_cl_history")
 
 
 def main(argv=None):
@@ -23,8 +26,9 @@ def main(argv=None):
     parser.add_argument("--max_epoches", type=int, default=200)
     parser.add_argument("--num_workers", type=int, default=0)
     parser.add_argument("--name_prefix", default="phase9")
-    parser.add_argument("--settings", nargs="+", choices=list(SETTINGS), default=list(SETTINGS),
-                        help="Generate selected command files only (default: all three settings)")
+    parser.add_argument("--settings", nargs="+", choices=list(SETTINGS), default=list(DEFAULT_SETTINGS),
+                        help="Generate selected files only (default: the original three settings; "
+                             "select prototype_bank_smooth prototype_bank_direct for the two new groups)")
     parser.add_argument("--output_dir", default=str(Path(__file__).resolve().parent / "grid_commands"))
     args = parser.parse_args(argv)
     if args.max_epoches <= 0 or args.num_workers < 0 or len(set(args.seeds)) != len(args.seeds):
@@ -51,6 +55,11 @@ def main(argv=None):
                 command += ["--fusion_mode", mode, "--fusion_update_rule", rule, "--fusion_classifier", "linear",
                             "--fusion_warmup_epochs", "40", "--fusion_update_interval", "40",
                             "--fusion_eta_max", "0.5", "--fusion_n_ref", "10", "--fusion_temperature", "0.1"]
+                if label.startswith("prototype_bank_"):
+                    # [P9 新增] 两组使用完全相同的历史原型方法，仅 gate 更新规则不同。
+                    # direct 对有效类别使用 eta=1；保留相同 eta_max/n_ref 参数便于明确控制变量。
+                    command += ["--fusion_prototype_mode", "history_bank", "--prototype_prior_strength", "10",
+                                "--record_cl_history", "--cl_history_interval", "40"]
             else:
                 # [P9 新增] 等权 AVCIL 只记录历史；不生成任何 gate 更新参数。
                 # 温度/最少样本数/batch size 用于 CL 原型观测，与动态融合实验保持一致。

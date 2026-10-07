@@ -272,3 +272,7 @@ python -m pytest experiments_phase_9/tests -q
 两个方法上的限制也需要保留：LOO 去掉的是原型中的当前样本，分支表征仍经过训练数据拟合，可靠性不等同于独立测试泛化率；视觉分支保留原 AVCIL 的音频引导注意力，因此称作“视觉分支可靠性”比“完全独立的视觉模态可靠性”更准确。最佳 checkpoint 也可能早于首次 gate 更新，应结合 gate_version 解读结果。
 
 本地没有实际 VGGSound 特征文件，无法追溯预训练特征是否接触测试数据，也没有做原始媒体近重复检测。GPU、集群实际调度和内存峰值未验证；Slurm 本地检查使用模拟 srun，验证单个 step 内的三进程并发、相同 GPU 可见性、线程数限制及失败状态汇总。CPU 上对比内存优化前后的 12 份检查点（线性/MLP × 三个 step × best/last），模型参数、gate、最佳 epoch 和验证准确率逐位一致；2026-10-06 新增 uniform CL-history 命令检查后，36 项测试通过。
+
+## 可选历史 prototype bank
+
+上述旧版原型流程仍为默认 `fusion_prototype_mode=fresh`。新增的 `history_bank` 模式及“原型历史融合＋gate 平滑/直接更新”两组三 seed 对照，见 [README_PROTOTYPE_BANK.md](README_PROTOTYPE_BANK.md)。旧三个命令文件保留，两个新实验单独提交。

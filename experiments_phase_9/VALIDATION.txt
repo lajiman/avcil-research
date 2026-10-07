@@ -9,7 +9,40 @@ Environment:
 Command from repository root:
   python -m pytest experiments_phase_9/tests -q
 Result:
-  36 passed in 10.56s; no warnings (including the uniform CL-history grid).
+  58 passed in 21.61s; no warnings (including the optional prototype bank).
+
+Prototype-bank extension verified (2026-10-06):
+  - The two new command files each contain seeds 42/43/44, for six experiments.
+    Both use identical bank/statistics/loss settings; only gate update rule,
+    experiment name and log destination differ (sample_aware versus direct).
+  - Original three command files are unchanged. The generator still produces
+    only those three by default; explicit --settings selects the new two.
+  - Default fresh behavior is preserved. With historical strength zero,
+    bank-enabled training matches fresh training bit-for-bit across three
+    steps: all best/last parameters, gates, best epochs, validation results,
+    and existing fusion CSV files.
+  - An independent sample-list oracle checks full prototypes and per-query
+    LOO reliability. The query is excluded from historical means, current
+    means, and drift anchors, with the LOO sample count used for beta.
+  - Fixed birth statistics and sample counts do not change on repeated scans.
+    Retained old anchors are pruned with memory; older discarded training
+    data cannot be read during a later bank preparation.
+  - Missing/invalid birth anchors cause whole-class fresh fallback. Current
+    singleton or degenerate full/LOO directions cannot be rescued by history.
+  - Preparation and scoring restore all RNG states and per-module modes,
+    including failed feature extraction. Saved method state is not mutated.
+  - Linear and MLP three-step runs round-trip bank state and gates through
+    best/last checkpoints. Test-only still reproduces results after removing
+    all bank fields and all train/val metadata; it cannot rebuild statistics.
+  - Changing every test feature and permuting test labels leaves new-method
+    trained parameters, gates, birth summaries, memory anchors, selected
+    epochs, validation results and diagnostic CSVs unchanged across three
+    steps. Actual bank references contain only current training and memory.
+  - Existing phase-8, base-model, original losses and Slurm resource scripts
+    were not changed. User's pre-existing CL-history comment was preserved.
+  - Historical strength 10 and translation-based drift compensation remain
+    experimental choices, not validated accuracy improvements. All checks
+    above used CPU synthetic data; real VGGSound/GPU runs remain unverified.
 
 Verified:
   - Equal gates reproduce original AVCIL logits, normalized branch features,
@@ -77,8 +110,8 @@ Verified:
 
 Other checks:
   - Training entry point --help succeeds.
-  - All 17 Python source/test files parse.
-  - All 9 generated commands parse/validate and have unique run names.
+  - Python source/test syntax is exercised by the test suite and CLI checks.
+  - All 15 commands (9 existing + 6 new) parse/validate with unique run names.
   - Launcher tests use the current Juno H200/180G allocation and mock its
     in-job Conda initialization; this does not submit a cluster job.
   - Bash syntax check passes; Slurm script/command files use LF line endings.
