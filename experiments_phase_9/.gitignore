@@ -1,5 +1,10 @@
-save/
-logs/
+# Track analysis outputs, including when broader local rules ignore them.
+!/save/
+!/save/**
+!/logs/
+!/logs/**
+# Keep saved tensors out of Git at every level within save/.
+/save/**/*.pt
 .venv/
 __pycache__/
 .pytest_cache/
