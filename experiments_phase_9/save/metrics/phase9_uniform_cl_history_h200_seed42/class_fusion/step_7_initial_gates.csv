@@ -1,0 +1,81 @@
+step,after_epoch,active_from_epoch,gate_version,class_id,category_name,counts,scored_counts,reliability_a,reliability_v,valid,eta,previous_gate,raw_gate,audio_gate,visual_gate
+7,0,1,0,0,playing volleyball,,,,,,,,,0.5,0.5
+7,0,1,0,1,child singing,,,,,,,,,0.5,0.5
+7,0,1,0,2,"heart sounds, heartbeat",,,,,,,,,0.5,0.5
+7,0,1,0,3,singing bowl,,,,,,,,,0.5,0.5
+7,0,1,0,4,cap gun shooting,,,,,,,,,0.5,0.5
+7,0,1,0,5,rope skipping,,,,,,,,,0.5,0.5
+7,0,1,0,6,"child speech, kid speaking",,,,,,,,,0.5,0.5
+7,0,1,0,7,baby laughter,,,,,,,,,0.5,0.5
+7,0,1,0,8,playing table tennis,,,,,,,,,0.5,0.5
+7,0,1,0,9,lighting firecrackers,,,,,,,,,0.5,0.5
+7,0,1,0,10,playing bass drum,,,,,,,,,0.5,0.5
+7,0,1,0,11,playing banjo,,,,,,,,,0.5,0.5
+7,0,1,0,12,fire truck siren,,,,,,,,,0.5,0.5
+7,0,1,0,13,playing bagpipes,,,,,,,,,0.5,0.5
+7,0,1,0,14,playing french horn,,,,,,,,,0.5,0.5
+7,0,1,0,15,civil defense siren,,,,,,,,,0.5,0.5
+7,0,1,0,16,tractor digging,,,,,,,,,0.5,0.5
+7,0,1,0,17,people whispering,,,,,,,,,0.5,0.5
+7,0,1,0,18,lathe spinning,,,,,,,,,0.5,0.5
+7,0,1,0,19,playing theremin,,,,,,,,,0.5,0.5
+7,0,1,0,20,playing glockenspiel,,,,,,,,,0.5,0.5
+7,0,1,0,21,playing hammond organ,,,,,,,,,0.5,0.5
+7,0,1,0,22,police car (siren),,,,,,,,,0.5,0.5
+7,0,1,0,23,people cheering,,,,,,,,,0.5,0.5
+7,0,1,0,24,playing electronic organ,,,,,,,,,0.5,0.5
+7,0,1,0,25,bowling impact,,,,,,,,,0.5,0.5
+7,0,1,0,26,people marching,,,,,,,,,0.5,0.5
+7,0,1,0,27,playing bass guitar,,,,,,,,,0.5,0.5
+7,0,1,0,28,goose honking,,,,,,,,,0.5,0.5
+7,0,1,0,29,playing trombone,,,,,,,,,0.5,0.5
+7,0,1,0,30,helicopter,,,,,,,,,0.5,0.5
+7,0,1,0,31,playing erhu,,,,,,,,,0.5,0.5
+7,0,1,0,32,dog howling,,,,,,,,,0.5,0.5
+7,0,1,0,33,playing synthesizer,,,,,,,,,0.5,0.5
+7,0,1,0,34,cat purring,,,,,,,,,0.5,0.5
+7,0,1,0,35,skiing,,,,,,,,,0.5,0.5
+7,0,1,0,36,wood thrush calling,,,,,,,,,0.5,0.5
+7,0,1,0,37,scuba diving,,,,,,,,,0.5,0.5
+7,0,1,0,38,playing tambourine,,,,,,,,,0.5,0.5
+7,0,1,0,39,driving motorcycle,,,,,,,,,0.5,0.5
+7,0,1,0,40,vacuum cleaner cleaning floors,,,,,,,,,0.5,0.5
+7,0,1,0,41,playing squash,,,,,,,,,0.5,0.5
+7,0,1,0,42,slot machine,,,,,,,,,0.5,0.5
+7,0,1,0,43,beat boxing,,,,,,,,,0.5,0.5
+7,0,1,0,44,playing cello,,,,,,,,,0.5,0.5
+7,0,1,0,45,playing cornet,,,,,,,,,0.5,0.5
+7,0,1,0,46,wind noise,,,,,,,,,0.5,0.5
+7,0,1,0,47,"playing steel guitar, slide guitar",,,,,,,,,0.5,0.5
+7,0,1,0,48,orchestra,,,,,,,,,0.5,0.5
+7,0,1,0,49,playing harp,,,,,,,,,0.5,0.5
+7,0,1,0,50,roller coaster running,,,,,,,,,0.5,0.5
+7,0,1,0,51,missile launch,,,,,,,,,0.5,0.5
+7,0,1,0,52,"playing marimba, xylophone",,,,,,,,,0.5,0.5
+7,0,1,0,53,airplane flyby,,,,,,,,,0.5,0.5
+7,0,1,0,54,playing saxophone,,,,,,,,,0.5,0.5
+7,0,1,0,55,"subway, metro, underground",,,,,,,,,0.5,0.5
+7,0,1,0,56,arc welding,,,,,,,,,0.5,0.5
+7,0,1,0,57,mynah bird singing,,,,,,,,,0.5,0.5
+7,0,1,0,58,playing piano,,,,,,,,,0.5,0.5
+7,0,1,0,59,playing bongo,,,,,,,,,0.5,0.5
+7,0,1,0,60,"pigeon, dove cooing",,,,,,,,,0.5,0.5
+7,0,1,0,61,"race car, auto racing",,,,,,,,,0.5,0.5
+7,0,1,0,62,people crowd,,,,,,,,,0.5,0.5
+7,0,1,0,63,playing vibraphone,,,,,,,,,0.5,0.5
+7,0,1,0,64,playing mandolin,,,,,,,,,0.5,0.5
+7,0,1,0,65,"female speech, woman speaking",,,,,,,,,0.5,0.5
+7,0,1,0,66,volcano explosion,,,,,,,,,0.5,0.5
+7,0,1,0,67,ocean burbling,,,,,,,,,0.5,0.5
+7,0,1,0,68,singing choir,,,,,,,,,0.5,0.5
+7,0,1,0,69,playing flute,,,,,,,,,0.5,0.5
+7,0,1,0,70,playing acoustic guitar,,,,,,,,,0.5,0.5
+7,0,1,0,71,canary calling,,,,,,,,,0.5,0.5
+7,0,1,0,72,pheasant crowing,,,,,,,,,0.5,0.5
+7,0,1,0,73,woodpecker pecking tree,,,,,,,,,0.5,0.5
+7,0,1,0,74,yodelling,,,,,,,,,0.5,0.5
+7,0,1,0,75,sharpen knife,,,,,,,,,0.5,0.5
+7,0,1,0,76,"playing violin, fiddle",,,,,,,,,0.5,0.5
+7,0,1,0,77,printer printing,,,,,,,,,0.5,0.5
+7,0,1,0,78,planing timber,,,,,,,,,0.5,0.5
+7,0,1,0,79,lawn mowing,,,,,,,,,0.5,0.5

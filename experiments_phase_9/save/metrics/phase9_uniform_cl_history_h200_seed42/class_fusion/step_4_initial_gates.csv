@@ -1,0 +1,51 @@
+step,after_epoch,active_from_epoch,gate_version,class_id,category_name,counts,scored_counts,reliability_a,reliability_v,valid,eta,previous_gate,raw_gate,audio_gate,visual_gate
+4,0,1,0,0,playing volleyball,,,,,,,,,0.5,0.5
+4,0,1,0,1,child singing,,,,,,,,,0.5,0.5
+4,0,1,0,2,"heart sounds, heartbeat",,,,,,,,,0.5,0.5
+4,0,1,0,3,singing bowl,,,,,,,,,0.5,0.5
+4,0,1,0,4,cap gun shooting,,,,,,,,,0.5,0.5
+4,0,1,0,5,rope skipping,,,,,,,,,0.5,0.5
+4,0,1,0,6,"child speech, kid speaking",,,,,,,,,0.5,0.5
+4,0,1,0,7,baby laughter,,,,,,,,,0.5,0.5
+4,0,1,0,8,playing table tennis,,,,,,,,,0.5,0.5
+4,0,1,0,9,lighting firecrackers,,,,,,,,,0.5,0.5
+4,0,1,0,10,playing bass drum,,,,,,,,,0.5,0.5
+4,0,1,0,11,playing banjo,,,,,,,,,0.5,0.5
+4,0,1,0,12,fire truck siren,,,,,,,,,0.5,0.5
+4,0,1,0,13,playing bagpipes,,,,,,,,,0.5,0.5
+4,0,1,0,14,playing french horn,,,,,,,,,0.5,0.5
+4,0,1,0,15,civil defense siren,,,,,,,,,0.5,0.5
+4,0,1,0,16,tractor digging,,,,,,,,,0.5,0.5
+4,0,1,0,17,people whispering,,,,,,,,,0.5,0.5
+4,0,1,0,18,lathe spinning,,,,,,,,,0.5,0.5
+4,0,1,0,19,playing theremin,,,,,,,,,0.5,0.5
+4,0,1,0,20,playing glockenspiel,,,,,,,,,0.5,0.5
+4,0,1,0,21,playing hammond organ,,,,,,,,,0.5,0.5
+4,0,1,0,22,police car (siren),,,,,,,,,0.5,0.5
+4,0,1,0,23,people cheering,,,,,,,,,0.5,0.5
+4,0,1,0,24,playing electronic organ,,,,,,,,,0.5,0.5
+4,0,1,0,25,bowling impact,,,,,,,,,0.5,0.5
+4,0,1,0,26,people marching,,,,,,,,,0.5,0.5
+4,0,1,0,27,playing bass guitar,,,,,,,,,0.5,0.5
+4,0,1,0,28,goose honking,,,,,,,,,0.5,0.5
+4,0,1,0,29,playing trombone,,,,,,,,,0.5,0.5
+4,0,1,0,30,helicopter,,,,,,,,,0.5,0.5
+4,0,1,0,31,playing erhu,,,,,,,,,0.5,0.5
+4,0,1,0,32,dog howling,,,,,,,,,0.5,0.5
+4,0,1,0,33,playing synthesizer,,,,,,,,,0.5,0.5
+4,0,1,0,34,cat purring,,,,,,,,,0.5,0.5
+4,0,1,0,35,skiing,,,,,,,,,0.5,0.5
+4,0,1,0,36,wood thrush calling,,,,,,,,,0.5,0.5
+4,0,1,0,37,scuba diving,,,,,,,,,0.5,0.5
+4,0,1,0,38,playing tambourine,,,,,,,,,0.5,0.5
+4,0,1,0,39,driving motorcycle,,,,,,,,,0.5,0.5
+4,0,1,0,40,vacuum cleaner cleaning floors,,,,,,,,,0.5,0.5
+4,0,1,0,41,playing squash,,,,,,,,,0.5,0.5
+4,0,1,0,42,slot machine,,,,,,,,,0.5,0.5
+4,0,1,0,43,beat boxing,,,,,,,,,0.5,0.5
+4,0,1,0,44,playing cello,,,,,,,,,0.5,0.5
+4,0,1,0,45,playing cornet,,,,,,,,,0.5,0.5
+4,0,1,0,46,wind noise,,,,,,,,,0.5,0.5
+4,0,1,0,47,"playing steel guitar, slide guitar",,,,,,,,,0.5,0.5
+4,0,1,0,48,orchestra,,,,,,,,,0.5,0.5
+4,0,1,0,49,playing harp,,,,,,,,,0.5,0.5
