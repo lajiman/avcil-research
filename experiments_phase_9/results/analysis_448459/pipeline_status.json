@@ -1,0 +1,93 @@
+{
+  "status": "complete",
+  "finished_at_utc": "2026-10-08T13:11:11.876621+00:00",
+  "mode": "all",
+  "worker_exit_codes": [
+    0,
+    0
+  ],
+  "errors": [],
+  "missing_checkpoints": 0,
+  "offline": {
+    "schema_version": 1,
+    "counts": {
+      "audit": 1620,
+      "log_summary": 15,
+      "epoch_losses": 30000,
+      "classes": 8250,
+      "gate_updates": 25920,
+      "gate_update_summary": 432,
+      "task_metrics": 825,
+      "steps": 150,
+      "new_old_metrics": 300,
+      "run_summary": 15,
+      "cl_history_best": 6750,
+      "cl_history_summary": 5604,
+      "prototype_bank": 12960,
+      "prototype_bank_summary": 216,
+      "paired_metrics": 84,
+      "class_deltas": 6600,
+      "subgroup_membership": 29400,
+      "subgroup_metrics": 1968,
+      "method_summary": 35
+    },
+    "warnings": [],
+    "notes": [
+      "Accuracy values are fractions; _pp are percentage-point differences.",
+      "Incomplete/ambiguous trajectories have no primary run aggregates.",
+      "Seed is the independent replication unit; class-step rows are descriptive repeated measurements.",
+      "Memory probes are not test accuracy. Quantile groups use uniform task-start memory only.",
+      "No checkpoint, gate, epoch, or hyperparameter is selected using test results."
+    ]
+  },
+  "report": {
+    "test_caches": 300,
+    "cache_splits": 600,
+    "warnings": [],
+    "coverage_issues": 0,
+    "reproduction_failures": 0,
+    "offline_flags": 0,
+    "figures": [
+      "figures/accuracy_protocol_0.png",
+      "figures/accuracy_protocol_0.pdf",
+      "figures/gate_deviation.png",
+      "figures/gate_deviation.pdf",
+      "figures/class_recall_delta_0.png",
+      "figures/class_recall_delta_0.pdf",
+      "figures/class_recall_delta_1.png",
+      "figures/class_recall_delta_1.pdf",
+      "figures/validation_group_delta_0.png",
+      "figures/validation_group_delta_0.pdf",
+      "figures/validation_group_delta_1.png",
+      "figures/validation_group_delta_1.pdf",
+      "figures/validation_group_delta_2.png",
+      "figures/validation_group_delta_2.pdf",
+      "figures/validation_group_delta_3.png",
+      "figures/validation_group_delta_3.pdf",
+      "figures/validation_group_delta_4.png",
+      "figures/validation_group_delta_4.pdf",
+      "figures/validation_group_delta_5.png",
+      "figures/validation_group_delta_5.pdf",
+      "figures/validation_group_delta_6.png",
+      "figures/validation_group_delta_6.pdf",
+      "figures/validation_group_delta_7.png",
+      "figures/validation_group_delta_7.pdf"
+    ],
+    "tables": {
+      "inference_summary": 1200,
+      "inference_classes": 66000,
+      "inference_confusion": 875688,
+      "inference_pairs": 30240,
+      "inference_sample_changes": 316299,
+      "inference_class_deltas": 13200,
+      "mechanism_decomposition": 960,
+      "validation_group_membership": 39600,
+      "validation_group_metrics": 2160,
+      "inference_reproduction_audit": 750,
+      "inference_coverage": 600,
+      "validation_group_seed_summary": 720,
+      "mechanism_seed_summary": 960
+    },
+    "report": "/groups/ytian/lujing/lujing/Projects/AV-CIL_gate/experiments_phase_9/results/analysis_448459/report.md"
+  }
+}

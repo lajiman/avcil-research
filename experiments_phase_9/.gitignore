@@ -3,9 +3,15 @@
 !/save/**
 !/logs/
 !/logs/**
+# 上传分析结果，但排除所有层级的 cache 目录。
+!/results/
+!/results/**
+/results/**/cache/
 # Keep saved tensors out of Git at every level within save/.
 /save/**/*.pt
 .venv/
 __pycache__/
 .pytest_cache/
 *.py[cod]
+/results/**/tables/inference_confusion.csv
+/results/**/tables/inference_sample_changes.csv

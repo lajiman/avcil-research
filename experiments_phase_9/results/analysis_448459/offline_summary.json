@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "counts": {
+    "audit": 1620,
+    "log_summary": 15,
+    "epoch_losses": 30000,
+    "classes": 8250,
+    "gate_updates": 25920,
+    "gate_update_summary": 432,
+    "task_metrics": 825,
+    "steps": 150,
+    "new_old_metrics": 300,
+    "run_summary": 15,
+    "cl_history_best": 6750,
+    "cl_history_summary": 5604,
+    "prototype_bank": 12960,
+    "prototype_bank_summary": 216,
+    "paired_metrics": 84,
+    "class_deltas": 6600,
+    "subgroup_membership": 29400,
+    "subgroup_metrics": 1968,
+    "method_summary": 35
+  },
+  "warnings": [],
+  "notes": [
+    "Accuracy values are fractions; _pp are percentage-point differences.",
+    "Incomplete/ambiguous trajectories have no primary run aggregates.",
+    "Seed is the independent replication unit; class-step rows are descriptive repeated measurements.",
+    "Memory probes are not test accuracy. Quantile groups use uniform task-start memory only.",
+    "No checkpoint, gate, epoch, or hyperparameter is selected using test results."
+  ]
+}
