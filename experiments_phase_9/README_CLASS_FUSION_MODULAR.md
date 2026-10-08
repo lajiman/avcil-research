@@ -276,3 +276,7 @@ python -m pytest experiments_phase_9/tests -q
 ## 可选历史 prototype bank
 
 上述旧版原型流程仍为默认 `fusion_prototype_mode=fresh`。新增的 `history_bank` 模式及“原型历史融合＋gate 平滑/直接更新”两组三 seed 对照，见 [README_PROTOTYPE_BANK.md](README_PROTOTYPE_BANK.md)。旧三个命令文件保留，两个新实验单独提交。
+
+## 统一分析入口
+
+训练结果的执行核验、日志/CSV 统计、逐类及新旧类对比、checkpoint 固定 gate 推理与报告生成，使用 [README_ANALYSIS.md](README_ANALYSIS.md) 中的一次提交流程。`run_analysis.slurm` 为 Juno 预留节点申请两张 H200，两个推理进程分别使用一张卡，所有分析输出写入 `results/analysis_JOBID/`，不会修改训练结果。

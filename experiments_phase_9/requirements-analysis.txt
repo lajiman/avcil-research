@@ -1,0 +1,3 @@
+-r requirements.txt
+# Optional for report figures; all CSV/JSON/Markdown/HTML analyses work without it.
+matplotlib>=3.7

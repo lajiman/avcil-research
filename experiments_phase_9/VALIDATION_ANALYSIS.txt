@@ -1,0 +1,41 @@
+Phase 9 unified analysis validation — 2026-10-08
+
+Full phase-9 suite:
+  experiments_phase_9/.venv/Scripts/python.exe -m pytest experiments_phase_9/tests -q
+  Result: 95 passed in 45.25 seconds (CPU, Windows).
+
+Analysis coverage:
+  - Safe literal parsing of Namespace logs; expressions are never executed.
+  - Hand-calculated class, task, old/new, paired-seed and forgetting statistics.
+  - Missing/duplicate/nonfinite records, invalid gate versions and prototype IDs.
+  - Earliest validation maximum; gates active only in the following epoch.
+  - Unique baseline matching with protocol and seed; no ambiguous baseline choice.
+  - Real synthetic HDF5 + checkpoint loading for linear and MLP heads.
+  - Saved, equal, audio and visual fusion controls match the original model path.
+  - Feature filtering and per-split/class coverage are explicitly reported.
+  - Same-ID/label/candidate alignment for prediction comparisons.
+  - Fixed-model decomposition and validation-defined groups with empty/tied bins.
+  - Input/checkpoint changes and damaged caches force failure or recomputation.
+  - Current invocation binding prevents stale caches entering a new report.
+  - One failing checkpoint does not prevent other jobs from completing.
+  - Unattended CPU pipeline: two synthetic training runs, subprocess inference,
+    report/figures, successful cache reuse and unchanged source checkpoint hashes.
+  - Mock Slurm launch: one step, two allocated GPUs, 12 CPU, 300G, xie reservation,
+    environment initialization, argument forwarding and nonzero exit propagation.
+  - Matplotlib PNG/PDF output and standalone escaped HTML/Markdown report.
+
+Additional checks:
+  - Complete offline entry executed against all 15 locally transferred runs.
+  - Existing log/CSV/JSON formats are accepted; reports written only to ignored
+    .pytest_cache smoke directories, not back to training artifacts.
+  - run_analysis.py --help succeeds.
+  - bash -n experiments_phase_9/run_analysis.slurm passes.
+  - git diff --check passes.
+
+Limits:
+  - No real VGGSound features or training .pt files were available locally.
+  - No H200 execution or actual Slurm job submission was performed here.
+  - GPU throughput, real host-memory peaks, filesystem contention and current
+    reservation availability must be verified by the submitted Juno job.
+  - 300G is an allocation request, not a measured usage guarantee.
+  - These checks validate analysis behavior, not an accuracy gain claim.
